@@ -1,2 +1,64 @@
-// Data models and Zod schemas — populated by budget-dev and subs-dev
-export {};
+// Data models and Zod schemas — all 13 tables
+export {
+  // Enums
+  AccountType,
+  TargetType,
+  Frequency,
+  AmountSign,
+  // BillingCycle — exported by catalog module, same enum values
+  SubscriptionStatus,
+  NotificationType,
+  // Schemas
+  AccountSchema,
+  AccountInsertSchema,
+  CategoryGroupSchema,
+  CategoryGroupInsertSchema,
+  CategorySchema,
+  CategoryInsertSchema,
+  BudgetAllocationSchema,
+  BudgetAllocationInsertSchema,
+  TransactionSchema,
+  TransactionInsertSchema,
+  TransactionSplitSchema,
+  TransactionSplitInsertSchema,
+  RecurringTemplateSchema,
+  RecurringTemplateInsertSchema,
+  PayeeCacheSchema,
+  CsvProfileSchema,
+  CsvProfileInsertSchema,
+  SubscriptionSchema,
+  SubscriptionInsertSchema,
+  PriceHistorySchema,
+  PriceHistoryInsertSchema,
+  NotificationLogSchema,
+  NotificationLogInsertSchema,
+  PreferenceSchema,
+} from './schemas';
+
+// Types
+export type {
+  Account,
+  AccountInsert,
+  CategoryGroup,
+  CategoryGroupInsert,
+  Category,
+  CategoryInsert,
+  BudgetAllocation,
+  BudgetAllocationInsert,
+  Transaction,
+  TransactionInsert,
+  TransactionSplit,
+  TransactionSplitInsert,
+  RecurringTemplate,
+  RecurringTemplateInsert,
+  PayeeCache,
+  CsvProfile,
+  CsvProfileInsert,
+  Subscription,
+  SubscriptionInsert,
+  PriceHistory,
+  PriceHistoryInsert,
+  NotificationLog,
+  NotificationLogInsert,
+  Preference,
+} from './schemas';

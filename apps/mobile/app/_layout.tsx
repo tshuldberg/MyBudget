@@ -21,6 +21,22 @@ export default function RootLayout() {
           name="import-csv"
           options={{ title: 'Import CSV' }}
         />
+        <Stack.Screen
+          name="add-subscription"
+          options={{ presentation: 'modal', title: 'Add Subscription' }}
+        />
+        <Stack.Screen
+          name="renewal-calendar"
+          options={{ title: 'Renewal Calendar' }}
+        />
+        <Stack.Screen
+          name="subscription-detail"
+          options={{ title: 'Subscription' }}
+        />
+        <Stack.Screen
+          name="onboarding"
+          options={{ headerShown: false, gestureEnabled: false }}
+        />
         <Stack.Screen name="settings" options={{ title: 'Settings' }} />
       </Stack>
     </>

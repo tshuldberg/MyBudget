@@ -101,7 +101,7 @@ MyBudget/
 
 - Zero network permissions. No analytics. No accounts. No Plaid/Yodlee. Local SQLite only.
 - Dark theme only for MVP.
-- Free trial: 30 days full, then read-only.
+- Free trial: 7 days full, then read-only.
 - 5 tabs: Budget (home), Transactions, Subscriptions, Reports, Accounts.
 - FSL-1.1-Apache-2.0 license.
 - Subscriptions integrate with the budget system through categories and recurring templates.
