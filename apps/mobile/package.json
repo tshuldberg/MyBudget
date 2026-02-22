@@ -1,0 +1,36 @@
+{
+  "name": "@mybudget/mobile",
+  "version": "0.1.0",
+  "private": true,
+  "main": "expo-router/entry",
+  "scripts": {
+    "dev": "expo start",
+    "build": "expo export",
+    "ios": "expo run:ios",
+    "android": "expo run:android",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint app/ components/ hooks/",
+    "clean": "rm -rf .expo dist .turbo"
+  },
+  "dependencies": {
+    "@mybudget/shared": "workspace:*",
+    "@mybudget/ui": "workspace:*",
+    "expo": "~52.0.0",
+    "expo-document-picker": "~13.0.0",
+    "expo-notifications": "~0.29.0",
+    "expo-router": "~4.0.0",
+    "expo-sqlite": "~15.0.0",
+    "expo-status-bar": "~2.0.0",
+    "react": "^18.3.0",
+    "react-native": "^0.76.0",
+    "react-native-safe-area-context": "^5.0.0",
+    "react-native-screens": "^4.0.0",
+    "react-native-svg": "^15.0.0",
+    "victory-native": "^41.0.0"
+  },
+  "devDependencies": {
+    "@mybudget/typescript-config": "workspace:*",
+    "@types/react": "^18.3.0",
+    "typescript": "^5.7.0"
+  }
+}
