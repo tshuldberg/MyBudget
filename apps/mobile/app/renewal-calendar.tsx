@@ -3,40 +3,7 @@ import { SectionList, View, StyleSheet } from 'react-native';
 import { Text, Card, colors, spacing, typography } from '@mybudget/ui';
 import type { Subscription } from '@mybudget/shared';
 import { formatCents, getUpcomingRenewals, normalizeToMonthly } from '@mybudget/shared';
-
-/**
- * Mock data — same subscriptions as dashboard. Will share via context/store.
- */
-const MOCK_SUBSCRIPTIONS: Subscription[] = [
-  {
-    id: 's1', name: 'Netflix', price: 1599, currency: 'USD', billing_cycle: 'monthly',
-    custom_days: null, category_id: 'c5', status: 'active', start_date: '2024-01-15',
-    next_renewal: '2026-03-15', trial_end_date: null, cancelled_date: null,
-    notes: null, url: null, icon: '🎬', color: null, notify_days: 1,
-    catalog_id: null, sort_order: 0, created_at: '', updated_at: '',
-  },
-  {
-    id: 's2', name: 'Spotify', price: 1099, currency: 'USD', billing_cycle: 'monthly',
-    custom_days: null, category_id: 'c5', status: 'active', start_date: '2023-06-01',
-    next_renewal: '2026-03-01', trial_end_date: null, cancelled_date: null,
-    notes: null, url: null, icon: '🎵', color: null, notify_days: 1,
-    catalog_id: null, sort_order: 1, created_at: '', updated_at: '',
-  },
-  {
-    id: 's3', name: 'iCloud+', price: 299, currency: 'USD', billing_cycle: 'monthly',
-    custom_days: null, category_id: null, status: 'active', start_date: '2022-11-01',
-    next_renewal: '2026-03-01', trial_end_date: null, cancelled_date: null,
-    notes: null, url: null, icon: '☁️', color: null, notify_days: 1,
-    catalog_id: null, sort_order: 2, created_at: '', updated_at: '',
-  },
-  {
-    id: 's4', name: 'ChatGPT Plus', price: 2000, currency: 'USD', billing_cycle: 'monthly',
-    custom_days: null, category_id: null, status: 'active', start_date: '2025-01-01',
-    next_renewal: '2026-03-01', trial_end_date: null, cancelled_date: null,
-    notes: null, url: null, icon: '🤖', color: null, notify_days: 1,
-    catalog_id: null, sort_order: 3, created_at: '', updated_at: '',
-  },
-];
+import { useSubscriptions } from '../hooks';
 
 interface CalendarSection {
   title: string;
@@ -94,9 +61,10 @@ function formatRenewalDate(dateStr: string): string {
 }
 
 export default function RenewalCalendarScreen() {
+  const { subscriptions } = useSubscriptions({ status: 'active' });
   const upcoming = useMemo(
-    () => getUpcomingRenewals(MOCK_SUBSCRIPTIONS, 30),
-    [],
+    () => getUpcomingRenewals(subscriptions, 30),
+    [subscriptions],
   );
   const sections = useMemo(() => groupByWeek(upcoming), [upcoming]);
 

@@ -1,27 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { ScrollView, View, Alert, StyleSheet } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { Text, Card, Badge, Button, colors, spacing, typography } from '@mybudget/ui';
-import type { Subscription } from '@mybudget/shared';
 import { formatCents, normalizeToMonthly, normalizeToAnnual } from '@mybudget/shared';
-
-/**
- * Mock data. Will be replaced with getSubscriptionById() query.
- */
-const MOCK_SUB: Subscription = {
-  id: 's1', name: 'Netflix', price: 1599, currency: 'USD', billing_cycle: 'monthly',
-  custom_days: null, category_id: 'c5', status: 'active', start_date: '2024-01-15',
-  next_renewal: '2026-03-15', trial_end_date: null, cancelled_date: null,
-  notes: 'Standard plan with ads', url: 'https://netflix.com', icon: '🎬',
-  color: '#E50914', notify_days: 1, catalog_id: 'netflix', sort_order: 0,
-  created_at: '2024-01-15T00:00:00Z', updated_at: '2026-01-15T00:00:00Z',
-};
-
-const MOCK_PRICE_HISTORY = [
-  { price: 1599, date: '2025-06-01', label: 'Current' },
-  { price: 1499, date: '2024-06-01', label: 'Previous' },
-  { price: 999, date: '2024-01-15', label: 'Original' },
-];
+import { useSubscriptionDetail, useSubscriptions } from '../hooks';
 
 function DetailRow({ label, value }: { label: string; value: string }) {
   return (
@@ -49,24 +31,32 @@ function formatBillingCycle(cycle: string): string {
 
 export default function SubscriptionDetailScreen() {
   const router = useRouter();
-  const sub = MOCK_SUB; // Will use useLocalSearchParams + query
+  const { id } = useLocalSearchParams<{ id: string }>();
+  const { subscription: sub, priceHistory } = useSubscriptionDetail(id);
+  const { pause, cancel } = useSubscriptions();
+
+  if (!sub) {
+    return (
+      <View style={[styles.container, { alignItems: 'center', justifyContent: 'center' }]}>
+        <Text variant="body">Subscription not found</Text>
+      </View>
+    );
+  }
 
   const monthly = normalizeToMonthly(sub.price, sub.billing_cycle, sub.custom_days);
   const annual = normalizeToAnnual(sub.price, sub.billing_cycle, sub.custom_days);
 
   const handlePause = () => {
-    // Will wire to pauseSubscription()
     Alert.alert('Pause', `Pause ${sub.name}?`, [
       { text: 'Cancel', style: 'cancel' },
-      { text: 'Pause', onPress: () => {} },
+      { text: 'Pause', onPress: () => { pause(sub.id); router.back(); } },
     ]);
   };
 
   const handleCancel = () => {
-    // Will wire to cancelSubscription()
     Alert.alert('Cancel', `Cancel ${sub.name}? This cannot be undone.`, [
       { text: 'Keep', style: 'cancel' },
-      { text: 'Cancel Subscription', style: 'destructive', onPress: () => {} },
+      { text: 'Cancel Subscription', style: 'destructive', onPress: () => { cancel(sub.id); router.back(); } },
     ]);
   };
 
@@ -134,21 +124,25 @@ export default function SubscriptionDetailScreen() {
       </Card>
 
       {/* Price history */}
-      <Text variant="caption" style={styles.sectionHeader}>PRICE HISTORY</Text>
-      <Card style={styles.historyCard}>
-        {MOCK_PRICE_HISTORY.map((entry, index) => (
-          <View key={entry.date}>
-            {index > 0 && <View style={styles.divider} />}
-            <View style={styles.historyRow}>
-              <View>
-                <Text variant="body">{formatCents(entry.price)}</Text>
-                <Text variant="caption">{entry.label}</Text>
+      {priceHistory.length > 0 && (
+        <>
+          <Text variant="caption" style={styles.sectionHeader}>PRICE HISTORY</Text>
+          <Card style={styles.historyCard}>
+            {[{ price: sub.price, effective_date: priceHistory.length > 0 ? priceHistory[priceHistory.length - 1].effective_date : sub.start_date, label: 'Current' }, ...priceHistory.map((h, i) => ({ price: h.price, effective_date: h.effective_date, label: i === priceHistory.length - 1 ? 'Original' : 'Previous' }))].map((entry, index) => (
+              <View key={`${entry.effective_date}-${index}`}>
+                {index > 0 && <View style={styles.divider} />}
+                <View style={styles.historyRow}>
+                  <View>
+                    <Text variant="body">{formatCents(entry.price)}</Text>
+                    <Text variant="caption">{entry.label}</Text>
+                  </View>
+                  <Text variant="caption">{formatFullDate(entry.effective_date)}</Text>
+                </View>
               </View>
-              <Text variant="caption">{formatFullDate(entry.date)}</Text>
-            </View>
-          </View>
-        ))}
-      </Card>
+            ))}
+          </Card>
+        </>
+      )}
 
       {/* Actions */}
       <View style={styles.actions}>

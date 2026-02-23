@@ -3,7 +3,8 @@ import { ScrollView, View, FlatList, Pressable, StyleSheet } from 'react-native'
 import { useRouter } from 'expo-router';
 import { Text, Input, Button, Card, Badge, colors, spacing, typography } from '@mybudget/ui';
 import type { CatalogEntry } from '@mybudget/shared';
-import { searchCatalog, getPopularEntries, formatCents } from '@mybudget/shared';
+import { searchCatalog, getPopularEntries, formatCents, calculateNextRenewal } from '@mybudget/shared';
+import { useSubscriptions } from '../hooks';
 
 type Step = 'search' | 'form';
 
@@ -48,12 +49,28 @@ export default function AddSubscriptionScreen() {
     setStep('form');
   }, []);
 
+  const { createSubscription } = useSubscriptions();
   const canSave = name.length > 0 && price.length > 0;
 
   const handleSave = useCallback(() => {
-    // Will wire to createSubscription() once data layer is connected
+    const cents = Math.round(parseFloat(price) * 100);
+    if (isNaN(cents) || cents <= 0) return;
+
+    const cycle = billingCycle as 'weekly' | 'monthly' | 'quarterly' | 'semi_annual' | 'annual';
+    const nextRenewal = calculateNextRenewal(startDate, cycle);
+
+    createSubscription({
+      name,
+      price: cents,
+      billing_cycle: cycle,
+      status: 'active',
+      start_date: startDate,
+      next_renewal: nextRenewal,
+      notes: notes || null,
+      catalog_id: catalogId,
+    });
     router.back();
-  }, [router]);
+  }, [router, name, price, billingCycle, startDate, notes, catalogId, createSubscription]);
 
   if (step === 'search') {
     return (

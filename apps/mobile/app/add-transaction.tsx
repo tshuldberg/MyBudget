@@ -2,46 +2,44 @@ import React, { useState, useCallback } from 'react';
 import { ScrollView, View, Pressable, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Text, Input, Button, Card, colors, spacing, typography } from '@mybudget/ui';
+import { useAccounts, useCategories, useTransactions } from '../hooks';
 
 type AmountMode = 'outflow' | 'inflow';
 
-/**
- * Mock data for development. Will be replaced with SQLite queries.
- */
-const MOCK_ACCOUNTS = [
-  { id: 'a1', name: 'Checking' },
-  { id: 'a2', name: 'Savings' },
-  { id: 'a3', name: 'Credit Card' },
-];
-
-const MOCK_CATEGORIES = [
-  { id: 'c1', name: 'Rent', emoji: '🏠' },
-  { id: 'c2', name: 'Groceries', emoji: '🛒' },
-  { id: 'c3', name: 'Utilities', emoji: '⚡' },
-  { id: 'c4', name: 'Dining Out', emoji: '🍕' },
-  { id: 'c5', name: 'Entertainment', emoji: '🎮' },
-  { id: 'c6', name: 'Shopping', emoji: '🛍️' },
-];
-
 export default function AddTransactionScreen() {
   const router = useRouter();
+  const { accounts } = useAccounts();
+  const { categories } = useCategories();
+  const { createTransaction } = useTransactions();
+
   const [amountMode, setAmountMode] = useState<AmountMode>('outflow');
   const [amount, setAmount] = useState('');
   const [payee, setPayee] = useState('');
   const [memo, setMemo] = useState('');
-  const [selectedAccountId, setSelectedAccountId] = useState(MOCK_ACCOUNTS[0].id);
+  const [selectedAccountId, setSelectedAccountId] = useState(accounts[0]?.id ?? '');
   const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null);
   const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
-
-  const selectedCategory = MOCK_CATEGORIES.find((c) => c.id === selectedCategoryId);
-  const selectedAccount = MOCK_ACCOUNTS.find((a) => a.id === selectedAccountId);
 
   const canSave = amount.length > 0 && payee.length > 0;
 
   const handleSave = useCallback(() => {
-    // Will wire to createTransaction() once data layer is connected
+    const cents = Math.round(parseFloat(amount) * 100);
+    if (isNaN(cents) || cents <= 0) return;
+    const signedAmount = amountMode === 'outflow' ? -cents : cents;
+
+    createTransaction(
+      {
+        account_id: selectedAccountId,
+        date,
+        payee,
+        memo: memo || null,
+        amount: signedAmount,
+        is_cleared: false,
+      },
+      selectedCategoryId,
+    );
     router.back();
-  }, [router]);
+  }, [router, amount, amountMode, selectedAccountId, date, payee, memo, selectedCategoryId, createTransaction]);
 
   return (
     <ScrollView
@@ -107,7 +105,7 @@ export default function AddTransactionScreen() {
       {/* Account picker */}
       <Text variant="caption" style={styles.fieldLabel}>Account</Text>
       <View style={styles.chipRow}>
-        {MOCK_ACCOUNTS.map((acc) => (
+        {accounts.map((acc) => (
           <Pressable
             key={acc.id}
             onPress={() => setSelectedAccountId(acc.id)}
@@ -132,7 +130,7 @@ export default function AddTransactionScreen() {
       {/* Category picker */}
       <Text variant="caption" style={styles.fieldLabel}>Category</Text>
       <View style={styles.chipRow}>
-        {MOCK_CATEGORIES.map((cat) => (
+        {categories.map((cat) => (
           <Pressable
             key={cat.id}
             onPress={() => setSelectedCategoryId(cat.id)}

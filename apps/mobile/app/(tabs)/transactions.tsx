@@ -1,76 +1,16 @@
-import React, { useState } from 'react';
+import React, { useMemo } from 'react';
 import { SectionList, View, Pressable, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Text, Card, colors, spacing } from '@mybudget/ui';
 import type { Transaction } from '@mybudget/shared';
 import { formatCents } from '@mybudget/shared';
 import { TransactionRow } from '../../components/TransactionRow';
+import { useTransactions, useCategories } from '../../hooks';
 
 interface TransactionDisplay {
   transaction: Transaction;
   categoryName?: string;
 }
-
-/**
- * Mock data for development. Will be replaced with SQLite queries.
- */
-const MOCK_TRANSACTIONS: TransactionDisplay[] = [
-  {
-    transaction: {
-      id: 't1', account_id: 'a1', date: '2026-02-22', payee: 'Whole Foods',
-      memo: null, amount: -8523, is_cleared: true, is_transfer: false,
-      transfer_id: null, created_at: '', updated_at: '',
-    },
-    categoryName: 'Groceries',
-  },
-  {
-    transaction: {
-      id: 't2', account_id: 'a1', date: '2026-02-21', payee: 'Netflix',
-      memo: null, amount: -1599, is_cleared: true, is_transfer: false,
-      transfer_id: null, created_at: '', updated_at: '',
-    },
-    categoryName: 'Entertainment',
-  },
-  {
-    transaction: {
-      id: 't3', account_id: 'a1', date: '2026-02-21', payee: 'Acme Corp',
-      memo: 'Paycheck', amount: 325000, is_cleared: true, is_transfer: false,
-      transfer_id: null, created_at: '', updated_at: '',
-    },
-    categoryName: 'Income',
-  },
-  {
-    transaction: {
-      id: 't4', account_id: 'a1', date: '2026-02-20', payee: 'Shell Gas Station',
-      memo: null, amount: -4800, is_cleared: false, is_transfer: false,
-      transfer_id: null, created_at: '', updated_at: '',
-    },
-    categoryName: 'Transportation',
-  },
-  {
-    transaction: {
-      id: 't5', account_id: 'a1', date: '2026-02-20', payee: 'Transfer to Savings',
-      memo: null, amount: -50000, is_cleared: true, is_transfer: true,
-      transfer_id: 't5b', created_at: '', updated_at: '',
-    },
-  },
-  {
-    transaction: {
-      id: 't6', account_id: 'a1', date: '2026-02-19', payee: 'Chipotle',
-      memo: null, amount: -1245, is_cleared: true, is_transfer: false,
-      transfer_id: null, created_at: '', updated_at: '',
-    },
-    categoryName: 'Dining Out',
-  },
-  {
-    transaction: {
-      id: 't7', account_id: 'a1', date: '2026-02-18', payee: 'Landlord',
-      memo: 'Feb rent', amount: -200000, is_cleared: true, is_transfer: false,
-      transfer_id: null, created_at: '', updated_at: '',
-    },
-    categoryName: 'Rent',
-  },
-];
 
 interface Section {
   title: string;
@@ -115,7 +55,23 @@ function formatSectionDate(dateStr: string): string {
 
 export default function TransactionsScreen() {
   const router = useRouter();
-  const sections = groupByDate(MOCK_TRANSACTIONS);
+  const { transactions: txData } = useTransactions();
+  const { categoryMap } = useCategories();
+
+  const displayItems: TransactionDisplay[] = useMemo(() => {
+    return txData.map(({ transaction, splits }) => {
+      const catId = splits.length > 0 ? splits[0].category_id : null;
+      const cat = catId ? categoryMap.get(catId) : null;
+      const categoryName = transaction.is_transfer
+        ? undefined
+        : transaction.amount > 0
+          ? 'Income'
+          : cat?.name;
+      return { transaction, categoryName };
+    });
+  }, [txData, categoryMap]);
+
+  const sections = groupByDate(displayItems);
 
   return (
     <View style={styles.container}>

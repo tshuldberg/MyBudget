@@ -1,31 +1,10 @@
 import React, { useState } from 'react';
 import { ScrollView, View, Pressable, StyleSheet } from 'react-native';
 import { Text, Card, ProgressBar, colors, spacing, typography } from '@mybudget/ui';
-import { formatCents } from '@mybudget/shared';
+import { formatCents, currentMonth } from '@mybudget/shared';
+import { useReports } from '../../hooks';
 
 type TimePeriod = 'month' | 'quarter' | 'year';
-
-/**
- * Mock data for development. Will be replaced with real calculations.
- */
-const MOCK_SPENDING_BY_CATEGORY = [
-  { name: 'Rent', emoji: '🏠', amount: 200000, percent: 52 },
-  { name: 'Groceries', emoji: '🛒', amount: 42500, percent: 11 },
-  { name: 'Dining Out', emoji: '🍕', amount: 28500, percent: 7 },
-  { name: 'Subscriptions', emoji: '🔄', amount: 24997, percent: 7 },
-  { name: 'Entertainment', emoji: '🎮', amount: 15000, percent: 4 },
-  { name: 'Utilities', emoji: '⚡', amount: 11200, percent: 3 },
-  { name: 'Shopping', emoji: '🛍️', amount: 7500, percent: 2 },
-  { name: 'Other', emoji: '📦', amount: 53803, percent: 14 },
-];
-
-const MOCK_SUMMARY = {
-  totalIncome: 450000,
-  totalSpending: 383500,
-  netSavings: 66500,
-  subscriptionMonthly: 4997,
-  subscriptionAnnual: 59964,
-};
 
 function PeriodToggle({
   period,
@@ -65,6 +44,8 @@ function PeriodToggle({
 
 export default function ReportsScreen() {
   const [period, setPeriod] = useState<TimePeriod>('month');
+  const month = currentMonth();
+  const reportData = useReports(month);
 
   return (
     <ScrollView
@@ -79,14 +60,14 @@ export default function ReportsScreen() {
           <View style={styles.overviewItem}>
             <Text variant="caption">Income</Text>
             <Text variant="currency" style={styles.incomeAmount}>
-              {formatCents(MOCK_SUMMARY.totalIncome)}
+              {formatCents(reportData.totalIncome)}
             </Text>
           </View>
           <View style={styles.overviewDivider} />
           <View style={styles.overviewItem}>
             <Text variant="caption">Spending</Text>
             <Text variant="currency" style={styles.spendingAmount}>
-              {formatCents(MOCK_SUMMARY.totalSpending)}
+              {formatCents(reportData.totalSpending)}
             </Text>
           </View>
         </View>
@@ -96,10 +77,10 @@ export default function ReportsScreen() {
             variant="currency"
             style={[
               styles.savingsAmount,
-              MOCK_SUMMARY.netSavings >= 0 ? styles.positive : styles.negative,
+              reportData.netSavings >= 0 ? styles.positive : styles.negative,
             ]}
           >
-            {MOCK_SUMMARY.netSavings >= 0 ? '+' : ''}{formatCents(MOCK_SUMMARY.netSavings)}
+            {reportData.netSavings >= 0 ? '+' : ''}{formatCents(reportData.netSavings)}
           </Text>
         </View>
       </Card>
@@ -107,7 +88,7 @@ export default function ReportsScreen() {
       {/* Spending by category */}
       <Text variant="caption" style={styles.sectionHeader}>SPENDING BY CATEGORY</Text>
       <Card style={styles.categoryCard}>
-        {MOCK_SPENDING_BY_CATEGORY.map((cat, index) => (
+        {reportData.spendingByCategory.map((cat, index) => (
           <View key={cat.name}>
             {index > 0 && <View style={styles.divider} />}
             <View style={styles.categoryRow}>
@@ -138,12 +119,12 @@ export default function ReportsScreen() {
       <Card>
         <View style={styles.subRow}>
           <Text variant="body">Monthly</Text>
-          <Text variant="currency">{formatCents(MOCK_SUMMARY.subscriptionMonthly)}</Text>
+          <Text variant="currency">{formatCents(reportData.subscriptionMonthly)}</Text>
         </View>
         <View style={styles.divider} />
         <View style={styles.subRow}>
           <Text variant="body">Annual Projection</Text>
-          <Text variant="currency">{formatCents(MOCK_SUMMARY.subscriptionAnnual)}</Text>
+          <Text variant="currency">{formatCents(reportData.subscriptionAnnual)}</Text>
         </View>
       </Card>
     </ScrollView>

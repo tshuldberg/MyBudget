@@ -1,9 +1,10 @@
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
+import { DatabaseProvider } from '../lib/DatabaseProvider';
 
 export default function RootLayout() {
   return (
-    <>
+    <DatabaseProvider>
       <StatusBar style="light" />
       <Stack
         screenOptions={{
@@ -39,6 +40,6 @@ export default function RootLayout() {
         />
         <Stack.Screen name="settings" options={{ title: 'Settings' }} />
       </Stack>
-    </>
+    </DatabaseProvider>
   );
 }

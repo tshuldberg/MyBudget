@@ -3,56 +3,9 @@ import { SectionList, View, Pressable, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Text, Card, colors, spacing, typography } from '@mybudget/ui';
 import type { Subscription, SubscriptionSummary } from '@mybudget/shared';
-import { formatCents, calculateSubscriptionSummary } from '@mybudget/shared';
+import { formatCents } from '@mybudget/shared';
 import { SubscriptionRow } from '../../components/SubscriptionRow';
-
-/**
- * Mock data for development. Will be replaced with SQLite queries.
- */
-const MOCK_SUBSCRIPTIONS: Subscription[] = [
-  {
-    id: 's1', name: 'Netflix', price: 1599, currency: 'USD', billing_cycle: 'monthly',
-    custom_days: null, category_id: 'c5', status: 'active', start_date: '2024-01-15',
-    next_renewal: '2026-03-15', trial_end_date: null, cancelled_date: null,
-    notes: null, url: null, icon: '🎬', color: '#E50914', notify_days: 1,
-    catalog_id: 'netflix', sort_order: 0, created_at: '', updated_at: '',
-  },
-  {
-    id: 's2', name: 'Spotify', price: 1099, currency: 'USD', billing_cycle: 'monthly',
-    custom_days: null, category_id: 'c5', status: 'active', start_date: '2023-06-01',
-    next_renewal: '2026-03-01', trial_end_date: null, cancelled_date: null,
-    notes: null, url: null, icon: '🎵', color: '#1DB954', notify_days: 1,
-    catalog_id: 'spotify', sort_order: 1, created_at: '', updated_at: '',
-  },
-  {
-    id: 's3', name: 'iCloud+', price: 299, currency: 'USD', billing_cycle: 'monthly',
-    custom_days: null, category_id: null, status: 'active', start_date: '2022-11-01',
-    next_renewal: '2026-03-01', trial_end_date: null, cancelled_date: null,
-    notes: null, url: null, icon: '☁️', color: null, notify_days: 1,
-    catalog_id: 'icloud', sort_order: 2, created_at: '', updated_at: '',
-  },
-  {
-    id: 's4', name: 'ChatGPT Plus', price: 2000, currency: 'USD', billing_cycle: 'monthly',
-    custom_days: null, category_id: null, status: 'active', start_date: '2025-01-01',
-    next_renewal: '2026-03-01', trial_end_date: null, cancelled_date: null,
-    notes: null, url: null, icon: '🤖', color: null, notify_days: 1,
-    catalog_id: 'chatgpt-plus', sort_order: 3, created_at: '', updated_at: '',
-  },
-  {
-    id: 's5', name: 'Adobe Creative Cloud', price: 5999, currency: 'USD', billing_cycle: 'monthly',
-    custom_days: null, category_id: null, status: 'paused', start_date: '2024-03-01',
-    next_renewal: '2026-04-01', trial_end_date: null, cancelled_date: null,
-    notes: 'Paused while on break', url: null, icon: '🎨', color: '#FF0000',
-    notify_days: 1, catalog_id: 'adobe-cc', sort_order: 4, created_at: '', updated_at: '',
-  },
-  {
-    id: 's6', name: 'Hulu', price: 1799, currency: 'USD', billing_cycle: 'monthly',
-    custom_days: null, category_id: 'c5', status: 'cancelled', start_date: '2024-06-01',
-    next_renewal: '2026-03-01', trial_end_date: null, cancelled_date: '2026-02-01',
-    notes: null, url: null, icon: '📺', color: null, notify_days: 1,
-    catalog_id: 'hulu', sort_order: 5, created_at: '', updated_at: '',
-  },
-];
+import { useSubscriptions } from '../../hooks';
 
 interface Section {
   title: string;
@@ -100,13 +53,10 @@ function CostSummary({ summary }: { summary: SubscriptionSummary }) {
 
 export default function SubscriptionsScreen() {
   const router = useRouter();
-  const summary = useMemo(
-    () => calculateSubscriptionSummary(MOCK_SUBSCRIPTIONS),
-    [],
-  );
+  const { subscriptions, summary } = useSubscriptions();
   const sections = useMemo(
-    () => groupByStatus(MOCK_SUBSCRIPTIONS),
-    [],
+    () => groupByStatus(subscriptions),
+    [subscriptions],
   );
 
   return (

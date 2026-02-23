@@ -4,13 +4,15 @@ import { useRouter } from 'expo-router';
 import { Text, Button, Card, Input, colors, spacing, typography } from '@mybudget/ui';
 import type { ParsedTransaction } from '@mybudget/shared';
 import { formatCents } from '@mybudget/shared';
+import { useAccounts, useTransactions } from '../hooks';
 
 type WizardStep = 'select-file' | 'preview' | 'confirm';
 
 /**
- * Mock parsed data for development. Will be replaced with actual CSV parsing.
+ * Placeholder parsed data until real CSV parsing is integrated.
+ * In production this will come from parsing the selected file.
  */
-const MOCK_PARSED: ParsedTransaction[] = [
+const PLACEHOLDER_PARSED: ParsedTransaction[] = [
   { date: '2026-02-20', payee: 'Whole Foods', memo: null, amount: -8523, rowIndex: 0 },
   { date: '2026-02-19', payee: 'Shell Gas', memo: 'Fuel', amount: -4800, rowIndex: 1 },
   { date: '2026-02-18', payee: 'Acme Corp', memo: 'Paycheck', amount: 325000, rowIndex: 2 },
@@ -27,11 +29,14 @@ function formatDate(dateStr: string): string {
 
 export default function ImportCSVScreen() {
   const router = useRouter();
+  const { accounts } = useAccounts();
+  const { createTransaction } = useTransactions();
   const [step, setStep] = useState<WizardStep>('select-file');
-  const [selectedAccount, setSelectedAccount] = useState('Checking');
+  const [selectedAccountId, setSelectedAccountId] = useState(accounts[0]?.id ?? '');
   const [excludedRows, setExcludedRows] = useState<Set<number>>(new Set());
 
-  const transactions = MOCK_PARSED;
+  const selectedAccount = accounts.find((a) => a.id === selectedAccountId)?.name ?? 'Checking';
+  const transactions = PLACEHOLDER_PARSED;
   const includedCount = transactions.length - excludedRows.size;
 
   const toggleRow = useCallback((rowIndex: number) => {
@@ -47,9 +52,22 @@ export default function ImportCSVScreen() {
   }, []);
 
   const handleImport = useCallback(() => {
-    // Will wire to createTransaction() in bulk once data layer is connected
+    const included = transactions.filter((t) => !excludedRows.has(t.rowIndex));
+    for (const t of included) {
+      createTransaction(
+        {
+          account_id: selectedAccountId,
+          date: t.date,
+          payee: t.payee,
+          memo: t.memo,
+          amount: t.amount,
+          is_cleared: false,
+        },
+        null,
+      );
+    }
     router.back();
-  }, [router]);
+  }, [router, transactions, excludedRows, selectedAccountId, createTransaction]);
 
   if (step === 'select-file') {
     return (

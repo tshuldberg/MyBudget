@@ -4,28 +4,7 @@ import { useRouter } from 'expo-router';
 import { Text, Card, colors, spacing, typography } from '@mybudget/ui';
 import type { Account } from '@mybudget/shared';
 import { formatCents } from '@mybudget/shared';
-
-/**
- * Mock data for development. Will be replaced with SQLite queries.
- */
-const MOCK_ACCOUNTS: Account[] = [
-  {
-    id: 'a1', name: 'Checking', type: 'checking', balance: 352480,
-    sort_order: 0, is_active: true, created_at: '', updated_at: '',
-  },
-  {
-    id: 'a2', name: 'Savings', type: 'savings', balance: 1250000,
-    sort_order: 1, is_active: true, created_at: '', updated_at: '',
-  },
-  {
-    id: 'a3', name: 'Credit Card', type: 'credit_card', balance: -48523,
-    sort_order: 2, is_active: true, created_at: '', updated_at: '',
-  },
-  {
-    id: 'a4', name: 'Cash', type: 'cash', balance: 8500,
-    sort_order: 3, is_active: true, created_at: '', updated_at: '',
-  },
-];
+import { useAccounts } from '../../hooks';
 
 const typeIcons: Record<string, string> = {
   checking: '🏦',
@@ -67,10 +46,10 @@ function AccountRow({ account, onPress }: { account: Account; onPress: () => voi
 
 export default function AccountsScreen() {
   const router = useRouter();
+  const { accounts, totalBalance } = useAccounts();
 
-  const totalBalance = MOCK_ACCOUNTS.reduce((sum, a) => sum + a.balance, 0);
-  const budgetAccounts = MOCK_ACCOUNTS.filter((a) => a.type !== 'credit_card');
-  const creditCards = MOCK_ACCOUNTS.filter((a) => a.type === 'credit_card');
+  const budgetAccounts = accounts.filter((a) => a.type !== 'credit_card');
+  const creditCards = accounts.filter((a) => a.type === 'credit_card');
 
   return (
     <ScrollView

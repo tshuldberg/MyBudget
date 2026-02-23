@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
-import { ScrollView, View, StyleSheet } from 'react-native';
+import React, { useState, useCallback } from 'react';
+import { ScrollView, View, Alert, StyleSheet } from 'react-native';
 import { Text, Card, colors, spacing } from '@mybudget/ui';
+import { initializeDatabase } from '@mybudget/shared';
 import { SettingsRow } from '../components/SettingsRow';
+import { useDatabase } from '../lib/DatabaseProvider';
+import { seedDatabase } from '../lib/seed';
 
 function SectionHeader({ title }: { title: string }) {
   return (
@@ -12,7 +15,34 @@ function SectionHeader({ title }: { title: string }) {
 }
 
 export default function SettingsScreen() {
+  const { db, invalidate } = useDatabase();
   const [appLockEnabled, setAppLockEnabled] = useState(false);
+
+  const handleResetData = useCallback(() => {
+    Alert.alert(
+      'Reset All Data',
+      'This will delete everything and restore the sample data. This cannot be undone.',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Reset',
+          style: 'destructive',
+          onPress: () => {
+            // Drop all tables and recreate
+            db.execute('PRAGMA writable_schema = ON');
+            db.execute("DELETE FROM sqlite_master WHERE type IN ('table', 'index', 'trigger')");
+            db.execute('PRAGMA writable_schema = OFF');
+            db.execute('VACUUM');
+            db.execute('PRAGMA integrity_check');
+            // Re-initialize schema and seed
+            initializeDatabase(db);
+            seedDatabase(db);
+            invalidate();
+          },
+        },
+      ],
+    );
+  }, [db, invalidate]);
 
   return (
     <ScrollView
@@ -53,7 +83,7 @@ export default function SettingsScreen() {
 
       <SectionHeader title="DANGER ZONE" />
       <Card style={styles.section}>
-        <SettingsRow label="Reset All Data" onPress={() => {}} destructive />
+        <SettingsRow label="Reset All Data" onPress={handleResetData} destructive />
       </Card>
     </ScrollView>
   );

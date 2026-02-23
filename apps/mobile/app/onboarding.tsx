@@ -2,6 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { View, Pressable, Animated, StyleSheet, Dimensions } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Text, Button, Input, Card, colors, spacing, typography } from '@mybudget/ui';
+import { useAccounts, useCategories } from '../hooks';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
@@ -24,6 +25,8 @@ const SUGGESTED_CATEGORIES = [
 
 export default function OnboardingScreen() {
   const router = useRouter();
+  const { createAccount } = useAccounts();
+  const { createGroup, createCategory } = useCategories();
   const [step, setStep] = useState<Step>('welcome');
   const [accountName, setAccountName] = useState('Checking');
   const [accountBalance, setAccountBalance] = useState('');
@@ -46,9 +49,27 @@ export default function OnboardingScreen() {
   }, []);
 
   const handleFinish = useCallback(() => {
-    // Will wire to createAccount() + createCategoryGroup() + createCategory()
+    const balanceCents = Math.round(parseFloat(accountBalance || '0') * 100);
+
+    createAccount({
+      name: accountName,
+      type: 'checking',
+      balance: isNaN(balanceCents) ? 0 : balanceCents,
+    });
+
+    const group = createGroup({ name: 'My Budget' });
+
+    const selected = SUGGESTED_CATEGORIES.filter((c) => selectedCategories.has(c.name));
+    for (const cat of selected) {
+      createCategory({
+        group_id: group.id,
+        name: cat.name,
+        emoji: cat.emoji,
+      });
+    }
+
     router.replace('/(tabs)/budget');
-  }, [router]);
+  }, [router, accountName, accountBalance, selectedCategories, createAccount, createGroup, createCategory]);
 
   return (
     <View style={styles.container}>
