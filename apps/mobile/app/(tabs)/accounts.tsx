@@ -1,6 +1,5 @@
 import React from 'react';
-import { ScrollView, View, Pressable, StyleSheet } from 'react-native';
-import { useRouter } from 'expo-router';
+import { ScrollView, View, Pressable, Alert, StyleSheet } from 'react-native';
 import { Text, Card, colors, spacing, typography } from '@mybudget/ui';
 import type { Account } from '@mybudget/shared';
 import { formatCents } from '@mybudget/shared';
@@ -45,8 +44,21 @@ function AccountRow({ account, onPress }: { account: Account; onPress: () => voi
 }
 
 export default function AccountsScreen() {
-  const router = useRouter();
   const { accounts, totalBalance } = useAccounts();
+
+  const handleAccountPress = (account: Account) => {
+    Alert.alert(
+      account.name,
+      `Account details and editing for ${account.name} will be available in an upcoming update.`,
+    );
+  };
+
+  const handleAddAccount = () => {
+    Alert.alert(
+      'Add Account',
+      'Guided account creation is coming soon. For now, accounts are managed through onboarding and sample data.',
+    );
+  };
 
   const budgetAccounts = accounts.filter((a) => a.type !== 'credit_card');
   const creditCards = accounts.filter((a) => a.type === 'credit_card');
@@ -76,7 +88,7 @@ export default function AccountsScreen() {
         {budgetAccounts.map((account, index) => (
           <View key={account.id}>
             {index > 0 && <View style={styles.divider} />}
-            <AccountRow account={account} onPress={() => {}} />
+            <AccountRow account={account} onPress={() => handleAccountPress(account)} />
           </View>
         ))}
       </Card>
@@ -89,7 +101,7 @@ export default function AccountsScreen() {
             {creditCards.map((account, index) => (
               <View key={account.id}>
                 {index > 0 && <View style={styles.divider} />}
-                <AccountRow account={account} onPress={() => {}} />
+                <AccountRow account={account} onPress={() => handleAccountPress(account)} />
               </View>
             ))}
           </Card>
@@ -97,7 +109,7 @@ export default function AccountsScreen() {
       )}
 
       {/* Add account button */}
-      <Pressable style={styles.addBtn} onPress={() => {}}>
+      <Pressable style={styles.addBtn} onPress={handleAddAccount}>
         <Text variant="body" style={styles.addBtnText}>+ Add Account</Text>
       </Pressable>
     </ScrollView>

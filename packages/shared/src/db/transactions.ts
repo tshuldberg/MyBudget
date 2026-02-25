@@ -43,8 +43,10 @@ export function createTransaction(
   const isTransfer = input.is_transfer ?? false;
   const transferId = input.transfer_id ?? null;
 
+  const normalizedSplits = normalizeSplits(txId, input.amount, splits);
+
   // Validate splits sum to transaction amount
-  const splitSum = splits.reduce((sum, s) => sum + s.amount, 0);
+  const splitSum = normalizedSplits.reduce((sum, s) => sum + s.amount, 0);
   if (splitSum !== input.amount) {
     throw new Error(
       `Split amounts (${splitSum}) must equal transaction amount (${input.amount})`,
@@ -58,7 +60,7 @@ export function createTransaction(
       [txId, input.account_id, input.date, input.payee, memo, input.amount, isCleared ? 1 : 0, isTransfer ? 1 : 0, transferId, now, now],
     );
 
-    for (const split of splits) {
+    for (const split of normalizedSplits) {
       db.execute(
         `INSERT INTO transaction_splits (id, transaction_id, category_id, amount, memo)
          VALUES (?, ?, ?, ?, ?)`,
@@ -81,7 +83,7 @@ export function createTransaction(
     updated_at: now,
   };
 
-  const resultSplits: TransactionSplit[] = splits.map((s) => ({
+  const resultSplits: TransactionSplit[] = normalizedSplits.map((s) => ({
     id: s.id,
     transaction_id: txId,
     category_id: s.category_id ?? null,
@@ -140,7 +142,8 @@ export function updateTransaction(
     if (newSplits) {
       // Validate splits if amount was updated
       const txAmount = updates.amount ?? getTransactionAmount(db, id);
-      const splitSum = newSplits.reduce((sum, s) => sum + s.amount, 0);
+      const normalizedSplits = normalizeSplits(id, txAmount, newSplits);
+      const splitSum = normalizedSplits.reduce((sum, s) => sum + s.amount, 0);
       if (splitSum !== txAmount) {
         throw new Error(
           `Split amounts (${splitSum}) must equal transaction amount (${txAmount})`,
@@ -148,7 +151,7 @@ export function updateTransaction(
       }
 
       db.execute(`DELETE FROM transaction_splits WHERE transaction_id = ?`, [id]);
-      for (const split of newSplits) {
+      for (const split of normalizedSplits) {
         db.execute(
           `INSERT INTO transaction_splits (id, transaction_id, category_id, amount, memo)
            VALUES (?, ?, ?, ?, ?)`,
@@ -290,6 +293,24 @@ export function getTotalIncome(
     [`${month}-01`, nextMonth(month) + '-01'],
   );
   return rows[0]?.total ?? 0;
+}
+
+function normalizeSplits(
+  transactionId: string,
+  amount: number,
+  splits: Array<{ id: string } & TransactionSplitInsert>,
+): Array<{ id: string } & TransactionSplitInsert> {
+  if (splits.length > 0) return splits;
+
+  return [
+    {
+      id: `${transactionId}-split-uncategorized`,
+      transaction_id: transactionId,
+      category_id: null,
+      amount,
+      memo: null,
+    },
+  ];
 }
 
 // --- Helpers ---

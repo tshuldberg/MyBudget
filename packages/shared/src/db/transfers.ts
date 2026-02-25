@@ -36,18 +36,24 @@ export function createTransfer(
   const memoValue = memo ?? null;
 
   db.transaction(() => {
-    // Outflow (negative amount)
+    // Insert outflow without transfer_id first to avoid circular FK issues.
     db.execute(
       `INSERT INTO transactions (id, account_id, date, payee, memo, amount, is_cleared, is_transfer, transfer_id, created_at, updated_at)
        VALUES (?, ?, ?, ?, ?, ?, 0, 1, ?, ?, ?)`,
-      [outflowId, fromAccountId, date, 'Transfer', memoValue, -amount, inflowId, now, now],
+      [outflowId, fromAccountId, date, 'Transfer', memoValue, -amount, null, now, now],
     );
 
-    // Inflow (positive amount)
+    // Insert inflow referencing outflow.
     db.execute(
       `INSERT INTO transactions (id, account_id, date, payee, memo, amount, is_cleared, is_transfer, transfer_id, created_at, updated_at)
        VALUES (?, ?, ?, ?, ?, ?, 0, 1, ?, ?, ?)`,
       [inflowId, toAccountId, date, 'Transfer', memoValue, amount, outflowId, now, now],
+    );
+
+    // Update outflow to reference inflow now that inflow exists.
+    db.execute(
+      `UPDATE transactions SET transfer_id = ?, updated_at = ? WHERE id = ?`,
+      [inflowId, now, outflowId],
     );
   });
 

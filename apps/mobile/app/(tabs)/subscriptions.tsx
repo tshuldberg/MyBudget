@@ -59,6 +59,10 @@ export default function SubscriptionsScreen() {
     [subscriptions],
   );
 
+  const handleSubscriptionPress = (id: string) => {
+    router.push(`/subscription-detail?id=${id}`);
+  };
+
   return (
     <View style={styles.container}>
       <SectionList
@@ -77,7 +81,7 @@ export default function SubscriptionsScreen() {
             {index > 0 && <View style={styles.divider} />}
             <SubscriptionRow
               subscription={item}
-              onPress={() => {}}
+              onPress={handleSubscriptionPress}
             />
           </Card>
         )}
