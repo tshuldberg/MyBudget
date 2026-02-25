@@ -1,6 +1,6 @@
 # AGENTS.md
 
-Project-specific agent instructions for "/Users/trey/Desktop/Apps/MyLife/MyBudget".
+Project-specific agent instructions for `/Users/trey/Desktop/Apps/MyLife/MyBudget`.
 
 ## Instruction Pair (Critical)
 
@@ -23,11 +23,11 @@ Project-specific agent instructions for "/Users/trey/Desktop/Apps/MyLife/MyBudge
 ## Skills Availability
 
 - Skills are sourced from the global Codex skills directory: `/Users/trey/.codex/skills`.
-- App-local skills may also exist under `.claude/skills/` when present.
 - Verified on 2026-02-24: 67 skills with `SKILL.md` are available (including `.system/*` skills).
 - Verify current availability with:
   - `find /Users/trey/.codex/skills -maxdepth 3 -name 'SKILL.md' | wc -l`
   - `find /Users/trey/.codex/skills -maxdepth 3 -name 'SKILL.md'`
+- Do not assume `.claude/skills` exists in this repo unless explicitly added later.
 
 ## Plugins / MCP Availability
 

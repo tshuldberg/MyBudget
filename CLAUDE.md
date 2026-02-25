@@ -24,11 +24,11 @@ Privacy-first envelope budgeting app with integrated subscription tracking. Merg
 
 ## Agent Instructions and Tooling
 
-- Persistent agent instructions are stored in both AGENTS.md and CLAUDE.md. Keep them in sync when rules change.
-- Global Codex skills are sourced from /Users/trey/.codex/skills (67 skills verified on 2026-02-24).
-- In-repo skill snapshot is tracked in .claude/skills-available.md.
-- Plugin/MCP availability and re-verification steps are tracked in .claude/plugins.md.
-- Local execution allow-list settings live in .claude/settings.local.json.
+- Persistent agent instructions are stored in both `AGENTS.md` and `CLAUDE.md`. Keep them in sync when rules change.
+- Global Codex skills are sourced from `/Users/trey/.codex/skills` (67 skills verified on 2026-02-24).
+- In-repo skill snapshot is tracked in `.claude/skills-available.md`.
+- Plugin/MCP availability and re-verification steps are tracked in `.claude/plugins.md`.
+- Local execution allow-list settings live in `.claude/settings.local.json`.
 
 ## Key Commands
 
