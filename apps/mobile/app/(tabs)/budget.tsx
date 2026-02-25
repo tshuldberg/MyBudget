@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ScrollView, View, StyleSheet } from 'react-native';
+import { ScrollView, View, Alert, StyleSheet } from 'react-native';
 import { Text, colors, spacing } from '@mybudget/ui';
 import { currentMonth, formatCents, parseMonth } from '@mybudget/shared';
 import { BudgetHeader } from '../../components/BudgetHeader';
@@ -15,6 +15,20 @@ function stepMonth(month: string, delta: number): string {
 export default function BudgetScreen() {
   const [month, setMonth] = useState(currentMonth);
   const budgetState = useBudget(month);
+
+  const handleCategoryPress = (categoryId: string) => {
+    Alert.alert(
+      'Category Details',
+      `Detailed category view for ${categoryId} is coming soon.`,
+    );
+  };
+
+  const handleCategoryLongPress = (categoryId: string) => {
+    Alert.alert(
+      'Quick Action',
+      `Quick budget actions for ${categoryId} will be available soon.`,
+    );
+  };
 
   return (
     <ScrollView
@@ -42,8 +56,8 @@ export default function BudgetScreen() {
           <CategoryGroupSection
             key={group.groupId}
             group={group}
-            onCategoryPress={() => {}}
-            onCategoryLongPress={() => {}}
+            onCategoryPress={handleCategoryPress}
+            onCategoryLongPress={handleCategoryLongPress}
           />
         ))
       )}

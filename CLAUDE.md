@@ -16,6 +16,20 @@ Privacy-first envelope budgeting app with integrated subscription tracking. Merg
 - **Payments:** RevenueCat (IAP), Lemon Squeezy (direct)
 - **Testing:** Vitest
 
+## TypeScript Requirement
+
+- TypeScript-first across all apps and packages in this project.
+- New runtime code should be .ts/.tsx with strict typing and no implicit any.
+- Use .js/.cjs only where required by tooling or platform constraints.
+
+## Agent Instructions and Tooling
+
+- Persistent agent instructions are stored in both `AGENTS.md` and `CLAUDE.md`. Keep them in sync when rules change.
+- Global Codex skills are sourced from `/Users/trey/.codex/skills` (67 skills verified on 2026-02-24).
+- In-repo skill snapshot is tracked in `.claude/skills-available.md`.
+- Plugin/MCP availability and re-verification steps are tracked in `.claude/plugins.md`.
+- Local execution allow-list settings live in `.claude/settings.local.json`.
+
 ## Key Commands
 
 ```bash
@@ -86,6 +100,19 @@ MyBudget/
 - Commit format: Conventional Commits (`feat: add budget engine`, `fix: carry-forward calc`)
 - Squash merge to `main`
 - Update `timeline.md` after completing work
+
+## Context7 — Live Documentation
+
+When writing or modifying code that uses external libraries, automatically use Context7 MCP tools (`resolve-library-id` → `query-docs`) to fetch current documentation instead of relying on training data.
+
+**Pre-resolved library IDs for this project:**
+- Expo: `/expo/expo`
+- Next.js: `/vercel/next.js`
+- Zod: `/colinhacks/zod`
+- Vitest: `/vitest-dev/vitest`
+
+Use when: implementing library APIs, upgrading dependencies, debugging API behavior, writing framework configuration.
+Skip when: pure business logic, editing docs/config with no framework dependency.
 
 ## File Ownership (Parallel Agent Work)
 

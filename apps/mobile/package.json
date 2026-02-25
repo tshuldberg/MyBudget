@@ -8,6 +8,8 @@
     "build": "expo export",
     "ios": "expo run:ios",
     "android": "expo run:android",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "typecheck": "tsc --noEmit",
     "lint": "eslint app/ components/ hooks/",
     "clean": "rm -rf .expo dist .turbo"
@@ -30,7 +32,13 @@
   },
   "devDependencies": {
     "@mybudget/typescript-config": "workspace:*",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
     "@types/react": "^18.3.0",
-    "typescript": "^5.7.0"
+    "@types/react-dom": "^18.3.0",
+    "jsdom": "^28.1.0",
+    "react-dom": "^18.3.0",
+    "typescript": "^5.7.0",
+    "vitest": "^3.0.0"
   }
 }

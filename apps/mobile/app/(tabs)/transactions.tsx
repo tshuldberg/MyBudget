@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { SectionList, View, Pressable, StyleSheet } from 'react-native';
+import { SectionList, View, Pressable, Alert, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Text, Card, colors, spacing } from '@mybudget/ui';
 import type { Transaction } from '@mybudget/shared';
@@ -58,6 +58,13 @@ export default function TransactionsScreen() {
   const { transactions: txData } = useTransactions();
   const { categoryMap } = useCategories();
 
+  const handleTransactionPress = (id: string) => {
+    Alert.alert(
+      'Transaction Details',
+      `Detailed transaction view for ${id} is coming soon.`,
+    );
+  };
+
   const displayItems: TransactionDisplay[] = useMemo(() => {
     return txData.map(({ transaction, splits }) => {
       const catId = splits.length > 0 ? splits[0].category_id : null;
@@ -91,7 +98,7 @@ export default function TransactionsScreen() {
             <TransactionRow
               transaction={item.transaction}
               categoryName={item.categoryName}
-              onPress={() => {}}
+              onPress={handleTransactionPress}
             />
           </Card>
         )}
