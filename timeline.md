@@ -94,6 +94,12 @@
 - `pnpm --filter @mybudget/web test` -> pass
 - `pnpm --filter @mylife/web test:parity` (from MyLife host) -> pass
 
+### Next steps
+- Add a lightweight standalone web smoke test that performs one create flow per entity (envelope, account, transaction, goal) against the live server actions.
+- Introduce route-level tests for `/api/bank/link-token`, `/api/bank/exchange`, and `/api/bank/webhook` to lock in provider validation and failure behavior.
+- Split standalone web data access into a reusable DB helper module so the budget actions and bank routes share one connection/runtime boundary.
+- Mirror any standalone web budget UX/content refinements into MyLife passthrough parity checks so wrapper assertions continue to protect UI drift.
+
 ## 2026-02-26 — Build 1 Bank Sync Runtime + Web API Routes
 
 ### What changed
