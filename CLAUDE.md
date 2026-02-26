@@ -2,7 +2,7 @@
 
 ## Overview
 
-Privacy-first envelope budgeting app with integrated subscription tracking. Merges traditional YNAB-style envelope budgeting with a pre-populated subscription catalog (200+ services), renewal calendar, and cost dashboard. All data stays on-device — zero network calls, no bank connections, no accounts. One-time $4.99 purchase.
+Privacy-first envelope budgeting app with integrated subscription tracking. Merges traditional YNAB-style envelope budgeting with a pre-populated subscription catalog (200+ services), renewal calendar, and cost dashboard. Supports both manual local-only operation and optional secure bank sync when users choose to connect accounts. One-time $4.99 purchase.
 
 ## Stack
 
@@ -21,6 +21,13 @@ Privacy-first envelope budgeting app with integrated subscription tracking. Merg
 - TypeScript-first across all apps and packages in this project.
 - New runtime code should be .ts/.tsx with strict typing and no implicit any.
 - Use .js/.cjs only where required by tooling or platform constraints.
+
+## Standalone/Hub Parity (Critical)
+
+- Standalone `MyBudget` is the canonical product source of truth.
+- The standalone `MyBudget` app and MyLife hub module `modules/budget` must remain feature-identical and behavior-identical.
+- Any product capability (including bank sync, notifications, reports, subscriptions, and schema updates) must ship for both implementations together.
+- Do not treat standalone as experimental while hub lags, or hub as experimental while standalone lags.
 
 ## Agent Instructions and Tooling
 
@@ -80,11 +87,13 @@ MyBudget/
 
 ## Data Model
 
-13 tables total — 9 from budget system, 4 from subscription system:
+18 tables total — 9 from budget system, 4 from subscription system, 5 from bank sync scaffolding:
 
 **Budget tables:** accounts, category_groups, categories, budget_allocations, transactions, transaction_splits, recurring_templates, payee_cache, csv_profiles
 
 **Subscription tables:** subscriptions, price_history, notification_log, preferences
+
+**Bank sync tables:** bank_connections, bank_accounts, bank_transactions_raw, bank_sync_state, bank_webhook_events
 
 **Merge points:**
 - `subscriptions.category_id` → `categories(id)` — subscription spending flows through envelopes
@@ -126,9 +135,14 @@ Skip when: pure business logic, editing docs/config with no framework dependency
 
 ## Important Notes
 
-- Zero network permissions. No analytics. No accounts. No Plaid/Yodlee. Local SQLite only.
+- Bank account sync is an optional user-controlled mode. Manual local-only mode must remain available.
+- No analytics or telemetry.
 - Dark theme only for MVP.
 - Free trial: 7 days full, then read-only.
 - 5 tabs: Budget (home), Transactions, Subscriptions, Reports, Accounts.
 - FSL-1.1-Apache-2.0 license.
 - Subscriptions integrate with the budget system through categories and recurring templates.
+
+
+## Writing Style
+- Do not use em dashes in documents or writing.

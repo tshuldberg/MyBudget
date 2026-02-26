@@ -18,5 +18,8 @@ export * from './subscriptions/index';
 // Catalog
 export * from './catalog/index';
 
+// Bank sync contract
+export * from './bank-sync/index';
+
 // Utils
 export * from './utils/index';
