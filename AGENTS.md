@@ -44,6 +44,12 @@ Project-specific agent instructions for `/Users/trey/Desktop/Apps/MyLife/MyBudge
   - `openaiDeveloperDocs` MCP server tools
 - Canonical inventory lives in `.claude/plugins.md`.
 
+## Agent Teams
+
+- Agent team support is enabled via `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` in MyLife `.claude/settings.json`.
+- Custom agent definitions are available from `/Users/trey/Desktop/Apps/.claude/agents/` and `/Users/trey/Desktop/Apps/MyLife/.claude/agents/`.
+- When spawning teams, assign file ownership zones from CLAUDE.md to prevent edit conflicts.
+- All teammates automatically load CLAUDE.md and AGENTS.md, so critical rules here are enforced team-wide.
 
 ## Writing Style
 - Do not use em dashes in documents or writing.

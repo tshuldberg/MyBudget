@@ -133,6 +133,16 @@ Skip when: pure business logic, editing docs/config with no framework dependency
 | UI + screens | ui-dev | packages/ui/**, apps/mobile/app/(tabs)/**, apps/mobile/components/**, apps/web/** |
 | Tests | tester | **/*.test.ts, **/*.test.tsx, **/*.spec.ts |
 
+## Agent Teams Strategy
+
+When 2+ plans target this project with overlapping scope, use an Agent Team instead of parallel subagents. Custom agent definitions from `/Users/trey/Desktop/Apps/.claude/agents/` and `/Users/trey/Desktop/Apps/MyLife/.claude/agents/`:
+- `plan-executor` -- Execute plan phases with testing and verification
+- `test-writer` -- Write tests without modifying source code
+- `docs-agent` -- Update documentation
+- `reviewer` -- Read-only code review (uses Sonnet)
+
+Agents working in different File Ownership Zones can run in parallel without conflicts. Agents sharing a zone must coordinate via the team task list.
+
 ## Important Notes
 
 - Bank account sync is an optional user-controlled mode. Manual local-only mode must remain available.
