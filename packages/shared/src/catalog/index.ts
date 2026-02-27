@@ -1,10 +1,10 @@
 // Subscription catalog — 200+ pre-populated services with names, prices, icons
 
-export { CatalogEntrySchema, BillingCycleSchema, CatalogCategorySchema } from './types';
-export type { CatalogEntry, BillingCycle, CatalogCategory } from './types';
+export { CatalogEntrySchema, BillingCycleSchema, CatalogCategorySchema, CancellationDifficultySchema } from './types';
+export type { CatalogEntry, BillingCycle, CatalogCategory, CancellationDifficulty } from './types';
 export { CATALOG_ENTRIES, isPopular } from './data';
 
-import type { CatalogEntry, CatalogCategory } from './types';
+import type { CatalogEntry, CatalogCategory, CancellationDifficulty } from './types';
 import { CATALOG_ENTRIES, isPopular } from './data';
 
 /**
@@ -53,4 +53,22 @@ export function getPopularEntries(): CatalogEntry[] {
   return CATALOG_ENTRIES
     .filter(isPopular)
     .sort((a, b) => a.name.localeCompare(b.name));
+}
+
+/**
+ * Get cancellation info for a catalog entry by its ID.
+ * Returns null if the entry is not found.
+ */
+export function getCancellationInfo(catalogId: string): {
+  url: string | undefined;
+  difficulty: CancellationDifficulty | undefined;
+  notes: string | undefined;
+} | null {
+  const entry = CATALOG_ENTRIES.find((e) => e.id === catalogId);
+  if (!entry) return null;
+  return {
+    url: entry.cancellationUrl,
+    difficulty: entry.cancellationDifficulty,
+    notes: entry.cancellationNotes,
+  };
 }

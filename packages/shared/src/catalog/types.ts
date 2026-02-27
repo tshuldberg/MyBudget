@@ -24,6 +24,15 @@ export const CatalogCategorySchema = z.enum([
 
 export type CatalogCategory = z.infer<typeof CatalogCategorySchema>;
 
+export const CancellationDifficultySchema = z.enum([
+  'easy',
+  'medium',
+  'hard',
+  'impossible',
+]);
+
+export type CancellationDifficulty = z.infer<typeof CancellationDifficultySchema>;
+
 export const CatalogEntrySchema = z.object({
   id: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, 'Must be kebab-case'),
   name: z.string().min(1),
@@ -32,6 +41,9 @@ export const CatalogEntrySchema = z.object({
   category: CatalogCategorySchema,
   iconKey: z.string().min(1),
   url: z.string().url().optional(),
+  cancellationUrl: z.string().url().optional(),
+  cancellationDifficulty: CancellationDifficultySchema.optional(),
+  cancellationNotes: z.string().optional(),
 });
 
 export type CatalogEntry = z.infer<typeof CatalogEntrySchema>;

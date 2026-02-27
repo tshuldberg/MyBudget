@@ -75,7 +75,8 @@ MyBudget/
 │   │   ├── src/engine/         # Budget calculation engine
 │   │   ├── src/csv/            # CSV parser and column mapper
 │   │   ├── src/subscriptions/  # Subscription engine, renewal calc, status machine
-│   │   ├── src/catalog/        # 200+ pre-populated subscription catalog
+│   │   ├── src/catalog/        # 200+ pre-populated subscription catalog with cancellation data
+│   │   ├── src/bank-sync/      # Bank sync infrastructure + recurring charge detector
 │   │   └── src/utils/          # Currency formatting, date helpers
 │   ├── ui/                     # Design tokens and shared components
 │   │   ├── src/tokens/         # Colors, spacing, typography
@@ -100,6 +101,10 @@ MyBudget/
 - Subscription creation auto-creates a `recurring_templates` entry
 - Subscription renewal auto-generates a `transactions` entry
 - Monthly subscription totals visible in both Subscriptions tab and Budget tab
+
+**Catalog enhancements:** The 200+ entry subscription catalog includes cancellation URLs, difficulty ratings (easy/medium/hard/impossible), and step-by-step cancellation notes sourced from JustDeleteMe's open-source database.
+
+**Bank-detected subscription discovery:** The `recurring-detector` module in `bank-sync/` analyzes Plaid transaction data to detect recurring charges and suggest them as tracked subscriptions. Pure function with confidence scoring, catalog matching, and dismissed-payee filtering. MyBudget is the sole subscription tracking module in the MyLife suite (MySubs was consolidated into MyBudget).
 
 **Critical rule:** ALL currency amounts stored as integer cents. No floating-point math on money.
 

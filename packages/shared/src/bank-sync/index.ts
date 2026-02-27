@@ -136,6 +136,19 @@ export type {
   BankSyncRuntimeOptions,
 } from './server-runtime';
 
+export {
+  detectRecurringCharges,
+  normalizePayeeName,
+} from './recurring-detector';
+
+export type {
+  DetectedSubscription,
+} from './recurring-detector';
+
+export {
+  getSubscriptionSuggestions,
+} from './subscription-discovery';
+
 export type {
   AwsKmsEncryptInput,
   AwsKmsDecryptInput,
