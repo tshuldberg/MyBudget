@@ -60,11 +60,20 @@ describe('MyBudget data pipeline: user data add/retrieve behavior', () => {
   beforeEach(() => {
     db = createSqliteAdapter();
     const result = initializeDatabase(db);
-    expect(result.version).toBe(1);
-    expect(result.migrationsApplied).toBe(1);
+    expect(result.version).toBe(2);
+    expect(result.migrationsApplied).toBe(2);
 
     const secondRun = initializeDatabase(db);
     expect(secondRun.migrationsApplied).toBe(0);
+  });
+
+  it('creates bank sync scaffolding tables', () => {
+    const rows = db.query<{ name: string }>(
+      `SELECT name FROM sqlite_master
+       WHERE type = 'table'
+         AND name IN ('bank_connections', 'bank_accounts', 'bank_transactions_raw', 'bank_sync_state', 'bank_webhook_events')`,
+    );
+    expect(rows).toHaveLength(5);
   });
 
   it('stores accounts, retrieves active lists, and archives accounts from active view', () => {

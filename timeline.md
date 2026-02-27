@@ -70,3 +70,64 @@
 - Subscription engine: 81 tests (renewal calc, cost normalization, status machine, catalog)
 - Budget cycle integration: 12 tests (full lifecycle)
 - Subscription lifecycle integration: 10 tests (full lifecycle)
+
+## 2026-02-26 — Restored Standalone Web Rich Budget UI
+
+### What changed
+- Replaced standalone web placeholder page with the full rich budget workspace UI in `apps/web/app/page.tsx`.
+- Added standalone web server actions in `apps/web/app/actions.ts` for envelopes, accounts, transactions, and goals:
+  - list/create/update/archive/restore/delete for envelopes and accounts
+  - list/create/update/delete for transactions
+  - list/create/update/delete for goals
+- Added local standalone SQLite backing for web actions using `better-sqlite3`:
+  - creates `bg_envelopes`, `bg_accounts`, `bg_transactions`, and `bg_goals`
+  - applies indexes and seeds initial account/envelope records
+  - persists DB at `apps/web/.data/mybudget-web.sqlite` (from app working directory)
+- Updated standalone web dependencies in `apps/web/package.json`:
+  - `better-sqlite3`
+  - `@types/better-sqlite3`
+- Updated web test to validate rich interface load behavior instead of placeholder content:
+  - `apps/web/test/landing-interface.test.tsx`
+
+### Verification
+- `pnpm --filter @mybudget/web typecheck` -> pass
+- `pnpm --filter @mybudget/web test` -> pass
+- `pnpm --filter @mylife/web test:parity` (from MyLife host) -> pass
+
+### Next steps
+- Add a lightweight standalone web smoke test that performs one create flow per entity (envelope, account, transaction, goal) against the live server actions.
+- Introduce route-level tests for `/api/bank/link-token`, `/api/bank/exchange`, and `/api/bank/webhook` to lock in provider validation and failure behavior.
+- Split standalone web data access into a reusable DB helper module so the budget actions and bank routes share one connection/runtime boundary.
+- Mirror any standalone web budget UX/content refinements into MyLife passthrough parity checks so wrapper assertions continue to protect UI drift.
+
+## 2026-02-26 — Build 1 Bank Sync Runtime + Web API Routes
+
+### What changed
+- Implemented shared bank-sync runtime and cloud adapter layer in `packages/shared/src/bank-sync/`:
+  - runtime bootstrap with env-driven KMS and webhook secret providers
+  - AWS/GCP adapter shims for KMS and secret-manager integrations
+  - webhook verification strategy plumbing and audit logging
+  - provider contract exports (`BANK_SYNC_PROVIDERS`, `BANK_SYNC_IMPLEMENTED_PROVIDERS`)
+- Added standalone web bank API routes in `apps/web/app/api/bank/`:
+  - `POST /api/bank/link-token`
+  - `POST /api/bank/exchange`
+  - `POST /api/bank/webhook`
+- Hardened provider validation so unimplemented providers return explicit `400` errors instead of silent fallback or generic `500`.
+- Added provider contract tests in `packages/shared/src/bank-sync/__tests__/types.test.ts`.
+- Mirrored bank-sync package and route parity into MyLife (`modules/budget/src/bank-sync` and `apps/web/app/api/bank`) during the same session.
+
+### Verification
+- `pnpm --filter @mybudget/shared test` -> pass (231 tests)
+- `pnpm --filter @mybudget/shared typecheck` -> pass
+- `pnpm --filter @mybudget/web typecheck` -> pass
+- `pnpm --filter @mybudget/web test` -> pass
+- `pnpm --filter @mylife/budget test` -> pass (47 tests)
+- `pnpm --filter @mylife/budget typecheck` -> pass
+- `pnpm --filter @mylife/web typecheck` -> pass
+- `pnpm check:module-parity` (MyLife) -> pass (existing deferred-module warnings unchanged)
+
+### Next steps
+- Implement Plaid-native webhook verification (JWT + `webhook_verification_key/get`) and remove placeholder shared-secret assumptions for direct Plaid webhook traffic.
+- Add auth/authorization guards to all bank API routes so link token, token exchange, and sync actions are tied to authenticated user identity.
+- Replace in-memory connector/token stores with persistent encrypted storage and add webhook idempotency keys to prevent duplicate event processing.
+- Add route-level tests for bank API handlers (invalid provider/auth/webhook verification/failure paths) in both standalone and hub web codepaths.

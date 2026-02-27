@@ -10,7 +10,13 @@
  * and better-sqlite3 (web) can implement it.
  */
 
-import { ALL_TABLES, CREATE_INDEXES, SCHEMA_VERSION } from './schema';
+import {
+  BANK_SYNC_INDEXES,
+  BANK_SYNC_TABLES,
+  CORE_INDEXES,
+  CORE_TABLES,
+  SCHEMA_VERSION,
+} from './schema';
 
 /**
  * Minimal database adapter interface.
@@ -32,18 +38,27 @@ export interface Migration {
 }
 
 /**
- * Migration 1: Initial schema — all 13 tables + indexes.
+ * Migration 1: Initial schema bootstrap.
  */
 const migration001: Migration = {
   version: 1,
-  description: 'Initial schema — 13 tables with indexes',
-  statements: [...ALL_TABLES, ...CREATE_INDEXES],
+  description: 'Initial schema bootstrap',
+  statements: [...CORE_TABLES, ...CORE_INDEXES],
+};
+
+/**
+ * Migration 2: Add bank sync scaffolding tables and indexes.
+ */
+const migration002: Migration = {
+  version: 2,
+  description: 'Bank sync scaffolding tables and indexes',
+  statements: [...BANK_SYNC_TABLES, ...BANK_SYNC_INDEXES],
 };
 
 /**
  * All migrations in order. Add new migrations here.
  */
-export const MIGRATIONS: Migration[] = [migration001];
+export const MIGRATIONS: Migration[] = [migration001, migration002];
 
 /**
  * The preference key used to track schema version.

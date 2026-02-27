@@ -20,6 +20,14 @@ Project-specific agent instructions for `/Users/trey/Desktop/Apps/MyLife/MyBudge
 - For new product/runtime code, prefer .ts/.tsx over .js/.jsx.
 - Use JavaScript only when a toolchain file requires it (for example Babel or Metro config).
 
+## Standalone/Hub Parity (Critical)
+
+- Standalone `MyBudget` is the canonical product source of truth.
+- The standalone `MyBudget` app and MyLife hub module `modules/budget` must remain feature-identical and behavior-identical.
+- Do not ship module-only or standalone-only capabilities, schema changes, workflows, or settings.
+- When a parity-impacting change is made, update both codebases and both instruction pairs (`AGENTS.md` + `CLAUDE.md`) in the same session.
+- Bank account sync is supported as an optional user-controlled capability; manual/local workflows must still work when sync is disabled.
+
 ## Skills Availability
 
 - Skills are sourced from the global Codex skills directory: `/Users/trey/.codex/skills`.
@@ -35,3 +43,7 @@ Project-specific agent instructions for `/Users/trey/Desktop/Apps/MyLife/MyBudge
   - `figma` MCP server (authenticated user: `trey.shuldberg@gmail.com`)
   - `openaiDeveloperDocs` MCP server tools
 - Canonical inventory lives in `.claude/plugins.md`.
+
+
+## Writing Style
+- Do not use em dashes in documents or writing.

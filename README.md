@@ -1,8 +1,8 @@
 # MyBudget
 
-**Budget without giving away your bank password.**
+**Budget with privacy-first controls and optional secure account sync.**
 
-A privacy-first envelope budgeting app with integrated subscription tracking. All financial data stays on your device — no bank connections, no Plaid, no cloud sync, no accounts. Manual transaction entry with smart autocomplete, CSV import, and a pre-populated catalog of 200+ subscription services.
+A privacy-first envelope budgeting app with integrated subscription tracking. Users can run fully local/manual workflows or optionally enable secure, consent-based bank account sync. Includes manual transaction entry with smart autocomplete, CSV import, and a pre-populated catalog of 200+ subscription services.
 
 ## Features
 
@@ -11,7 +11,7 @@ A privacy-first envelope budgeting app with integrated subscription tracking. Al
 - **CSV Import** — Import bank statements with saved column mapping profiles.
 - **Smart Autocomplete** — Learns payee-to-category mappings after 3+ entries.
 - **Reports** — Budget vs Actual, spending by category, income vs expenses trends.
-- **Zero Network Calls** — No analytics, no telemetry, no cloud. Your data never leaves your device.
+- **Optional Bank Sync** — Stay fully local/manual, or connect accounts with secure consent-based sync.
 
 ## Tech Stack
 
@@ -78,7 +78,7 @@ MyBudget/
 
 ## Privacy
 
-MyBudget makes **zero network requests**. No analytics, no crash reporting, no telemetry. No account creation. No bank credentials. Your financial data exists only on your device.
+MyBudget defaults to local-first operation and supports an optional secure bank-sync mode when users choose to connect accounts. No analytics or telemetry. No sharing of bank login credentials.
 
 ## License
 

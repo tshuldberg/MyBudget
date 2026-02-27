@@ -1,5 +1,5 @@
 /**
- * SQLite schema for MyBudget — all 13 tables.
+ * SQLite schema for MyBudget — all 18 tables.
  *
  * Currency amounts are stored as INTEGER cents (never floating-point).
  * Dates stored as TEXT in ISO format (YYYY-MM-DD or YYYY-MM).
@@ -180,8 +180,109 @@ CREATE TABLE IF NOT EXISTS preferences (
   value TEXT NOT NULL
 );`;
 
+// -- 14. Bank Connections --
+export const CREATE_BANK_CONNECTIONS = `
+CREATE TABLE IF NOT EXISTS bank_connections (
+  id TEXT PRIMARY KEY NOT NULL,
+  provider TEXT NOT NULL CHECK(provider IN ('plaid', 'mx', 'truelayer', 'tink', 'belvo', 'basiq', 'akoya', 'finicity', 'other')),
+  provider_item_id TEXT NOT NULL,
+  display_name TEXT NOT NULL,
+  institution_id TEXT,
+  institution_name TEXT,
+  status TEXT NOT NULL CHECK(status IN ('active', 'requires_reauth', 'disconnected', 'error')),
+  last_successful_sync TEXT,
+  last_attempted_sync TEXT,
+  error_code TEXT,
+  error_message TEXT,
+  created_at TEXT NOT NULL DEFAULT (datetime('now')),
+  updated_at TEXT NOT NULL DEFAULT (datetime('now')),
+  UNIQUE(provider, provider_item_id)
+);`;
+
+// -- 15. Bank Accounts --
+export const CREATE_BANK_ACCOUNTS = `
+CREATE TABLE IF NOT EXISTS bank_accounts (
+  id TEXT PRIMARY KEY NOT NULL,
+  connection_id TEXT NOT NULL REFERENCES bank_connections(id) ON DELETE CASCADE,
+  provider_account_id TEXT NOT NULL,
+  mask TEXT,
+  name TEXT NOT NULL,
+  official_name TEXT,
+  type TEXT NOT NULL CHECK(type IN ('checking', 'savings', 'credit', 'loan', 'investment', 'other')),
+  subtype TEXT,
+  currency TEXT NOT NULL DEFAULT 'USD',
+  current_balance INTEGER,
+  available_balance INTEGER,
+  local_account_id TEXT REFERENCES accounts(id) ON DELETE SET NULL,
+  is_active INTEGER NOT NULL DEFAULT 1,
+  created_at TEXT NOT NULL DEFAULT (datetime('now')),
+  updated_at TEXT NOT NULL DEFAULT (datetime('now')),
+  UNIQUE(connection_id, provider_account_id)
+);`;
+
+// -- 16. Bank Transactions Raw --
+export const CREATE_BANK_TRANSACTIONS_RAW = `
+CREATE TABLE IF NOT EXISTS bank_transactions_raw (
+  id TEXT PRIMARY KEY NOT NULL,
+  connection_id TEXT NOT NULL REFERENCES bank_connections(id) ON DELETE CASCADE,
+  bank_account_id TEXT NOT NULL REFERENCES bank_accounts(id) ON DELETE CASCADE,
+  provider_transaction_id TEXT NOT NULL,
+  pending_transaction_id TEXT,
+  date_posted TEXT NOT NULL,
+  date_authorized TEXT,
+  payee TEXT,
+  memo TEXT,
+  amount INTEGER NOT NULL,
+  currency TEXT NOT NULL DEFAULT 'USD',
+  raw_category TEXT,
+  raw_json TEXT,
+  is_pending INTEGER NOT NULL DEFAULT 0,
+  synced_at TEXT NOT NULL DEFAULT (datetime('now')),
+  UNIQUE(connection_id, provider_transaction_id)
+);`;
+
+// -- 17. Bank Sync State --
+export const CREATE_BANK_SYNC_STATE = `
+CREATE TABLE IF NOT EXISTS bank_sync_state (
+  connection_id TEXT PRIMARY KEY NOT NULL REFERENCES bank_connections(id) ON DELETE CASCADE,
+  cursor TEXT,
+  last_webhook_cursor TEXT,
+  sync_status TEXT NOT NULL DEFAULT 'idle' CHECK(sync_status IN ('idle', 'running', 'error')),
+  last_successful_sync TEXT,
+  last_attempted_sync TEXT,
+  last_error TEXT,
+  updated_at TEXT NOT NULL DEFAULT (datetime('now'))
+);`;
+
+// -- 18. Bank Webhook Events --
+export const CREATE_BANK_WEBHOOK_EVENTS = `
+CREATE TABLE IF NOT EXISTS bank_webhook_events (
+  id TEXT PRIMARY KEY NOT NULL,
+  provider TEXT NOT NULL,
+  event_id TEXT NOT NULL,
+  event_type TEXT NOT NULL,
+  connection_id TEXT REFERENCES bank_connections(id) ON DELETE SET NULL,
+  payload TEXT NOT NULL,
+  received_at TEXT NOT NULL DEFAULT (datetime('now')),
+  processed_at TEXT,
+  status TEXT NOT NULL DEFAULT 'pending' CHECK(status IN ('pending', 'processed', 'failed', 'ignored')),
+  error_message TEXT,
+  UNIQUE(provider, event_id)
+);`;
+
 // -- Indexes --
-export const CREATE_INDEXES = [
+export const BANK_SYNC_INDEXES = [
+  `CREATE INDEX IF NOT EXISTS idx_bank_connections_status ON bank_connections(status);`,
+  `CREATE INDEX IF NOT EXISTS idx_bank_accounts_connection_id ON bank_accounts(connection_id);`,
+  `CREATE INDEX IF NOT EXISTS idx_bank_accounts_local_account_id ON bank_accounts(local_account_id);`,
+  `CREATE INDEX IF NOT EXISTS idx_bank_transactions_raw_bank_account_date ON bank_transactions_raw(bank_account_id, date_posted DESC);`,
+  `CREATE INDEX IF NOT EXISTS idx_bank_transactions_raw_pending ON bank_transactions_raw(is_pending, date_posted DESC);`,
+  `CREATE INDEX IF NOT EXISTS idx_bank_sync_state_status ON bank_sync_state(sync_status);`,
+  `CREATE INDEX IF NOT EXISTS idx_bank_webhook_events_status_received ON bank_webhook_events(status, received_at DESC);`,
+  `CREATE INDEX IF NOT EXISTS idx_bank_webhook_events_connection_id ON bank_webhook_events(connection_id);`,
+];
+
+export const CORE_INDEXES = [
   `CREATE INDEX IF NOT EXISTS idx_categories_group_id ON categories(group_id);`,
   `CREATE INDEX IF NOT EXISTS idx_budget_allocations_category_month ON budget_allocations(category_id, month);`,
   `CREATE INDEX IF NOT EXISTS idx_transactions_account_id ON transactions(account_id);`,
@@ -202,12 +303,25 @@ export const CREATE_INDEXES = [
   `CREATE INDEX IF NOT EXISTS idx_notification_log_scheduled_for ON notification_log(scheduled_for);`,
 ];
 
+export const CREATE_INDEXES = [
+  ...CORE_INDEXES,
+  ...BANK_SYNC_INDEXES,
+];
+
 /**
  * All table creation statements in dependency order.
  * Tables with foreign keys come after the tables they reference.
  * Note: subscriptions must come before recurring_templates (subscription_id FK).
  */
-export const ALL_TABLES = [
+export const BANK_SYNC_TABLES = [
+  CREATE_BANK_CONNECTIONS,
+  CREATE_BANK_ACCOUNTS,
+  CREATE_BANK_TRANSACTIONS_RAW,
+  CREATE_BANK_SYNC_STATE,
+  CREATE_BANK_WEBHOOK_EVENTS,
+];
+
+export const CORE_TABLES = [
   CREATE_ACCOUNTS,
   CREATE_CATEGORY_GROUPS,
   CREATE_CATEGORIES,
@@ -223,7 +337,12 @@ export const ALL_TABLES = [
   CREATE_PREFERENCES,
 ];
 
+export const ALL_TABLES = [
+  ...CORE_TABLES,
+  ...BANK_SYNC_TABLES,
+];
+
 /**
  * Schema version — increment this when changing the schema.
  */
-export const SCHEMA_VERSION = 1;
+export const SCHEMA_VERSION = 2;
