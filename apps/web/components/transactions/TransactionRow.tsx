@@ -14,18 +14,36 @@ interface Props {
   onDelete: () => void;
 }
 
+function getCategoryIcon(payee: string, catLabel?: string): string {
+  const p = payee.toLowerCase();
+  if (p.includes('food') || p.includes('restaurant') || p.includes('doordash') || p.includes('uber eat')) return '🍽️';
+  if (p.includes('gas') || p.includes('chevron') || p.includes('shell')) return '⛽';
+  if (p.includes('grocery') || p.includes('albertson') || p.includes('trader') || p.includes('whole food')) return '🛒';
+  if (p.includes('amazon')) return '📦';
+  if (p.includes('netflix') || p.includes('spotify') || p.includes('disney') || p.includes('hulu')) return '🎬';
+  if (p.includes('transfer')) return '🔄';
+  if (catLabel) {
+    const emoji = catLabel.match(/^\p{Emoji}/u);
+    if (emoji) return emoji[0];
+  }
+  return '💳';
+}
+
 export function TransactionRow({ txn, accountName, categoryLabel, onEdit, onDelete }: Props) {
   const { transaction } = txn;
+  const isPending = !transaction.is_cleared;
 
   return (
     <div className={styles.row}>
-      <div
-        className={`${styles.clearedDot} ${transaction.is_cleared ? styles.cleared : ''}`}
-        title={transaction.is_cleared ? 'Cleared' : 'Uncleared'}
-      />
+      <div className={styles.iconCircle}>
+        <span>{getCategoryIcon(transaction.payee, categoryLabel)}</span>
+      </div>
 
       <div className={styles.payeeInfo}>
-        <span className={styles.payee}>{transaction.payee}</span>
+        <span className={styles.payee}>
+          {transaction.payee}
+          {isPending && <span className={styles.pendingBadge}>Pending</span>}
+        </span>
         <span className={styles.accountName}>{accountName}</span>
       </div>
 

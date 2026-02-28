@@ -1,5 +1,51 @@
 # MyBudget — Timeline
 
+## 2026-02-27 — Rocket Money-style web app redesign (Phases A-E)
+
+Comprehensive UI/UX overhaul of the Next.js web app to match Rocket Money's fintech design patterns. Based on frame-by-frame analysis of a Rocket Money screen recording. Full comparison report at `docs/REPORT-rocket-money-comparison-2026-02-27.md`.
+
+### Phase A: Dashboard Overhaul
+- Rewrote `apps/web/app/page.tsx` with 3:2 asymmetric grid layout
+- Added personalized greeting ("Good morning/afternoon/evening")
+- Created `CurrentSpendChart` (dual-line recharts AreaChart: this month vs last month cumulative)
+- Created `UpcomingStrip` (7-day calendar strip showing subscription renewals)
+- Added Accounts card with expandable sections (Checking, Card Balance, Net Cash, Savings) and "Sync now" label
+- Recent Transactions with category icon circles and pending badges
+- Added 5 new server actions to `reports.ts`: `fetchDailySpending`, `fetchFrequentSpend`, `fetchSpendingSummary`, `fetchCategoryHistory`, `fetchCategoryTransactions`
+
+### Phase B: Spending Analysis Upgrade
+- Rewrote `apps/web/app/reports/spending/page.tsx` with period tabs and enhanced category table
+- Category table shows % Spend, Change arrows with %, clickable rows
+- Added summary sidebar (Income/Bills/Spending with comparison text)
+- Added Frequent Spend section (top merchants by count with average + total)
+- Created `reports/spending/[categoryId]/page.tsx` drill-down with 12-month bar chart
+
+### Phase C: Recurring/Subscriptions Overhaul
+- Rewrote `apps/web/app/subscriptions/page.tsx` with tab navigation (Upcoming/All Recurring/Calendar)
+- Category-based grouping: Subscriptions, Bills & Utilities, Credit Card Payments
+- Per-group yearly total display
+- Search bar + Sort dropdown (type, amount, due date)
+- Monthly Breakdown sidebar chart (6-month bar chart)
+- Inactive subscriptions toggle
+
+### Phase D: Transaction Enhancements
+- Enhanced `TransactionList.tsx` with per-date spending totals in date headers
+- Enhanced `TransactionRow.tsx` with category icon circles (emoji-based), pending badge
+- Added `getCategoryIcon()` helper mapping payee names to emoji icons
+
+### Phase E: Settings Restructure
+- Rewrote `apps/web/app/settings/page.tsx` with sidebar sub-navigation
+- 6 sections: Profile, Linked Accounts, Notifications, Categories, Transaction Rules, Data
+- Categories management: full CRUD with edit/hide/delete per category, add groups, toggle hidden
+- Transaction Rules: "When payee contains X, assign category Y" with localStorage persistence
+- Notifications: toggle switches for bill reminders, over-budget alerts, weekly digest
+- Linked Accounts: bank/card display with connection status badges
+- Data: import CSV, export JSON, danger zone (reset data)
+
+### Build Verification
+- All 6 Turborepo typecheck tasks passing, zero type errors
+- Fixed 3 type issues: `is_cleared` boolean comparison, `is_hidden` toggle type, recharts Tooltip formatter
+
 ## 2026-02-22 — Project scaffolding + full shared package build
 
 ### Scaffolding

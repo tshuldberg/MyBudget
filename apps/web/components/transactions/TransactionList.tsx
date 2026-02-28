@@ -46,9 +46,20 @@ export function TransactionList({ transactions, accounts, categories, onEdit, on
 
   return (
     <div className={styles.container}>
-      {groups.map((group) => (
+      {groups.map((group) => {
+        const dateTotal = group.items.reduce((s, t) => s + t.transaction.amount, 0);
+        return (
         <div key={group.date} className={styles.dateGroup}>
-          <div className={styles.dateHeader}>{group.label}</div>
+          <div className={styles.dateHeader}>
+            <span>{group.label}</span>
+            <span className={styles.dateTotal}>
+              {dateTotal !== 0 && (
+                <span style={{ color: dateTotal < 0 ? 'var(--color-coral)' : 'var(--color-teal)' }}>
+                  {dateTotal > 0 ? '+' : ''}{(dateTotal / 100).toLocaleString(undefined, { style: 'currency', currency: 'USD' })}
+                </span>
+              )}
+            </span>
+          </div>
           <div className={styles.rows}>
             {group.items.map((txn) => {
               const catId = txn.splits[0]?.category_id;
@@ -65,7 +76,8 @@ export function TransactionList({ transactions, accounts, categories, onEdit, on
             })}
           </div>
         </div>
-      ))}
+        );
+      })}
     </div>
   );
 }

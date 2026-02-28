@@ -1,17 +1,92 @@
+.greeting {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-lg);
+}
+
 .grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 3fr 2fr;
   gap: var(--spacing-lg);
 }
 
 .wide {
-  grid-column: span 2;
+  grid-column: span 1;
 }
 
-.fullWidth {
-  grid-column: 1 / -1;
+.spendCard {
+  grid-column: 1;
 }
 
+.accountsCard {
+  grid-column: 2;
+  grid-row: 1 / 3;
+}
+
+/* Current Spend */
+.spendHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--spacing-md);
+  gap: var(--spacing-md);
+}
+
+.spendAmount {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-top: 4px;
+}
+
+.comparisonBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: var(--font-size-xs);
+  white-space: nowrap;
+}
+
+.badgeNegative {
+  background: rgba(255, 107, 107, 0.12);
+  color: var(--color-coral);
+}
+
+.badgePositive {
+  background: rgba(78, 205, 196, 0.12);
+  color: var(--color-teal);
+}
+
+.chartLegend {
+  display: flex;
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-sm);
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+}
+
+.legendDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.legendDotDashed {
+  width: 16px;
+  height: 0;
+  border-top: 2px dashed var(--text-muted);
+}
+
+/* Card header */
 .cardHeader {
   display: flex;
   align-items: center;
@@ -27,70 +102,117 @@
   letter-spacing: 0.5px;
 }
 
-.heroAmount {
-  font-size: var(--font-size-xxl);
-  font-weight: 700;
-  margin-bottom: var(--spacing-sm);
-}
-
-.perMonth {
-  font-size: var(--font-size-sm);
-  color: var(--text-muted);
-  font-weight: 400;
-}
-
-.subRow {
-  display: flex;
-  gap: var(--spacing-lg);
-}
-
-.subLabel {
-  font-size: var(--font-size-sm);
-  color: var(--text-secondary);
-}
-
-.budgetMini {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-sm);
-  margin-top: var(--spacing-md);
-}
-
-.miniRow {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.miniLabel {
-  font-size: var(--font-size-xs);
-  color: var(--text-secondary);
-}
-
-.renewalList {
-  margin-top: var(--spacing-md);
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-sm);
-}
-
-.renewalHeader {
+.syncLabel {
   display: flex;
   align-items: center;
-  gap: var(--spacing-xs);
+  gap: 4px;
   font-size: var(--font-size-xs);
   color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: color 0.15s;
 }
 
-.renewalRow {
+.syncLabel:hover {
+  color: var(--color-teal);
+}
+
+.viewAll {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.15s;
+}
+
+.viewAll:hover {
+  color: var(--text-primary);
+}
+
+/* Accounts */
+.accountTypeRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(58, 58, 92, 0.3);
+}
+
+.accountTypeRow:last-child {
+  border-bottom: none;
+}
+
+.accountTypeLeft {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.accountTypeIcon {
+  font-size: 18px;
+}
+
+.accountTypeName {
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.accountTypeRight {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.amountNegative {
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--color-coral);
+}
+
+.amountPositive {
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.addBtn {
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.15s;
+}
+
+.addBtn:hover {
+  color: var(--color-teal);
+}
+
+.subAccounts {
+  padding-left: 36px;
+  border-bottom: 1px solid rgba(58, 58, 92, 0.3);
+}
+
+.subAccountRow {
   display: flex;
   justify-content: space-between;
-  font-size: var(--font-size-sm);
+  padding: 6px 0;
+  font-size: var(--font-size-xs);
   color: var(--text-secondary);
 }
 
+.subAccountName {
+  color: var(--text-secondary);
+}
+
+/* Transactions */
 .txnList {
   display: flex;
   flex-direction: column;
@@ -100,12 +222,29 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--spacing-sm) 0;
-  border-bottom: 1px solid rgba(58, 58, 92, 0.5);
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(58, 58, 92, 0.3);
 }
 
 .txnRow:last-child {
   border-bottom: none;
+}
+
+.txnLeft {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.txnIcon {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 50%;
+  font-size: 16px;
 }
 
 .txnInfo {
@@ -116,25 +255,24 @@
 .txnPayee {
   font-size: var(--font-size-sm);
   font-weight: 500;
+  color: var(--text-primary);
 }
 
-.txnDate {
+.txnMeta {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
   font-size: var(--font-size-xs);
   color: var(--text-muted);
 }
 
-.accountList {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-sm);
-}
-
-.accountRow {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: var(--font-size-sm);
-  padding: var(--spacing-xs) 0;
+.pendingBadge {
+  font-size: 10px;
+  color: var(--color-amber);
+  background: rgba(245, 166, 35, 0.15);
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-weight: 500;
 }
 
 .emptyText {
@@ -144,6 +282,7 @@
   padding: var(--spacing-lg);
 }
 
+/* Skeleton */
 .skeleton {
   height: 32px;
   background: rgba(255, 255, 255, 0.05);
@@ -165,13 +304,15 @@
   50% { opacity: 0.5; }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 960px) {
   .grid {
     grid-template-columns: 1fr;
   }
 
-  .wide,
-  .fullWidth {
+  .spendCard,
+  .accountsCard,
+  .wide {
     grid-column: span 1;
+    grid-row: auto;
   }
 }

@@ -1,58 +1,78 @@
 'use client';
 
 import { useEffect, useState, useCallback } from 'react';
-import { PageHeader } from '../components/layout/PageHeader';
+import { useRouter } from 'next/navigation';
 import { Card } from '../components/ui/Card';
 import { CurrencyDisplay } from '../components/ui/CurrencyDisplay';
-import { ProgressBar } from '../components/ui/ProgressBar';
 import {
   TrendingUp,
   TrendingDown,
-  Wallet,
-  ArrowLeftRight,
+  ArrowUpCircle,
+  ArrowDownCircle,
   RefreshCw,
-  Clock,
+  ChevronDown,
+  ChevronRight,
 } from 'lucide-react';
 import { getNetWorth, fetchAccounts } from './actions/accounts';
-import { fetchBudgetForMonth } from './actions/budget';
 import { fetchRecentTransactions } from './actions/transactions';
 import { fetchUpcomingRenewals, fetchSubscriptionSummary } from './actions/subscriptions';
-import { fetchMonthlySpending } from './actions/reports';
+import { fetchDailySpending } from './actions/reports';
 import { seedDefaultCategories } from './actions/categories';
-import type { MonthBudgetState, Account, TransactionWithSplits, Subscription } from '@mybudget/shared';
-import { MonthlySpendingChart } from '../components/dashboard/MonthlySpendingChart';
+import type { Account, TransactionWithSplits, Subscription } from '@mybudget/shared';
+import { CurrentSpendChart } from '../components/dashboard/CurrentSpendChart';
+import { UpcomingStrip } from '../components/dashboard/UpcomingStrip';
 
 import styles from './page.module.css';
 
+function getGreeting(): string {
+  const hour = new Date().getHours();
+  if (hour < 12) return 'Good morning';
+  if (hour < 17) return 'Good afternoon';
+  return 'Good evening';
+}
+
+function formatCurrency(cents: number): string {
+  const dollars = Math.abs(cents) / 100;
+  const sign = cents < 0 ? '-' : '';
+  return `${sign}$${dollars.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+}
+
+interface DailyData {
+  thisMonth: Array<{ day: number; cumulative: number }>;
+  lastMonth: Array<{ day: number; cumulative: number }>;
+  thisMonthTotal: number;
+  lastMonthTotal: number;
+  comparison: number;
+}
+
 export default function DashboardPage() {
+  const router = useRouter();
   const [netWorth, setNetWorth] = useState({ assets: 0, liabilities: 0, netWorth: 0 });
-  const [budget, setBudget] = useState<MonthBudgetState | null>(null);
   const [accounts, setAccounts] = useState<Account[]>([]);
   const [recentTxns, setRecentTxns] = useState<TransactionWithSplits[]>([]);
   const [upcomingRenewals, setUpcomingRenewals] = useState<Subscription[]>([]);
   const [subSummary, setSubSummary] = useState({ monthlyTotal: 0, annualTotal: 0, activeCount: 0 });
-  const [monthlySpending, setMonthlySpending] = useState<Array<{ month: string; total: number }>>([]);
+  const [dailySpend, setDailySpend] = useState<DailyData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [expandedAccountType, setExpandedAccountType] = useState<string | null>(null);
 
   const load = useCallback(async () => {
     try {
       await seedDefaultCategories();
-      const [nw, bgt, accts, txns, renewals, subSum, spending] = await Promise.all([
+      const [nw, accts, txns, renewals, subSum, daily] = await Promise.all([
         getNetWorth(),
-        fetchBudgetForMonth(),
         fetchAccounts(),
-        fetchRecentTransactions(10),
+        fetchRecentTransactions(8),
         fetchUpcomingRenewals(7),
         fetchSubscriptionSummary(),
-        fetchMonthlySpending(6),
+        fetchDailySpending(),
       ]);
       setNetWorth(nw);
-      setBudget(bgt);
       setAccounts(accts);
       setRecentTxns(txns);
       setUpcomingRenewals(renewals);
       setSubSummary(subSum);
-      setMonthlySpending(spending);
+      setDailySpend(daily);
     } finally {
       setLoading(false);
     }
@@ -62,91 +82,139 @@ export default function DashboardPage() {
 
   if (loading) return <DashboardSkeleton />;
 
-  const accountTypeIcon = (type: string) => {
-    switch (type) {
-      case 'checking': return '🏦';
-      case 'savings': return '🐷';
-      case 'credit_card': return '💳';
-      case 'cash': return '💵';
-      default: return '🏦';
-    }
+  // Group accounts by type
+  const checking = accounts.filter((a) => a.type === 'checking');
+  const savings = accounts.filter((a) => a.type === 'savings');
+  const creditCards = accounts.filter((a) => a.type === 'credit_card');
+  const cash = accounts.filter((a) => a.type === 'cash');
+  const checkingTotal = checking.reduce((s, a) => s + a.balance, 0) + cash.reduce((s, a) => s + a.balance, 0);
+  const cardTotal = creditCards.reduce((s, a) => s + Math.abs(a.balance), 0);
+  const netCash = checkingTotal - cardTotal;
+
+  const comparisonAbs = Math.abs(dailySpend?.comparison ?? 0);
+  const spentMore = (dailySpend?.comparison ?? 0) > 0;
+
+  const categoryIcon = (payee: string): string => {
+    const p = payee.toLowerCase();
+    if (p.includes('food') || p.includes('restaurant') || p.includes('doordash') || p.includes('uber eat')) return '🍽️';
+    if (p.includes('gas') || p.includes('chevron') || p.includes('shell')) return '⛽';
+    if (p.includes('grocery') || p.includes('albertson') || p.includes('trader') || p.includes('whole food')) return '🛒';
+    if (p.includes('amazon')) return '📦';
+    if (p.includes('netflix') || p.includes('spotify') || p.includes('disney') || p.includes('hulu')) return '🎬';
+    if (p.includes('transfer')) return '🔄';
+    return '💳';
   };
 
   return (
     <div className="fade-in">
-      <PageHeader title="Dashboard" subtitle="Your financial overview" />
+      {/* Personalized greeting */}
+      <h1 className={styles.greeting}>{getGreeting()}</h1>
 
       <div className={styles.grid}>
-        {/* Net Worth Card */}
-        <Card className={styles.wide}>
-          <div className={styles.cardHeader}>
-            <span className={styles.cardLabel}>Net Worth</span>
-            {netWorth.netWorth >= 0 ? <TrendingUp size={18} color="var(--color-teal)" /> : <TrendingDown size={18} color="var(--color-coral)" />}
-          </div>
-          <div className={styles.heroAmount}>
-            <CurrencyDisplay amount={netWorth.netWorth} colorize />
-          </div>
-          <div className={styles.subRow}>
-            <span className={styles.subLabel}>Assets: <CurrencyDisplay amount={netWorth.assets} /></span>
-            <span className={styles.subLabel}>Liabilities: <CurrencyDisplay amount={netWorth.liabilities} /></span>
-          </div>
-        </Card>
-
-        {/* Budget Progress Card */}
-        <Card>
-          <div className={styles.cardHeader}>
-            <span className={styles.cardLabel}>Ready to Assign</span>
-            <Wallet size={18} color="var(--color-teal)" />
-          </div>
-          <div className={styles.heroAmount}>
-            <CurrencyDisplay amount={budget?.readyToAssign ?? 0} colorize />
-          </div>
-          {budget && (
-            <div className={styles.budgetMini}>
-              {budget.groups.slice(0, 5).map((g) => (
-                <div key={g.groupId} className={styles.miniRow}>
-                  <span className={styles.miniLabel}>{g.name}</span>
-                  <ProgressBar
-                    value={g.allocated > 0 ? Math.round((Math.abs(g.activity) / g.allocated) * 100) : 0}
-                    size="sm"
-                  />
-                </div>
-              ))}
-            </div>
-          )}
-        </Card>
-
-        {/* Subscription Alert Card */}
-        <Card>
-          <div className={styles.cardHeader}>
-            <span className={styles.cardLabel}>Subscriptions</span>
-            <RefreshCw size={18} color="var(--color-amber)" />
-          </div>
-          <div className={styles.heroAmount}>
-            <CurrencyDisplay amount={subSummary.monthlyTotal} />
-            <span className={styles.perMonth}>/mo</span>
-          </div>
-          <div className={styles.subLabel}>{subSummary.activeCount} active subscriptions</div>
-          {upcomingRenewals.length > 0 && (
-            <div className={styles.renewalList}>
-              <div className={styles.renewalHeader}>
-                <Clock size={14} /> Upcoming renewals
+        {/* Current Spend Card - Wide */}
+        <Card className={styles.spendCard}>
+          <div className={styles.spendHeader}>
+            <div>
+              <span className={styles.cardLabel}>Current Spend</span>
+              <div className={styles.spendAmount}>
+                {formatCurrency(dailySpend?.thisMonthTotal ?? 0)}
               </div>
-              {upcomingRenewals.slice(0, 3).map((s) => (
-                <div key={s.id} className={styles.renewalRow}>
-                  <span>{s.icon ?? '💳'} {s.name}</span>
-                  <CurrencyDisplay amount={s.price} />
-                </div>
-              ))}
+            </div>
+            {dailySpend && comparisonAbs > 0 && (
+              <div className={`${styles.comparisonBadge} ${spentMore ? styles.badgeNegative : styles.badgePositive}`}>
+                {spentMore ? <ArrowUpCircle size={14} /> : <ArrowDownCircle size={14} />}
+                <span>
+                  You&apos;ve spent {formatCurrency(comparisonAbs)} {spentMore ? 'more' : 'less'} than last month
+                </span>
+              </div>
+            )}
+          </div>
+          {dailySpend && (
+            <CurrentSpendChart
+              thisMonth={dailySpend.thisMonth}
+              lastMonth={dailySpend.lastMonth}
+            />
+          )}
+          <div className={styles.chartLegend}>
+            <span className={styles.legendItem}>
+              <span className={styles.legendDot} style={{ background: 'var(--color-teal)' }} />
+              This Month
+            </span>
+            <span className={styles.legendItem}>
+              <span className={styles.legendDotDashed} />
+              Last Month
+            </span>
+          </div>
+        </Card>
+
+        {/* Accounts Card */}
+        <Card className={styles.accountsCard}>
+          <div className={styles.cardHeader}>
+            <span className={styles.cardLabel}>Accounts</span>
+            <span className={styles.syncLabel}>
+              <RefreshCw size={12} /> Sync now
+            </span>
+          </div>
+
+          {/* Checking */}
+          <AccountTypeRow
+            label="Checking"
+            icon="🏦"
+            total={checkingTotal}
+            accounts={[...checking, ...cash]}
+            expanded={expandedAccountType === 'checking'}
+            onToggle={() => setExpandedAccountType(expandedAccountType === 'checking' ? null : 'checking')}
+          />
+
+          {/* Card Balance */}
+          <AccountTypeRow
+            label="Card Balance"
+            icon="💳"
+            total={cardTotal}
+            accounts={creditCards}
+            expanded={expandedAccountType === 'cards'}
+            onToggle={() => setExpandedAccountType(expandedAccountType === 'cards' ? null : 'cards')}
+          />
+
+          {/* Net Cash */}
+          <div className={styles.accountTypeRow}>
+            <div className={styles.accountTypeLeft}>
+              <span className={styles.accountTypeIcon}>💰</span>
+              <span className={styles.accountTypeName}>Net Cash</span>
+            </div>
+            <span className={netCash < 0 ? styles.amountNegative : styles.amountPositive}>
+              {formatCurrency(netCash)}
+            </span>
+          </div>
+
+          {/* Savings */}
+          {savings.length > 0 ? (
+            <AccountTypeRow
+              label="Savings"
+              icon="🐷"
+              total={savings.reduce((s, a) => s + a.balance, 0)}
+              accounts={savings}
+              expanded={expandedAccountType === 'savings'}
+              onToggle={() => setExpandedAccountType(expandedAccountType === 'savings' ? null : 'savings')}
+            />
+          ) : (
+            <div className={styles.accountTypeRow}>
+              <div className={styles.accountTypeLeft}>
+                <span className={styles.accountTypeIcon}>🐷</span>
+                <span className={styles.accountTypeName}>Savings</span>
+              </div>
+              <button className={styles.addBtn} onClick={() => router.push('/accounts')}>Add +</button>
             </div>
           )}
         </Card>
 
-        {/* Recent Transactions */}
+        {/* Recent Transactions - Wide */}
         <Card className={styles.wide}>
           <div className={styles.cardHeader}>
             <span className={styles.cardLabel}>Recent Transactions</span>
-            <ArrowLeftRight size={18} color="var(--color-lavender)" />
+            <button className={styles.viewAll} onClick={() => router.push('/transactions')}>
+              View all <ChevronRight size={14} />
+            </button>
           </div>
           {recentTxns.length === 0 ? (
             <div className={styles.emptyText}>No transactions yet</div>
@@ -154,9 +222,15 @@ export default function DashboardPage() {
             <div className={styles.txnList}>
               {recentTxns.map(({ transaction: tx }) => (
                 <div key={tx.id} className={styles.txnRow}>
-                  <div className={styles.txnInfo}>
-                    <span className={styles.txnPayee}>{tx.payee}</span>
-                    <span className={styles.txnDate}>{tx.date}</span>
+                  <div className={styles.txnLeft}>
+                    <span className={styles.txnIcon}>{categoryIcon(tx.payee)}</span>
+                    <div className={styles.txnInfo}>
+                      <span className={styles.txnPayee}>{tx.payee}</span>
+                      <span className={styles.txnMeta}>
+                        {tx.date}
+                        {!tx.is_cleared && <span className={styles.pendingBadge}>Pending</span>}
+                      </span>
+                    </div>
                   </div>
                   <CurrencyDisplay amount={tx.amount} colorize showSign />
                 </div>
@@ -165,44 +239,66 @@ export default function DashboardPage() {
           )}
         </Card>
 
-        {/* Accounts Overview */}
+        {/* Upcoming Strip */}
         <Card>
-          <div className={styles.cardHeader}>
-            <span className={styles.cardLabel}>Accounts</span>
-          </div>
-          {accounts.length === 0 ? (
-            <div className={styles.emptyText}>No accounts yet</div>
-          ) : (
-            <div className={styles.accountList}>
-              {accounts.map((a) => (
-                <div key={a.id} className={styles.accountRow}>
-                  <span>{accountTypeIcon(a.type)} {a.name}</span>
-                  <CurrencyDisplay amount={a.balance} />
-                </div>
-              ))}
-            </div>
-          )}
-        </Card>
-
-        {/* Monthly Spending Chart */}
-        <Card className={styles.fullWidth}>
-          <div className={styles.cardHeader}>
-            <span className={styles.cardLabel}>Spending Trend</span>
-          </div>
-          <MonthlySpendingChart data={monthlySpending} />
+          <UpcomingStrip
+            renewals={upcomingRenewals}
+            onSeeAll={() => router.push('/subscriptions/calendar')}
+          />
         </Card>
       </div>
     </div>
   );
 }
 
+function AccountTypeRow({
+  label,
+  icon,
+  total,
+  accounts,
+  expanded,
+  onToggle,
+}: {
+  label: string;
+  icon: string;
+  total: number;
+  accounts: Account[];
+  expanded: boolean;
+  onToggle: () => void;
+}) {
+  return (
+    <>
+      <div className={styles.accountTypeRow} onClick={onToggle} style={{ cursor: accounts.length > 1 ? 'pointer' : 'default' }}>
+        <div className={styles.accountTypeLeft}>
+          <span className={styles.accountTypeIcon}>{icon}</span>
+          <span className={styles.accountTypeName}>{label}</span>
+        </div>
+        <div className={styles.accountTypeRight}>
+          <span>{formatCurrency(total)}</span>
+          {accounts.length > 1 && (expanded ? <ChevronDown size={14} /> : <ChevronRight size={14} />)}
+        </div>
+      </div>
+      {expanded && accounts.length > 1 && (
+        <div className={styles.subAccounts}>
+          {accounts.map((a) => (
+            <div key={a.id} className={styles.subAccountRow}>
+              <span className={styles.subAccountName}>{a.name}</span>
+              <span>{formatCurrency(a.balance)}</span>
+            </div>
+          ))}
+        </div>
+      )}
+    </>
+  );
+}
+
 function DashboardSkeleton() {
   return (
     <div>
-      <PageHeader title="Dashboard" subtitle="Your financial overview" />
+      <div className={styles.greeting} style={{ opacity: 0.3 }}>Loading...</div>
       <div className={styles.grid}>
-        {[1, 2, 3, 4, 5, 6].map((i) => (
-          <Card key={i} className={i === 1 || i === 4 ? styles.wide : i === 6 ? styles.fullWidth : ''}>
+        {[1, 2, 3, 4].map((i) => (
+          <Card key={i} className={i === 1 || i === 3 ? styles.wide : ''}>
             <div className={styles.skeleton} />
             <div className={styles.skeletonSm} />
           </Card>
