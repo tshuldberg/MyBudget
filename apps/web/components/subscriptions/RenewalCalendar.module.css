@@ -1,0 +1,132 @@
+.calendar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.navBtn:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+}
+
+.monthLabel {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+
+.weekday {
+  text-align: center;
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding-bottom: var(--spacing-sm);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+
+.cell {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: var(--spacing-xs);
+  border-radius: var(--radius-sm);
+  transition: background 0.1s ease;
+}
+
+.cell.hasRenewal {
+  cursor: pointer;
+}
+
+.cell.hasRenewal:hover {
+  background: rgba(78, 205, 196, 0.08);
+}
+
+.today {
+  background: rgba(78, 205, 196, 0.1);
+}
+
+.today .dayNumber {
+  color: var(--color-teal);
+  font-weight: 700;
+}
+
+.dayNumber {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+}
+
+.dot {
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: var(--color-teal);
+  margin-top: 2px;
+}
+
+.tooltip {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: var(--spacing-sm);
+  z-index: 20;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  min-width: 140px;
+}
+
+.tooltipRow {
+  font-size: var(--font-size-xs);
+  color: var(--text-primary);
+  padding: 2px 0;
+}
+
+@media (max-width: 640px) {
+  .cell {
+    min-height: 40px;
+  }
+
+  .dayNumber {
+    font-size: var(--font-size-xs);
+  }
+}

@@ -1,0 +1,19 @@
+.content {
+  margin-left: var(--sidebar-width);
+  min-height: 100vh;
+  padding: var(--spacing-xl);
+}
+
+@media (max-width: 1024px) {
+  .content {
+    margin-left: 64px;
+  }
+}
+
+@media (max-width: 768px) {
+  .content {
+    margin-left: 0;
+    padding: var(--spacing-md);
+    padding-top: 60px; /* space for hamburger */
+  }
+}

@@ -1,0 +1,73 @@
+.filterBar {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+  margin-bottom: var(--spacing-lg);
+}
+
+.searchWrap {
+  flex: 1;
+  min-width: 200px;
+}
+
+.dateGroup {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--spacing-sm);
+}
+
+.dateInput {
+  width: 150px;
+}
+
+.accountSelect {
+  min-width: 160px;
+}
+
+.directionToggle {
+  display: flex;
+  background: var(--bg-background);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.directionBtn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  padding: 8px 14px;
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.directionBtn:hover {
+  color: var(--text-secondary);
+}
+
+.directionBtnActive {
+  background: var(--bg-surface-elevated);
+  color: var(--text-primary);
+}
+
+@media (max-width: 768px) {
+  .filterBar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .dateGroup {
+    flex-direction: column;
+  }
+
+  .dateInput {
+    width: 100%;
+  }
+
+  .accountSelect {
+    width: 100%;
+  }
+}
