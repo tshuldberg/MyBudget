@@ -5,6 +5,7 @@ import { Text, Card, colors, spacing } from '@mybudget/ui';
 import { initializeDatabase } from '@mybudget/shared';
 import { SettingsRow } from '../components/SettingsRow';
 import { useDatabase } from '../lib/DatabaseProvider';
+import { useGoals } from '../hooks';
 import { seedDatabase } from '../lib/seed';
 
 function SectionHeader({ title }: { title: string }) {
@@ -18,6 +19,8 @@ function SectionHeader({ title }: { title: string }) {
 export default function SettingsScreen() {
   const router = useRouter();
   const { db, invalidate } = useDatabase();
+  const { goals } = useGoals();
+  const goalsCount = goals.length;
   const [appLockEnabled, setAppLockEnabled] = useState(false);
 
   const handleResetData = useCallback(() => {
@@ -89,6 +92,11 @@ export default function SettingsScreen() {
         <SettingsRow label="Currency Format" value="USD" onPress={handleCurrencyFormat} />
         <View style={styles.divider} />
         <SettingsRow label="First Day of Week" value="Sunday" onPress={handleFirstDayOfWeek} />
+      </Card>
+
+      <SectionHeader title="FEATURES" />
+      <Card style={styles.section}>
+        <SettingsRow label="Goals" value={`${goalsCount} goal${goalsCount !== 1 ? 's' : ''}`} onPress={() => router.push('/goals')} />
       </Card>
 
       <SectionHeader title="DATA" />

@@ -270,6 +270,31 @@ CREATE TABLE IF NOT EXISTS bank_webhook_events (
   UNIQUE(provider, event_id)
 );`;
 
+// -- 19. Goals --
+export const CREATE_GOALS = `
+CREATE TABLE IF NOT EXISTS goals (
+  id TEXT PRIMARY KEY NOT NULL,
+  name TEXT NOT NULL,
+  target_amount_cents INTEGER NOT NULL,
+  current_amount_cents INTEGER NOT NULL DEFAULT 0,
+  target_date TEXT,
+  category_id TEXT REFERENCES categories(id) ON DELETE SET NULL,
+  created_at TEXT NOT NULL DEFAULT (datetime('now')),
+  updated_at TEXT NOT NULL DEFAULT (datetime('now'))
+);`;
+
+// -- 20. Transaction Rules --
+export const CREATE_TRANSACTION_RULES = `
+CREATE TABLE IF NOT EXISTS transaction_rules (
+  id TEXT PRIMARY KEY NOT NULL,
+  payee_pattern TEXT NOT NULL,
+  match_type TEXT NOT NULL CHECK(match_type IN ('contains', 'exact', 'starts_with')),
+  category_id TEXT NOT NULL REFERENCES categories(id) ON DELETE CASCADE,
+  is_enabled INTEGER NOT NULL DEFAULT 1,
+  priority INTEGER NOT NULL DEFAULT 0,
+  created_at TEXT NOT NULL DEFAULT (datetime('now'))
+);`;
+
 // -- Indexes --
 export const BANK_SYNC_INDEXES = [
   `CREATE INDEX IF NOT EXISTS idx_bank_connections_status ON bank_connections(status);`,
@@ -280,6 +305,13 @@ export const BANK_SYNC_INDEXES = [
   `CREATE INDEX IF NOT EXISTS idx_bank_sync_state_status ON bank_sync_state(sync_status);`,
   `CREATE INDEX IF NOT EXISTS idx_bank_webhook_events_status_received ON bank_webhook_events(status, received_at DESC);`,
   `CREATE INDEX IF NOT EXISTS idx_bank_webhook_events_connection_id ON bank_webhook_events(connection_id);`,
+];
+
+export const GOALS_RULES_INDEXES = [
+  `CREATE INDEX IF NOT EXISTS idx_goals_category_id ON goals(category_id);`,
+  `CREATE INDEX IF NOT EXISTS idx_goals_target_date ON goals(target_date);`,
+  `CREATE INDEX IF NOT EXISTS idx_transaction_rules_is_enabled ON transaction_rules(is_enabled, priority);`,
+  `CREATE INDEX IF NOT EXISTS idx_transaction_rules_category_id ON transaction_rules(category_id);`,
 ];
 
 export const CORE_INDEXES = [
@@ -306,6 +338,7 @@ export const CORE_INDEXES = [
 export const CREATE_INDEXES = [
   ...CORE_INDEXES,
   ...BANK_SYNC_INDEXES,
+  ...GOALS_RULES_INDEXES,
 ];
 
 /**
@@ -337,12 +370,18 @@ export const CORE_TABLES = [
   CREATE_PREFERENCES,
 ];
 
+export const GOALS_RULES_TABLES = [
+  CREATE_GOALS,
+  CREATE_TRANSACTION_RULES,
+];
+
 export const ALL_TABLES = [
   ...CORE_TABLES,
   ...BANK_SYNC_TABLES,
+  ...GOALS_RULES_TABLES,
 ];
 
 /**
  * Schema version — increment this when changing the schema.
  */
-export const SCHEMA_VERSION = 2;
+export const SCHEMA_VERSION = 3;

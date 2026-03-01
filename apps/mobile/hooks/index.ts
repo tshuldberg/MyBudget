@@ -5,3 +5,5 @@ export { useBudget, useAllocate } from './useBudget';
 export { useSubscriptions, useSubscriptionDetail } from './useSubscriptions';
 export { useReports } from './useReports';
 export type { SpendingCategory, ReportData } from './useReports';
+export { useGoals } from './useGoals';
+export type { GoalWithProgress } from './useGoals';

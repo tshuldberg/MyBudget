@@ -39,6 +39,7 @@ export default function RootLayout() {
           options={{ headerShown: false, gestureEnabled: false }}
         />
         <Stack.Screen name="settings" options={{ title: 'Settings' }} />
+        <Stack.Screen name="goals" options={{ title: 'Goals' }} />
       </Stack>
     </DatabaseProvider>
   );

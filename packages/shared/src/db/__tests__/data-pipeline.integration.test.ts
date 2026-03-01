@@ -60,8 +60,8 @@ describe('MyBudget data pipeline: user data add/retrieve behavior', () => {
   beforeEach(() => {
     db = createSqliteAdapter();
     const result = initializeDatabase(db);
-    expect(result.version).toBe(2);
-    expect(result.migrationsApplied).toBe(2);
+    expect(result.version).toBe(3);
+    expect(result.migrationsApplied).toBe(3);
 
     const secondRun = initializeDatabase(db);
     expect(secondRun.migrationsApplied).toBe(0);

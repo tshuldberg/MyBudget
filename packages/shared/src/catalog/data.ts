@@ -16,6 +16,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'entertainment',
     iconKey: 'netflix',
     url: 'https://www.netflix.com',
+    cancellationUrl: 'https://www.netflix.com/cancelplan',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account > Cancel Membership. Access continues until billing period ends.',
   },
   {
     id: 'netflix-premium',
@@ -25,6 +28,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'entertainment',
     iconKey: 'netflix',
     url: 'https://www.netflix.com',
+    cancellationUrl: 'https://www.netflix.com/cancelplan',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account > Cancel Membership. Access continues until billing period ends.',
   },
   {
     id: 'netflix-standard-ads',
@@ -34,6 +40,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'entertainment',
     iconKey: 'netflix',
     url: 'https://www.netflix.com',
+    cancellationUrl: 'https://www.netflix.com/cancelplan',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account > Cancel Membership. Access continues until billing period ends.',
   },
   {
     id: 'spotify-premium',
@@ -43,6 +52,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'entertainment',
     iconKey: 'spotify',
     url: 'https://www.spotify.com',
+    cancellationUrl: 'https://www.spotify.com/account/subscription/',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account > Subscription > Cancel Premium. Reverts to free tier.',
   },
   {
     id: 'spotify-duo',
@@ -52,6 +64,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'entertainment',
     iconKey: 'spotify',
     url: 'https://www.spotify.com',
+    cancellationUrl: 'https://www.spotify.com/account/subscription/',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account > Subscription > Cancel Premium. Reverts to free tier.',
   },
   {
     id: 'spotify-family',
@@ -61,6 +76,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'entertainment',
     iconKey: 'spotify',
     url: 'https://www.spotify.com',
+    cancellationUrl: 'https://www.spotify.com/account/subscription/',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account > Subscription > Cancel Premium. All family members revert to free.',
   },
   {
     id: 'youtube-premium',
@@ -70,6 +88,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'entertainment',
     iconKey: 'youtube',
     url: 'https://www.youtube.com/premium',
+    cancellationUrl: 'https://www.youtube.com/paid_memberships',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Purchases and memberships > Manage membership > Deactivate.',
   },
   {
     id: 'youtube-premium-family',
@@ -79,6 +100,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'entertainment',
     iconKey: 'youtube',
     url: 'https://www.youtube.com/premium',
+    cancellationUrl: 'https://www.youtube.com/paid_memberships',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Purchases and memberships > Manage membership > Deactivate.',
   },
   {
     id: 'youtube-music',
@@ -88,6 +112,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'entertainment',
     iconKey: 'youtube-music',
     url: 'https://music.youtube.com',
+    cancellationUrl: 'https://www.youtube.com/paid_memberships',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Purchases and memberships > Manage membership > Deactivate.',
   },
   {
     id: 'disney-plus',
@@ -97,6 +124,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'entertainment',
     iconKey: 'disney-plus',
     url: 'https://www.disneyplus.com',
+    cancellationUrl: 'https://www.disneyplus.com/account/subscription',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account > Subscription > Cancel Subscription. Access continues until billing period ends.',
   },
   {
     id: 'disney-plus-ads',
@@ -106,6 +136,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'entertainment',
     iconKey: 'disney-plus',
     url: 'https://www.disneyplus.com',
+    cancellationUrl: 'https://www.disneyplus.com/account/subscription',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account > Subscription > Cancel Subscription. Access continues until billing period ends.',
   },
   {
     id: 'hulu',
@@ -115,6 +148,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'entertainment',
     iconKey: 'hulu',
     url: 'https://www.hulu.com',
+    cancellationUrl: 'https://secure.hulu.com/account',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account > Cancel Your Subscription. Access continues until billing period ends.',
   },
   {
     id: 'hulu-no-ads',
@@ -124,6 +160,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'entertainment',
     iconKey: 'hulu',
     url: 'https://www.hulu.com',
+    cancellationUrl: 'https://secure.hulu.com/account',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account > Cancel Your Subscription. Access continues until billing period ends.',
   },
   {
     id: 'hbo-max',
@@ -133,6 +172,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'entertainment',
     iconKey: 'max',
     url: 'https://www.max.com',
+    cancellationUrl: 'https://www.max.com/account/subscription',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Subscription > Cancel Subscription. If subscribed via app store, cancel there.',
   },
   {
     id: 'hbo-max-ads',
@@ -142,6 +184,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'entertainment',
     iconKey: 'max',
     url: 'https://www.max.com',
+    cancellationUrl: 'https://www.max.com/account/subscription',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Subscription > Cancel Subscription. If subscribed via app store, cancel there.',
   },
   {
     id: 'hbo-max-ultimate',
@@ -151,6 +196,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'entertainment',
     iconKey: 'max',
     url: 'https://www.max.com',
+    cancellationUrl: 'https://www.max.com/account/subscription',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Subscription > Cancel Subscription. If subscribed via app store, cancel there.',
   },
   {
     id: 'amazon-prime-video',
@@ -160,6 +208,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'entertainment',
     iconKey: 'prime-video',
     url: 'https://www.amazon.com/primevideo',
+    cancellationUrl: 'https://www.amazon.com/gp/video/settings/subscriptions',
+    cancellationDifficulty: 'medium',
+    cancellationNotes: 'Prime Video > Account & Settings > Channels. If bundled with Prime, cancel the full membership.',
   },
   {
     id: 'apple-tv-plus',
@@ -169,6 +220,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'entertainment',
     iconKey: 'apple-tv',
     url: 'https://tv.apple.com',
+    cancellationUrl: 'https://support.apple.com/en-us/118428',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Apple ID > Subscriptions > Apple TV+ > Cancel. Also works from Apple devices.',
   },
   {
     id: 'apple-music',
@@ -178,6 +232,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'entertainment',
     iconKey: 'apple-music',
     url: 'https://music.apple.com',
+    cancellationUrl: 'https://support.apple.com/en-us/118428',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Apple ID > Subscriptions > Apple Music > Cancel.',
   },
   {
     id: 'apple-music-family',
@@ -187,6 +244,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'entertainment',
     iconKey: 'apple-music',
     url: 'https://music.apple.com',
+    cancellationUrl: 'https://support.apple.com/en-us/118428',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Apple ID > Subscriptions > Apple Music > Cancel.',
   },
   {
     id: 'apple-one-individual',
@@ -196,6 +256,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'entertainment',
     iconKey: 'apple',
     url: 'https://www.apple.com/apple-one',
+    cancellationUrl: 'https://support.apple.com/en-us/118428',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Apple ID > Subscriptions > Apple One > Cancel. Individual services can be kept separately.',
   },
   {
     id: 'apple-one-family',
@@ -205,6 +268,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'entertainment',
     iconKey: 'apple',
     url: 'https://www.apple.com/apple-one',
+    cancellationUrl: 'https://support.apple.com/en-us/118428',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Apple ID > Subscriptions > Apple One > Cancel. Individual services can be kept separately.',
   },
   {
     id: 'apple-one-premier',
@@ -214,6 +280,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'entertainment',
     iconKey: 'apple',
     url: 'https://www.apple.com/apple-one',
+    cancellationUrl: 'https://support.apple.com/en-us/118428',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Apple ID > Subscriptions > Apple One > Cancel. Individual services can be kept separately.',
   },
   {
     id: 'peacock-premium',
@@ -223,6 +292,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'entertainment',
     iconKey: 'peacock',
     url: 'https://www.peacocktv.com',
+    cancellationUrl: 'https://www.peacocktv.com/account/plans',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account > Plans > Cancel Plan. Access continues until billing period ends.',
   },
   {
     id: 'peacock-premium-plus',
@@ -232,6 +304,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'entertainment',
     iconKey: 'peacock',
     url: 'https://www.peacocktv.com',
+    cancellationUrl: 'https://www.peacocktv.com/account/plans',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account > Plans > Cancel Plan. Access continues until billing period ends.',
   },
   {
     id: 'paramount-plus',
@@ -241,6 +316,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'entertainment',
     iconKey: 'paramount-plus',
     url: 'https://www.paramountplus.com',
+    cancellationUrl: 'https://www.paramountplus.com/account/',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account > Cancel Subscription. Access continues until billing period ends.',
   },
   {
     id: 'paramount-plus-premium',
@@ -250,6 +328,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'entertainment',
     iconKey: 'paramount-plus',
     url: 'https://www.paramountplus.com',
+    cancellationUrl: 'https://www.paramountplus.com/account/',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account > Cancel Subscription. Access continues until billing period ends.',
   },
   {
     id: 'discovery-plus',
@@ -259,6 +340,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'entertainment',
     iconKey: 'discovery-plus',
     url: 'https://www.discoveryplus.com',
+    cancellationUrl: 'https://www.discoveryplus.com/account',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account > Subscription > Cancel. Access continues until billing period ends.',
   },
   {
     id: 'crunchyroll',
@@ -268,6 +352,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'entertainment',
     iconKey: 'crunchyroll',
     url: 'https://www.crunchyroll.com',
+    cancellationUrl: 'https://www.crunchyroll.com/account/subscription',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account Settings > Subscription > Cancel. Access continues until billing period ends.',
   },
   {
     id: 'crunchyroll-mega',
@@ -277,6 +364,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'entertainment',
     iconKey: 'crunchyroll',
     url: 'https://www.crunchyroll.com',
+    cancellationUrl: 'https://www.crunchyroll.com/account/subscription',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account Settings > Subscription > Cancel. Access continues until billing period ends.',
   },
   {
     id: 'tidal-hifi',
@@ -286,6 +376,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'entertainment',
     iconKey: 'tidal',
     url: 'https://tidal.com',
+    cancellationUrl: 'https://tidal.com/settings/subscription',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Subscription > Cancel subscription.',
   },
   {
     id: 'tidal-hifi-plus',
@@ -295,6 +388,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'entertainment',
     iconKey: 'tidal',
     url: 'https://tidal.com',
+    cancellationUrl: 'https://tidal.com/settings/subscription',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Subscription > Cancel subscription.',
   },
   {
     id: 'amazon-music-unlimited',
@@ -304,6 +400,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'entertainment',
     iconKey: 'amazon-music',
     url: 'https://music.amazon.com',
+    cancellationUrl: 'https://www.amazon.com/music/settings',
+    cancellationDifficulty: 'medium',
+    cancellationNotes: 'Amazon Music Settings > Cancel subscription. Multiple confirmation steps required.',
   },
   {
     id: 'deezer-premium',
@@ -313,6 +412,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'entertainment',
     iconKey: 'deezer',
     url: 'https://www.deezer.com',
+    cancellationUrl: 'https://www.deezer.com/account/subscription',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account > Manage my subscription > Cancel. Reverts to free tier.',
   },
   {
     id: 'pandora-plus',
@@ -322,6 +424,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'entertainment',
     iconKey: 'pandora',
     url: 'https://www.pandora.com',
+    cancellationUrl: 'https://www.pandora.com/account/manage',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Subscription > Cancel. Reverts to free ad-supported tier.',
   },
   {
     id: 'pandora-premium',
@@ -331,6 +436,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'entertainment',
     iconKey: 'pandora',
     url: 'https://www.pandora.com',
+    cancellationUrl: 'https://www.pandora.com/account/manage',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Subscription > Cancel. Reverts to free ad-supported tier.',
   },
   {
     id: 'siriusxm',
@@ -340,6 +448,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'entertainment',
     iconKey: 'siriusxm',
     url: 'https://www.siriusxm.com',
+    cancellationUrl: 'https://www.siriusxm.com/manage-subscription',
+    cancellationDifficulty: 'hard',
+    cancellationNotes: 'Must call or use live chat to cancel. Retention agents will offer discounts. No self-service online cancellation.',
   },
   {
     id: 'audible-premium',
@@ -349,6 +460,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'entertainment',
     iconKey: 'audible',
     url: 'https://www.audible.com',
+    cancellationUrl: 'https://www.audible.com/account/cancel-membership',
+    cancellationDifficulty: 'medium',
+    cancellationNotes: 'Account Details > Cancel membership. Multiple retention screens. Purchased audiobooks are kept.',
   },
   {
     id: 'audible-plus',
@@ -358,6 +472,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'entertainment',
     iconKey: 'audible',
     url: 'https://www.audible.com',
+    cancellationUrl: 'https://www.audible.com/account/cancel-membership',
+    cancellationDifficulty: 'medium',
+    cancellationNotes: 'Account Details > Cancel membership. Multiple retention screens. Purchased audiobooks are kept.',
   },
   {
     id: 'kindle-unlimited',
@@ -367,6 +484,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'entertainment',
     iconKey: 'kindle',
     url: 'https://www.amazon.com/kindleunlimited',
+    cancellationUrl: 'https://www.amazon.com/kindle-dbs/hz/subscribe/ku/manageSubscription',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Kindle Unlimited > Manage Subscription > Cancel. Borrowed books are returned.',
   },
   {
     id: 'scribd',
@@ -376,6 +496,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'entertainment',
     iconKey: 'scribd',
     url: 'https://www.scribd.com',
+    cancellationUrl: 'https://www.scribd.com/account-settings/subscription',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account Settings > Subscription > Cancel subscription.',
   },
   {
     id: 'xbox-game-pass-core',
@@ -385,6 +508,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'entertainment',
     iconKey: 'xbox',
     url: 'https://www.xbox.com/gamepass',
+    cancellationUrl: 'https://account.microsoft.com/services',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Microsoft Account > Services & subscriptions > Cancel. Auto-renewal can be toggled off.',
   },
   {
     id: 'xbox-game-pass-ultimate',
@@ -394,6 +520,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'entertainment',
     iconKey: 'xbox',
     url: 'https://www.xbox.com/gamepass',
+    cancellationUrl: 'https://account.microsoft.com/services',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Microsoft Account > Services & subscriptions > Cancel. Auto-renewal can be toggled off.',
   },
   {
     id: 'playstation-plus-essential',
@@ -403,6 +532,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'entertainment',
     iconKey: 'playstation',
     url: 'https://www.playstation.com/ps-plus',
+    cancellationUrl: 'https://store.playstation.com/en-us/latest',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Account Management > Account Information > PlayStation Subscriptions > Turn Off Auto-Renew.',
   },
   {
     id: 'playstation-plus-premium',
@@ -412,6 +544,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'entertainment',
     iconKey: 'playstation',
     url: 'https://www.playstation.com/ps-plus',
+    cancellationUrl: 'https://store.playstation.com/en-us/latest',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Account Management > Account Information > PlayStation Subscriptions > Turn Off Auto-Renew.',
   },
   {
     id: 'nintendo-switch-online',
@@ -421,6 +556,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'entertainment',
     iconKey: 'nintendo',
     url: 'https://www.nintendo.com/switch/online',
+    cancellationUrl: 'https://accounts.nintendo.com/shop/subscription',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Nintendo Account > Shop Menu > Nintendo Switch Online > Turn Off Automatic Renewal.',
   },
   {
     id: 'twitch-turbo',
@@ -430,6 +568,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'entertainment',
     iconKey: 'twitch',
     url: 'https://www.twitch.tv/turbo',
+    cancellationUrl: 'https://www.twitch.tv/subscriptions',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Subscriptions page > Turbo > Do not Renew.',
   },
   {
     id: 'espn-plus',
@@ -439,6 +580,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'entertainment',
     iconKey: 'espn',
     url: 'https://plus.espn.com',
+    cancellationUrl: 'https://plus.espn.com/account/subscriptions',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account > ESPN+ Subscription > Cancel Subscription.',
   },
   {
     id: 'fubo-pro',
@@ -448,6 +592,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'entertainment',
     iconKey: 'fubo',
     url: 'https://www.fubo.tv',
+    cancellationUrl: 'https://www.fubo.tv/account',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'My Account > Subscription & Billing > Cancel Subscription.',
   },
   {
     id: 'youtube-tv',
@@ -457,6 +604,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'entertainment',
     iconKey: 'youtube-tv',
     url: 'https://tv.youtube.com',
+    cancellationUrl: 'https://tv.youtube.com/account',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Membership > Pause or cancel membership > Cancel membership.',
   },
   {
     id: 'sling-tv-orange',
@@ -466,6 +616,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'entertainment',
     iconKey: 'sling',
     url: 'https://www.sling.com',
+    cancellationUrl: 'https://www.sling.com/account',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account > Cancel subscription. Multiple retention screens before final cancel.',
   },
   {
     id: 'mubi',
@@ -475,6 +628,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'entertainment',
     iconKey: 'mubi',
     url: 'https://mubi.com',
+    cancellationUrl: 'https://mubi.com/account',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account > Subscription > Cancel subscription.',
   },
   {
     id: 'criterion-channel',
@@ -484,6 +640,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'entertainment',
     iconKey: 'criterion',
     url: 'https://www.criterionchannel.com',
+    cancellationUrl: 'https://www.criterionchannel.com/account',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account > Cancel Plan.',
   },
   {
     id: 'shudder',
@@ -493,6 +652,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'entertainment',
     iconKey: 'shudder',
     url: 'https://www.shudder.com',
+    cancellationUrl: 'https://www.shudder.com/account',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account > Subscription > Cancel. Access continues until billing period ends.',
   },
   {
     id: 'starz',
@@ -502,6 +664,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'entertainment',
     iconKey: 'starz',
     url: 'https://www.starz.com',
+    cancellationUrl: 'https://www.starz.com/account',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account > Subscription > Cancel subscription. If via app store, cancel there.',
   },
 
   // ─────────────────────────────────────────────────────────────────────────
@@ -515,6 +680,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'productivity',
     iconKey: 'chatgpt',
     url: 'https://chat.openai.com',
+    cancellationUrl: 'https://chat.openai.com/settings/subscription',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Subscription > Cancel plan. Access continues until billing period ends.',
   },
   {
     id: 'chatgpt-pro',
@@ -524,6 +692,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'productivity',
     iconKey: 'chatgpt',
     url: 'https://chat.openai.com',
+    cancellationUrl: 'https://chat.openai.com/settings/subscription',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Subscription > Cancel plan. Access continues until billing period ends.',
   },
   {
     id: 'claude-pro',
@@ -533,6 +704,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'productivity',
     iconKey: 'claude',
     url: 'https://claude.ai',
+    cancellationUrl: 'https://claude.ai/settings/billing',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Billing > Cancel plan. Access continues until billing period ends.',
   },
   {
     id: 'claude-max',
@@ -542,6 +716,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'productivity',
     iconKey: 'claude',
     url: 'https://claude.ai',
+    cancellationUrl: 'https://claude.ai/settings/billing',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Billing > Cancel plan. Access continues until billing period ends.',
   },
   {
     id: 'github-copilot',
@@ -551,6 +728,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'productivity',
     iconKey: 'github',
     url: 'https://github.com/features/copilot',
+    cancellationUrl: 'https://github.com/settings/billing/summary',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Billing > Plans and usage > Cancel Copilot.',
   },
   {
     id: 'microsoft-365-personal',
@@ -560,6 +740,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'productivity',
     iconKey: 'microsoft-365',
     url: 'https://www.microsoft.com/microsoft-365',
+    cancellationUrl: 'https://account.microsoft.com/services',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Microsoft Account > Services & subscriptions > Cancel. Turn off recurring billing.',
   },
   {
     id: 'microsoft-365-family',
@@ -569,6 +752,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'productivity',
     iconKey: 'microsoft-365',
     url: 'https://www.microsoft.com/microsoft-365',
+    cancellationUrl: 'https://account.microsoft.com/services',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Microsoft Account > Services & subscriptions > Cancel. Turn off recurring billing.',
   },
   {
     id: 'google-one-100gb',
@@ -578,6 +764,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'productivity',
     iconKey: 'google-one',
     url: 'https://one.google.com',
+    cancellationUrl: 'https://one.google.com/settings',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Google One > Settings > Cancel membership. Storage reverts to 15GB free.',
   },
   {
     id: 'google-one-2tb',
@@ -587,6 +776,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'productivity',
     iconKey: 'google-one',
     url: 'https://one.google.com',
+    cancellationUrl: 'https://one.google.com/settings',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Google One > Settings > Cancel membership. Storage reverts to 15GB free.',
   },
   {
     id: 'google-workspace-starter',
@@ -596,6 +788,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'productivity',
     iconKey: 'google-workspace',
     url: 'https://workspace.google.com',
+    cancellationUrl: 'https://admin.google.com/ac/billing/subscriptions',
+    cancellationDifficulty: 'medium',
+    cancellationNotes: 'Admin console > Billing > Subscriptions > Cancel. Must be admin. Export data first.',
   },
   {
     id: 'icloud-plus-50gb',
@@ -605,6 +800,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'productivity',
     iconKey: 'icloud',
     url: 'https://www.apple.com/icloud',
+    cancellationUrl: 'https://support.apple.com/en-us/118428',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Apple ID > Subscriptions > iCloud+ > Cancel. Storage reverts to 5GB free.',
   },
   {
     id: 'icloud-plus-200gb',
@@ -614,6 +812,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'productivity',
     iconKey: 'icloud',
     url: 'https://www.apple.com/icloud',
+    cancellationUrl: 'https://support.apple.com/en-us/118428',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Apple ID > Subscriptions > iCloud+ > Cancel. Storage reverts to 5GB free.',
   },
   {
     id: 'icloud-plus-2tb',
@@ -623,6 +824,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'productivity',
     iconKey: 'icloud',
     url: 'https://www.apple.com/icloud',
+    cancellationUrl: 'https://support.apple.com/en-us/118428',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Apple ID > Subscriptions > iCloud+ > Cancel. Storage reverts to 5GB free.',
   },
   {
     id: 'dropbox-plus',
@@ -632,6 +836,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'productivity',
     iconKey: 'dropbox',
     url: 'https://www.dropbox.com',
+    cancellationUrl: 'https://www.dropbox.com/account/plan',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account > Plan > Downgrade to Basic. Access continues until billing period ends.',
   },
   {
     id: 'dropbox-professional',
@@ -641,6 +848,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'productivity',
     iconKey: 'dropbox',
     url: 'https://www.dropbox.com',
+    cancellationUrl: 'https://www.dropbox.com/account/plan',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account > Plan > Downgrade to Basic. Access continues until billing period ends.',
   },
   {
     id: 'notion-plus',
@@ -650,6 +860,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'productivity',
     iconKey: 'notion',
     url: 'https://www.notion.so',
+    cancellationUrl: 'https://www.notion.so/my-account',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Plans > Downgrade. Workspace reverts to free tier limits.',
   },
   {
     id: 'evernote-personal',
@@ -659,6 +872,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'productivity',
     iconKey: 'evernote',
     url: 'https://evernote.com',
+    cancellationUrl: 'https://www.evernote.com/Billing.action',
+    cancellationDifficulty: 'medium',
+    cancellationNotes: 'Account Settings > Billing > Downgrade. Notes are kept but some features become read-only.',
   },
   {
     id: 'todoist-pro',
@@ -668,6 +884,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'productivity',
     iconKey: 'todoist',
     url: 'https://todoist.com',
+    cancellationUrl: 'https://todoist.com/app/settings/subscription',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Subscription > Cancel subscription. Reverts to free tier.',
   },
   {
     id: 'linear',
@@ -677,6 +896,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'productivity',
     iconKey: 'linear',
     url: 'https://linear.app',
+    cancellationUrl: 'https://linear.app/settings/billing',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Billing > Cancel plan. Workspace reverts to free tier.',
   },
   {
     id: 'slack-pro',
@@ -686,6 +908,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'productivity',
     iconKey: 'slack',
     url: 'https://slack.com',
+    cancellationUrl: 'https://slack.com/intl/en-us/help/articles/218915077',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Workspace Settings > Billing > Cancel plan. Must be workspace owner.',
   },
   {
     id: 'zoom-workplace',
@@ -695,6 +920,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'productivity',
     iconKey: 'zoom',
     url: 'https://zoom.us',
+    cancellationUrl: 'https://zoom.us/account/billing',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account > Billing > Cancel subscription. Reverts to free 40-minute limit.',
   },
   {
     id: 'figma-professional',
@@ -704,6 +932,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'productivity',
     iconKey: 'figma',
     url: 'https://www.figma.com',
+    cancellationUrl: 'https://www.figma.com/settings',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Plan > Downgrade to Starter. Existing files are preserved.',
   },
   {
     id: 'canva-pro',
@@ -713,6 +944,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'productivity',
     iconKey: 'canva',
     url: 'https://www.canva.com',
+    cancellationUrl: 'https://www.canva.com/settings/billing-and-plans',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account Settings > Billing & plans > Cancel subscription.',
   },
   {
     id: 'adobe-creative-cloud',
@@ -722,6 +956,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'productivity',
     iconKey: 'adobe-cc',
     url: 'https://www.adobe.com/creativecloud',
+    cancellationUrl: 'https://account.adobe.com/plans',
+    cancellationDifficulty: 'hard',
+    cancellationNotes: 'Account > Plans > Cancel plan. Annual plans have an early termination fee (50% of remaining months).',
   },
   {
     id: 'adobe-photography',
@@ -731,6 +968,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'productivity',
     iconKey: 'adobe-cc',
     url: 'https://www.adobe.com/creativecloud/photography',
+    cancellationUrl: 'https://account.adobe.com/plans',
+    cancellationDifficulty: 'hard',
+    cancellationNotes: 'Account > Plans > Cancel plan. Annual plans have an early termination fee (50% of remaining months).',
   },
   {
     id: 'adobe-acrobat-pro',
@@ -740,6 +980,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'productivity',
     iconKey: 'adobe-acrobat',
     url: 'https://www.adobe.com/acrobat',
+    cancellationUrl: 'https://account.adobe.com/plans',
+    cancellationDifficulty: 'hard',
+    cancellationNotes: 'Account > Plans > Cancel plan. Annual plans have an early termination fee (50% of remaining months).',
   },
   {
     id: 'grammarly-premium',
@@ -749,6 +992,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'productivity',
     iconKey: 'grammarly',
     url: 'https://www.grammarly.com',
+    cancellationUrl: 'https://account.grammarly.com/subscription',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account > Subscription > Cancel subscription. Reverts to free tier.',
   },
   {
     id: '1password',
@@ -758,6 +1004,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'productivity',
     iconKey: '1password',
     url: 'https://1password.com',
+    cancellationUrl: 'https://my.1password.com/settings/billing',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Billing > Cancel subscription. Export your vault first.',
   },
   {
     id: '1password-family',
@@ -767,6 +1016,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'productivity',
     iconKey: '1password',
     url: 'https://1password.com',
+    cancellationUrl: 'https://my.1password.com/settings/billing',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Billing > Cancel subscription. Export your vault first.',
   },
   {
     id: 'lastpass-premium',
@@ -776,6 +1028,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'productivity',
     iconKey: 'lastpass',
     url: 'https://www.lastpass.com',
+    cancellationUrl: 'https://lastpass.com/misc_premium_cancel.php',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account Settings > Subscription > Cancel. Export vault before cancelling.',
   },
   {
     id: 'bitwarden-premium',
@@ -785,6 +1040,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'productivity',
     iconKey: 'bitwarden',
     url: 'https://bitwarden.com',
+    cancellationUrl: 'https://vault.bitwarden.com/#/settings/subscription',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Subscription > Cancel subscription. Vault data is preserved.',
   },
   {
     id: 'dashlane-premium',
@@ -794,6 +1052,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'productivity',
     iconKey: 'dashlane',
     url: 'https://www.dashlane.com',
+    cancellationUrl: 'https://www.dashlane.com/deleteaccount',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account > Subscription > Cancel plan. Requires email verification to delete account entirely.',
   },
   {
     id: 'tailscale-personal-pro',
@@ -803,6 +1064,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'productivity',
     iconKey: 'tailscale',
     url: 'https://tailscale.com',
+    cancellationUrl: 'https://login.tailscale.com/admin/billing',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Admin console > Billing > Cancel plan. Reverts to free tier.',
   },
   {
     id: 'superhuman',
@@ -812,6 +1076,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'productivity',
     iconKey: 'superhuman',
     url: 'https://superhuman.com',
+    cancellationUrl: 'https://superhuman.com/settings/billing',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Billing > Cancel subscription.',
   },
   {
     id: 'raycast-pro',
@@ -821,6 +1088,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'productivity',
     iconKey: 'raycast',
     url: 'https://www.raycast.com',
+    cancellationUrl: 'https://www.raycast.com/settings/billing',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Billing > Cancel plan. Reverts to free tier.',
   },
   {
     id: 'setapp',
@@ -830,6 +1100,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'productivity',
     iconKey: 'setapp',
     url: 'https://setapp.com',
+    cancellationUrl: 'https://my.setapp.com/account/billing',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'My Account > Billing > Cancel subscription. All app access ends at billing period.',
   },
   {
     id: 'zapier-starter',
@@ -839,6 +1112,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'productivity',
     iconKey: 'zapier',
     url: 'https://zapier.com',
+    cancellationUrl: 'https://zapier.com/app/settings/billing/plans',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Billing > Downgrade to Free. Active Zaps are paused.',
   },
   {
     id: 'trello-standard',
@@ -848,6 +1124,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'productivity',
     iconKey: 'trello',
     url: 'https://trello.com',
+    cancellationUrl: 'https://trello.com/your-boards',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Workspace Settings > Billing > Downgrade to Free. Boards are preserved.',
   },
   {
     id: 'asana-starter',
@@ -857,6 +1136,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'productivity',
     iconKey: 'asana',
     url: 'https://asana.com',
+    cancellationUrl: 'https://app.asana.com/admin/billing',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Admin Console > Billing > Downgrade. Must be workspace admin.',
   },
   {
     id: 'monday-standard',
@@ -866,6 +1148,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'productivity',
     iconKey: 'monday',
     url: 'https://monday.com',
+    cancellationUrl: 'https://monday.com/admin/billing',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Admin > Billing > Cancel plan. Must be account admin.',
   },
   {
     id: 'miro-starter',
@@ -875,6 +1160,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'productivity',
     iconKey: 'miro',
     url: 'https://miro.com',
+    cancellationUrl: 'https://miro.com/app/settings/billing/',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Billing > Cancel plan. Boards become view-only above free tier limits.',
   },
   {
     id: 'obsidian-sync',
@@ -884,6 +1172,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'productivity',
     iconKey: 'obsidian',
     url: 'https://obsidian.md',
+    cancellationUrl: 'https://obsidian.md/account',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account > Subscription > Cancel. Local vault is unaffected; sync stops.',
   },
 
   // ─────────────────────────────────────────────────────────────────────────
@@ -897,6 +1188,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'health',
     iconKey: 'peloton',
     url: 'https://www.onepeloton.com',
+    cancellationUrl: 'https://www.onepeloton.com/settings/subscriptions',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Subscriptions > Cancel. If via app store, cancel there.',
   },
   {
     id: 'peloton-all-access',
@@ -906,6 +1200,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'health',
     iconKey: 'peloton',
     url: 'https://www.onepeloton.com',
+    cancellationUrl: 'https://www.onepeloton.com/settings/subscriptions',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Subscriptions > Cancel. If via app store, cancel there.',
   },
   {
     id: 'apple-fitness-plus',
@@ -915,6 +1212,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'health',
     iconKey: 'apple-fitness',
     url: 'https://www.apple.com/apple-fitness-plus',
+    cancellationUrl: 'https://support.apple.com/en-us/118428',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Apple ID > Subscriptions > Fitness+ > Cancel.',
   },
   {
     id: 'strava-premium',
@@ -924,6 +1224,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'health',
     iconKey: 'strava',
     url: 'https://www.strava.com',
+    cancellationUrl: 'https://www.strava.com/account/subscription',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Subscription > Cancel. Activity data is preserved; premium features are locked.',
   },
   {
     id: 'myfitnesspal-premium',
@@ -933,6 +1236,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'health',
     iconKey: 'myfitnesspal',
     url: 'https://www.myfitnesspal.com',
+    cancellationUrl: 'https://www.myfitnesspal.com/account/subscriptions',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account > Subscriptions > Cancel Premium. Reverts to free tier.',
   },
   {
     id: 'noom',
@@ -942,6 +1248,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'health',
     iconKey: 'noom',
     url: 'https://www.noom.com',
+    cancellationUrl: 'https://www.noom.com/support/',
+    cancellationDifficulty: 'hard',
+    cancellationNotes: 'Must contact support or use in-app cancellation. Retention offers are common. No straightforward online self-service.',
   },
   {
     id: 'headspace',
@@ -951,6 +1260,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'health',
     iconKey: 'headspace',
     url: 'https://www.headspace.com',
+    cancellationUrl: 'https://www.headspace.com/settings/subscription',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Subscription > Cancel. If via app store, cancel there.',
   },
   {
     id: 'calm',
@@ -960,6 +1272,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'health',
     iconKey: 'calm',
     url: 'https://www.calm.com',
+    cancellationUrl: 'https://www.calm.com/account',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account > Subscription > Cancel. If via app store, cancel there.',
   },
   {
     id: 'whoop',
@@ -969,6 +1284,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'health',
     iconKey: 'whoop',
     url: 'https://www.whoop.com',
+    cancellationUrl: 'https://app.whoop.com/account/membership',
+    cancellationDifficulty: 'hard',
+    cancellationNotes: 'Account > Membership > Cancel. Annual commitments may require contacting support. Band must be returned if under commitment period.',
   },
   {
     id: 'oura-membership',
@@ -978,6 +1296,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'health',
     iconKey: 'oura',
     url: 'https://ouraring.com',
+    cancellationUrl: 'https://cloud.ouraring.com/account/subscription',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account > Subscription > Cancel. Basic ring features still work without membership.',
   },
   {
     id: 'fitbit-premium',
@@ -987,6 +1308,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'health',
     iconKey: 'fitbit',
     url: 'https://www.fitbit.com/global/us/technology/premium',
+    cancellationUrl: 'https://www.fitbit.com/settings/subscription',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Subscription > Cancel Fitbit Premium. Basic tracking continues.',
   },
   {
     id: 'nike-training-club',
@@ -996,6 +1320,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'health',
     iconKey: 'nike',
     url: 'https://www.nike.com/ntc-app',
+    cancellationUrl: 'https://www.nike.com/member/settings',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'If subscribed via app store, cancel in iOS/Android subscription settings.',
   },
   {
     id: 'eight-sleep',
@@ -1005,6 +1332,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'health',
     iconKey: 'eight-sleep',
     url: 'https://www.eightsleep.com',
+    cancellationUrl: 'https://www.eightsleep.com/account',
+    cancellationDifficulty: 'medium',
+    cancellationNotes: 'Account > Membership > Cancel. Temperature control features require active membership.',
   },
   {
     id: 'betterhelp',
@@ -1014,6 +1344,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'health',
     iconKey: 'betterhelp',
     url: 'https://www.betterhelp.com',
+    cancellationUrl: 'https://www.betterhelp.com/settings',
+    cancellationDifficulty: 'medium',
+    cancellationNotes: 'Settings > Payment settings > Cancel membership. Multiple retention screens before final cancel.',
   },
   {
     id: 'talkiatry',
@@ -1023,6 +1356,8 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'health',
     iconKey: 'talkiatry',
     url: 'https://www.talkiatry.com',
+    cancellationDifficulty: 'medium',
+    cancellationNotes: 'Contact your care team or support to cancel. No self-service cancellation page.',
   },
   {
     id: 'cerebral',
@@ -1032,6 +1367,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'health',
     iconKey: 'cerebral',
     url: 'https://cerebral.com',
+    cancellationUrl: 'https://cerebral.com/account',
+    cancellationDifficulty: 'medium',
+    cancellationNotes: 'Account > Subscription > Cancel. Contact support if unable to cancel online.',
   },
   {
     id: 'nurx',
@@ -1041,6 +1379,8 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'health',
     iconKey: 'nurx',
     url: 'https://www.nurx.com',
+    cancellationDifficulty: 'medium',
+    cancellationNotes: 'Contact support to cancel. Ensure no pending prescriptions or shipments.',
   },
   {
     id: 'hims',
@@ -1050,6 +1390,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'health',
     iconKey: 'hims',
     url: 'https://www.hims.com',
+    cancellationUrl: 'https://www.hims.com/account/subscriptions',
+    cancellationDifficulty: 'medium',
+    cancellationNotes: 'Account > Subscriptions > Cancel. Multiple confirmation steps. May need to cancel individual prescriptions separately.',
   },
   {
     id: 'hers',
@@ -1059,6 +1402,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'health',
     iconKey: 'hers',
     url: 'https://www.forhers.com',
+    cancellationUrl: 'https://www.forhers.com/account/subscriptions',
+    cancellationDifficulty: 'medium',
+    cancellationNotes: 'Account > Subscriptions > Cancel. Multiple confirmation steps. May need to cancel individual prescriptions separately.',
   },
   {
     id: 'macrofactor',
@@ -1068,6 +1414,8 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'health',
     iconKey: 'macrofactor',
     url: 'https://macrofactorapp.com',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Cancel via iOS/Android subscription settings. App data is preserved locally.',
   },
   {
     id: 'sleep-cycle-premium',
@@ -1077,6 +1425,8 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'health',
     iconKey: 'sleep-cycle',
     url: 'https://www.sleepcycle.com',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Cancel via iOS/Android subscription settings.',
   },
   {
     id: 'traineroize',
@@ -1086,6 +1436,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'health',
     iconKey: 'trainerroad',
     url: 'https://www.trainerroad.com',
+    cancellationUrl: 'https://www.trainerroad.com/app/account/subscription',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account > Subscription > Cancel. Training history is preserved.',
   },
 
   // ─────────────────────────────────────────────────────────────────────────
@@ -1099,6 +1452,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'shopping',
     iconKey: 'amazon',
     url: 'https://www.amazon.com/prime',
+    cancellationUrl: 'https://www.amazon.com/mc/pipelines/cancel-prime',
+    cancellationDifficulty: 'medium',
+    cancellationNotes: 'Account > Prime Membership > End Membership. Multiple retention screens and confirmation steps.',
   },
   {
     id: 'amazon-prime-monthly',
@@ -1108,6 +1464,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'shopping',
     iconKey: 'amazon',
     url: 'https://www.amazon.com/prime',
+    cancellationUrl: 'https://www.amazon.com/mc/pipelines/cancel-prime',
+    cancellationDifficulty: 'medium',
+    cancellationNotes: 'Account > Prime Membership > End Membership. Multiple retention screens and confirmation steps.',
   },
   {
     id: 'costco-executive',
@@ -1117,6 +1476,8 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'shopping',
     iconKey: 'costco',
     url: 'https://www.costco.com',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Cancel at any Costco membership counter for a full refund, or call 1-800-774-2678.',
   },
   {
     id: 'costco-gold-star',
@@ -1126,6 +1487,8 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'shopping',
     iconKey: 'costco',
     url: 'https://www.costco.com',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Cancel at any Costco membership counter for a full refund, or call 1-800-774-2678.',
   },
   {
     id: 'walmart-plus',
@@ -1135,6 +1498,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'shopping',
     iconKey: 'walmart',
     url: 'https://www.walmart.com/plus',
+    cancellationUrl: 'https://www.walmart.com/account/walmartplus/manage',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account > Walmart+ > Manage membership > Cancel.',
   },
   {
     id: 'sams-club',
@@ -1144,6 +1510,8 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'shopping',
     iconKey: 'sams-club',
     url: 'https://www.samsclub.com',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Cancel at any club membership desk or call 1-888-746-7726. Full refund available anytime.',
   },
   {
     id: 'sams-club-plus',
@@ -1153,6 +1521,8 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'shopping',
     iconKey: 'sams-club',
     url: 'https://www.samsclub.com',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Cancel at any club membership desk or call 1-888-746-7726. Full refund available anytime.',
   },
   {
     id: 'instacart-plus',
@@ -1162,6 +1532,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'shopping',
     iconKey: 'instacart',
     url: 'https://www.instacart.com',
+    cancellationUrl: 'https://www.instacart.com/store/account/instacart-plus',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account > Instacart+ > Cancel membership.',
   },
   {
     id: 'doordash-dashpass',
@@ -1171,6 +1544,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'shopping',
     iconKey: 'doordash',
     url: 'https://www.doordash.com/dashpass',
+    cancellationUrl: 'https://www.doordash.com/consumer/more/dashpass/',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account > DashPass > Cancel DashPass.',
   },
   {
     id: 'uber-one',
@@ -1180,6 +1556,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'shopping',
     iconKey: 'uber',
     url: 'https://www.uber.com/one',
+    cancellationUrl: 'https://www.uber.com/one',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account > Uber One > Manage membership > Cancel. Also cancellable in the Uber app.',
   },
   {
     id: 'grubhub-plus',
@@ -1189,6 +1568,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'shopping',
     iconKey: 'grubhub',
     url: 'https://www.grubhub.com',
+    cancellationUrl: 'https://www.grubhub.com/help/contact-us',
+    cancellationDifficulty: 'medium',
+    cancellationNotes: 'Account > Grubhub+ membership > Cancel. If bundled with Amazon Prime, cancel through Amazon.',
   },
   {
     id: 'shipt',
@@ -1198,6 +1580,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'shopping',
     iconKey: 'shipt',
     url: 'https://www.shipt.com',
+    cancellationUrl: 'https://shop.shipt.com/account/membership',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account > Membership > Cancel. Access continues until billing period ends.',
   },
   {
     id: 'thrive-market',
@@ -1207,6 +1592,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'shopping',
     iconKey: 'thrive-market',
     url: 'https://thrivemarket.com',
+    cancellationUrl: 'https://thrivemarket.com/account/membership',
+    cancellationDifficulty: 'medium',
+    cancellationNotes: 'Account > Membership > Cancel. Within 30 days of signup you can get a full refund.',
   },
   {
     id: 'stitch-fix',
@@ -1216,6 +1604,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'shopping',
     iconKey: 'stitch-fix',
     url: 'https://www.stitchfix.com',
+    cancellationUrl: 'https://www.stitchfix.com/settings',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Deliveries > Cancel future Fix deliveries.',
   },
   {
     id: 'rent-the-runway',
@@ -1225,6 +1616,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'shopping',
     iconKey: 'rent-the-runway',
     url: 'https://www.renttherunway.com',
+    cancellationUrl: 'https://www.renttherunway.com/account/membership',
+    cancellationDifficulty: 'medium',
+    cancellationNotes: 'Account > Membership > Cancel. All rented items must be returned before cancellation is final.',
   },
   {
     id: 'aaa-membership',
@@ -1234,6 +1628,8 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'shopping',
     iconKey: 'aaa',
     url: 'https://www.aaa.com',
+    cancellationDifficulty: 'medium',
+    cancellationNotes: 'Call your local AAA club or visit a branch to cancel. No online self-service cancellation.',
   },
 
   // ─────────────────────────────────────────────────────────────────────────
@@ -1247,6 +1643,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'news',
     iconKey: 'nyt',
     url: 'https://www.nytimes.com',
+    cancellationUrl: 'https://myaccount.nytimes.com/seg/subscription',
+    cancellationDifficulty: 'medium',
+    cancellationNotes: 'Account > Subscription > Cancel. Must call or use live chat for some plans. Retention offers common.',
   },
   {
     id: 'nyt-news',
@@ -1256,6 +1655,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'news',
     iconKey: 'nyt',
     url: 'https://www.nytimes.com',
+    cancellationUrl: 'https://myaccount.nytimes.com/seg/subscription',
+    cancellationDifficulty: 'medium',
+    cancellationNotes: 'Account > Subscription > Cancel. Must call or use live chat for some plans. Retention offers common.',
   },
   {
     id: 'washington-post',
@@ -1265,6 +1667,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'news',
     iconKey: 'wapo',
     url: 'https://www.washingtonpost.com',
+    cancellationUrl: 'https://www.washingtonpost.com/my-account/subscriptions/',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'My Account > Subscriptions > Cancel.',
   },
   {
     id: 'wsj',
@@ -1274,6 +1679,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'news',
     iconKey: 'wsj',
     url: 'https://www.wsj.com',
+    cancellationUrl: 'https://customercenter.wsj.com/subscription-cancel',
+    cancellationDifficulty: 'medium',
+    cancellationNotes: 'Customer Center > Cancel Subscription. May require calling customer service.',
   },
   {
     id: 'economist',
@@ -1283,6 +1691,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'news',
     iconKey: 'economist',
     url: 'https://www.economist.com',
+    cancellationUrl: 'https://myaccount.economist.com/s/subscription',
+    cancellationDifficulty: 'medium',
+    cancellationNotes: 'My Account > Subscription > Cancel. Phone cancellation may be required for print bundles.',
   },
   {
     id: 'atlantic',
@@ -1292,6 +1703,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'news',
     iconKey: 'atlantic',
     url: 'https://www.theatlantic.com',
+    cancellationUrl: 'https://accounts.theatlantic.com/accounts/subscription/',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account > Subscription > Cancel. Access continues until billing period ends.',
   },
   {
     id: 'bloomberg',
@@ -1301,6 +1715,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'news',
     iconKey: 'bloomberg',
     url: 'https://www.bloomberg.com',
+    cancellationUrl: 'https://www.bloomberg.com/account/subscriptions',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account > Subscriptions > Cancel.',
   },
   {
     id: 'financial-times',
@@ -1310,6 +1727,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'news',
     iconKey: 'ft',
     url: 'https://www.ft.com',
+    cancellationUrl: 'https://myaccount.ft.com/details/core/view',
+    cancellationDifficulty: 'medium',
+    cancellationNotes: 'My Account > Subscription > Cancel. May need to contact support for some plan types.',
   },
   {
     id: 'new-yorker',
@@ -1319,6 +1739,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'news',
     iconKey: 'new-yorker',
     url: 'https://www.newyorker.com',
+    cancellationUrl: 'https://www.newyorker.com/my-account',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'My Account > Cancel subscription.',
   },
   {
     id: 'wired',
@@ -1328,6 +1751,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'news',
     iconKey: 'wired',
     url: 'https://www.wired.com',
+    cancellationUrl: 'https://www.wired.com/account',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account > Subscription > Cancel.',
   },
   {
     id: 'la-times',
@@ -1337,6 +1763,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'news',
     iconKey: 'la-times',
     url: 'https://www.latimes.com',
+    cancellationUrl: 'https://membership.latimes.com/subscription',
+    cancellationDifficulty: 'medium',
+    cancellationNotes: 'Account > Subscription > Cancel. May require contacting support.',
   },
   {
     id: 'medium',
@@ -1346,6 +1775,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'news',
     iconKey: 'medium',
     url: 'https://medium.com',
+    cancellationUrl: 'https://medium.com/me/settings/billing',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Membership > Cancel membership.',
   },
   {
     id: 'substack-pro',
@@ -1355,6 +1787,8 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'news',
     iconKey: 'substack',
     url: 'https://substack.com',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Each Substack is cancelled individually from the publication settings page.',
   },
   {
     id: 'apple-news-plus',
@@ -1364,6 +1798,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'news',
     iconKey: 'apple-news',
     url: 'https://www.apple.com/apple-news',
+    cancellationUrl: 'https://support.apple.com/en-us/118428',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Apple ID > Subscriptions > Apple News+ > Cancel.',
   },
   {
     id: 'the-information',
@@ -1373,6 +1810,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'news',
     iconKey: 'the-information',
     url: 'https://www.theinformation.com',
+    cancellationUrl: 'https://www.theinformation.com/account',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account > Subscription > Cancel auto-renewal.',
   },
   {
     id: 'stratechery',
@@ -1382,6 +1822,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'news',
     iconKey: 'stratechery',
     url: 'https://stratechery.com',
+    cancellationUrl: 'https://stratechery.com/account/',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account > Cancel subscription.',
   },
   {
     id: 'barrons',
@@ -1391,6 +1834,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'news',
     iconKey: 'barrons',
     url: 'https://www.barrons.com',
+    cancellationUrl: 'https://customercenter.barrons.com/',
+    cancellationDifficulty: 'medium',
+    cancellationNotes: 'Customer Center > Cancel subscription. May require phone call.',
   },
   {
     id: 'reuters',
@@ -1400,6 +1846,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'news',
     iconKey: 'reuters',
     url: 'https://www.reuters.com',
+    cancellationUrl: 'https://www.reuters.com/account/',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account > Subscription > Cancel.',
   },
   {
     id: 'guardian-supporter',
@@ -1409,6 +1858,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'news',
     iconKey: 'guardian',
     url: 'https://www.theguardian.com',
+    cancellationUrl: 'https://manage.theguardian.com/cancel',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Manage subscription > Cancel. Straightforward self-service.',
   },
   {
     id: 'ars-technica-plus',
@@ -1418,6 +1870,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'news',
     iconKey: 'ars-technica',
     url: 'https://arstechnica.com',
+    cancellationUrl: 'https://arstechnica.com/account/',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account > Subscription > Cancel.',
   },
   {
     id: 'the-verge-plus',
@@ -1427,6 +1882,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'news',
     iconKey: 'the-verge',
     url: 'https://www.theverge.com',
+    cancellationUrl: 'https://www.theverge.com/account',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account > Subscription > Cancel.',
   },
   {
     id: 'axios-pro',
@@ -1436,6 +1894,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'news',
     iconKey: 'axios',
     url: 'https://www.axios.com/pro',
+    cancellationUrl: 'https://www.axios.com/pro/account',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account > Subscription > Cancel.',
   },
 
   // ─────────────────────────────────────────────────────────────────────────
@@ -1449,6 +1910,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'finance',
     iconKey: 'ynab',
     url: 'https://www.ynab.com',
+    cancellationUrl: 'https://app.ynab.com/settings/billing',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Billing > Cancel subscription. Budget data is kept for 3 months.',
   },
   {
     id: 'copilot-money',
@@ -1458,6 +1922,8 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'finance',
     iconKey: 'copilot-money',
     url: 'https://copilot.money',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Cancel via iOS subscription settings (Apple-only app).',
   },
   {
     id: 'monarch-money',
@@ -1467,6 +1933,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'finance',
     iconKey: 'monarch',
     url: 'https://www.monarchmoney.com',
+    cancellationUrl: 'https://app.monarchmoney.com/settings/subscription',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Subscription > Cancel. Access continues until billing period ends.',
   },
   {
     id: 'quicken-simplifi',
@@ -1476,6 +1945,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'finance',
     iconKey: 'quicken',
     url: 'https://www.quicken.com/simplifi',
+    cancellationUrl: 'https://app.simplifimoney.com/settings/subscription',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Subscription > Cancel.',
   },
   {
     id: 'quicken-classic',
@@ -1485,6 +1957,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'finance',
     iconKey: 'quicken',
     url: 'https://www.quicken.com',
+    cancellationUrl: 'https://www.quicken.com/support',
+    cancellationDifficulty: 'medium',
+    cancellationNotes: 'Account > Subscription > Turn off auto-renewal. Desktop app continues to work but sync stops.',
   },
   {
     id: 'turbotax-plus',
@@ -1494,6 +1969,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'finance',
     iconKey: 'turbotax',
     url: 'https://turbotax.intuit.com',
+    cancellationUrl: 'https://myturbotax.intuit.com/',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'One-time annual purchase; no recurring subscription to cancel for most plans.',
   },
   {
     id: 'credit-karma-plus',
@@ -1503,6 +1981,8 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'finance',
     iconKey: 'credit-karma',
     url: 'https://www.creditkarma.com',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Free service. Delete account via Settings > Account if desired.',
   },
   {
     id: 'personal-capital',
@@ -1512,6 +1992,8 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'finance',
     iconKey: 'empower',
     url: 'https://www.empower.com',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Free dashboard. Advisory services require contacting Empower directly to cancel.',
   },
   {
     id: 'robinhood-gold',
@@ -1521,6 +2003,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'finance',
     iconKey: 'robinhood',
     url: 'https://robinhood.com/gold',
+    cancellationUrl: 'https://robinhood.com/account/settings',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Gold > Downgrade. Margin positions must be closed first.',
   },
   {
     id: 'wealthfront',
@@ -1530,6 +2015,8 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'finance',
     iconKey: 'wealthfront',
     url: 'https://www.wealthfront.com',
+    cancellationDifficulty: 'medium',
+    cancellationNotes: 'Contact support to close account. Investments must be transferred or liquidated first.',
   },
   {
     id: 'betterment-premium',
@@ -1539,6 +2026,8 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'finance',
     iconKey: 'betterment',
     url: 'https://www.betterment.com',
+    cancellationDifficulty: 'medium',
+    cancellationNotes: 'Contact support to close account. Investments must be transferred or liquidated first.',
   },
   {
     id: 'coinbase-one',
@@ -1548,6 +2037,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'finance',
     iconKey: 'coinbase',
     url: 'https://www.coinbase.com/one',
+    cancellationUrl: 'https://www.coinbase.com/settings/subscription',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Subscription > Cancel Coinbase One.',
   },
   {
     id: 'morningstar-premium',
@@ -1557,6 +2049,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'finance',
     iconKey: 'morningstar',
     url: 'https://www.morningstar.com',
+    cancellationUrl: 'https://www.morningstar.com/members/settings',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account > Settings > Cancel membership.',
   },
   {
     id: 'seeking-alpha-premium',
@@ -1566,6 +2061,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'finance',
     iconKey: 'seeking-alpha',
     url: 'https://seekingalpha.com',
+    cancellationUrl: 'https://seekingalpha.com/account/subscription',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account > Subscription > Cancel.',
   },
   {
     id: 'motley-fool-stock-advisor',
@@ -1575,6 +2073,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'finance',
     iconKey: 'motley-fool',
     url: 'https://www.fool.com',
+    cancellationUrl: 'https://www.fool.com/account/subscription',
+    cancellationDifficulty: 'medium',
+    cancellationNotes: 'Account > My Services > Cancel. Retention offers are common.',
   },
   {
     id: 'acorns',
@@ -1584,6 +2085,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'finance',
     iconKey: 'acorns',
     url: 'https://www.acorns.com',
+    cancellationUrl: 'https://app.acorns.com/settings',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Close account. Investments are liquidated and deposited to linked bank.',
   },
 
   // ─────────────────────────────────────────────────────────────────────────
@@ -1597,6 +2101,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'utilities',
     iconKey: 'nordvpn',
     url: 'https://nordvpn.com',
+    cancellationUrl: 'https://my.nordaccount.com/dashboard/nordvpn/',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Dashboard > NordVPN > Cancel auto-renewal. Access continues until plan expires.',
   },
   {
     id: 'expressvpn',
@@ -1606,6 +2113,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'utilities',
     iconKey: 'expressvpn',
     url: 'https://www.expressvpn.com',
+    cancellationUrl: 'https://www.expressvpn.com/subscriptions',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Subscriptions > Turn off auto-renewal. Access continues until plan expires.',
   },
   {
     id: 'surfshark',
@@ -1615,6 +2125,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'utilities',
     iconKey: 'surfshark',
     url: 'https://surfshark.com',
+    cancellationUrl: 'https://my.surfshark.com/account/subscription',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account > Subscription > Cancel auto-renewal. Access continues until plan expires.',
   },
   {
     id: 'protonvpn-plus',
@@ -1624,6 +2137,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'utilities',
     iconKey: 'protonvpn',
     url: 'https://protonvpn.com',
+    cancellationUrl: 'https://account.proton.me/u/0/subscription',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account > Subscription > Downgrade to free. VPN access continues until plan expires.',
   },
   {
     id: 'proton-mail-plus',
@@ -1633,6 +2149,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'utilities',
     iconKey: 'proton-mail',
     url: 'https://proton.me/mail',
+    cancellationUrl: 'https://account.proton.me/u/0/subscription',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account > Subscription > Downgrade to free. Email address is kept.',
   },
   {
     id: 'proton-unlimited',
@@ -1642,6 +2161,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'utilities',
     iconKey: 'proton',
     url: 'https://proton.me',
+    cancellationUrl: 'https://account.proton.me/u/0/subscription',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account > Subscription > Downgrade to free. Reduce storage before downgrading.',
   },
   {
     id: 'mullvad-vpn',
@@ -1651,6 +2173,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'utilities',
     iconKey: 'mullvad',
     url: 'https://mullvad.net',
+    cancellationUrl: 'https://mullvad.net/en/account',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'No auto-renewal. Prepaid time simply expires. No cancellation needed.',
   },
   {
     id: 'backblaze',
@@ -1660,6 +2185,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'utilities',
     iconKey: 'backblaze',
     url: 'https://www.backblaze.com',
+    cancellationUrl: 'https://secure.backblaze.com/user_account.htm',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account > My Settings > Delete account. Download backups first; data is not recoverable.',
   },
   {
     id: 'carbonite',
@@ -1669,6 +2197,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'utilities',
     iconKey: 'carbonite',
     url: 'https://www.carbonite.com',
+    cancellationUrl: 'https://www.carbonite.com/account',
+    cancellationDifficulty: 'medium',
+    cancellationNotes: 'Account > Turn off auto-renewal or contact support. Backups are deleted after expiration.',
   },
   {
     id: 'idrive',
@@ -1678,6 +2209,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'utilities',
     iconKey: 'idrive',
     url: 'https://www.idrive.com',
+    cancellationUrl: 'https://www.idrive.com/idrive/login/loginForm',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account > Subscription > Cancel auto-renewal. Download backups before expiration.',
   },
   {
     id: 'norton-360',
@@ -1687,6 +2221,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'utilities',
     iconKey: 'norton',
     url: 'https://us.norton.com',
+    cancellationUrl: 'https://my.norton.com/extspa/idsafe?path=subscriptions',
+    cancellationDifficulty: 'medium',
+    cancellationNotes: 'My Norton > Subscription > Turn off auto-renewal. May require contacting support for refunds.',
   },
   {
     id: 'malwarebytes-premium',
@@ -1696,6 +2233,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'utilities',
     iconKey: 'malwarebytes',
     url: 'https://www.malwarebytes.com',
+    cancellationUrl: 'https://my.malwarebytes.com/account/subscriptions',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'My Account > Subscriptions > Cancel auto-renewal.',
   },
   {
     id: 'cleanmymac',
@@ -1705,6 +2245,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'utilities',
     iconKey: 'cleanmymac',
     url: 'https://macpaw.com/cleanmymac',
+    cancellationUrl: 'https://account.macpaw.com/',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'MacPaw Account > Subscriptions > Cancel auto-renewal.',
   },
   {
     id: 'lifelock-standard',
@@ -1714,6 +2257,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'utilities',
     iconKey: 'lifelock',
     url: 'https://www.lifelock.com',
+    cancellationUrl: 'https://memberportal.lifelock.com/',
+    cancellationDifficulty: 'hard',
+    cancellationNotes: 'Must call 1-800-543-3562 to cancel. No online self-service cancellation.',
   },
   {
     id: 'aura-identity',
@@ -1723,6 +2269,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'utilities',
     iconKey: 'aura',
     url: 'https://www.aura.com',
+    cancellationUrl: 'https://app.aura.com/settings',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Subscription > Cancel. 60-day money-back guarantee for new subscribers.',
   },
   {
     id: 'deleteme',
@@ -1732,6 +2281,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'utilities',
     iconKey: 'deleteme',
     url: 'https://joindeleteme.com',
+    cancellationUrl: 'https://joindeleteme.com/help/',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account > Subscription > Cancel auto-renewal. Opt-out removals stop at expiration.',
   },
 
   // ─────────────────────────────────────────────────────────────────────────
@@ -1745,6 +2297,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'other',
     iconKey: 'duolingo',
     url: 'https://www.duolingo.com',
+    cancellationUrl: 'https://www.duolingo.com/settings/subscription',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Subscription > Cancel. If via app store, cancel there. Reverts to free tier.',
   },
   {
     id: 'babbel',
@@ -1754,6 +2309,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'other',
     iconKey: 'babbel',
     url: 'https://www.babbel.com',
+    cancellationUrl: 'https://my.babbel.com/subscription',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'My Account > Subscription > Cancel. 20-day money-back guarantee for new subscribers.',
   },
   {
     id: 'rosetta-stone',
@@ -1763,6 +2321,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'other',
     iconKey: 'rosetta-stone',
     url: 'https://www.rosettastone.com',
+    cancellationUrl: 'https://www.rosettastone.com/account',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account > Subscription > Cancel auto-renewal.',
   },
   {
     id: 'masterclass',
@@ -1772,6 +2333,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'other',
     iconKey: 'masterclass',
     url: 'https://www.masterclass.com',
+    cancellationUrl: 'https://www.masterclass.com/settings/subscriptions',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Subscriptions > Cancel membership. 30-day refund available for annual plans.',
   },
   {
     id: 'skillshare-premium',
@@ -1781,6 +2345,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'other',
     iconKey: 'skillshare',
     url: 'https://www.skillshare.com',
+    cancellationUrl: 'https://www.skillshare.com/settings/payments',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Payments > Cancel membership.',
   },
   {
     id: 'curiosity-stream',
@@ -1790,6 +2357,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'other',
     iconKey: 'curiosity-stream',
     url: 'https://curiositystream.com',
+    cancellationUrl: 'https://curiositystream.com/settings',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Subscription > Cancel.',
   },
   {
     id: 'coursera-plus',
@@ -1799,6 +2369,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'other',
     iconKey: 'coursera',
     url: 'https://www.coursera.org',
+    cancellationUrl: 'https://www.coursera.org/my-purchases',
+    cancellationDifficulty: 'medium',
+    cancellationNotes: 'My Purchases > Subscriptions > Cancel. 14-day refund policy for annual plans.',
   },
   {
     id: 'linkedin-learning',
@@ -1808,6 +2381,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'other',
     iconKey: 'linkedin',
     url: 'https://www.linkedin.com/learning',
+    cancellationUrl: 'https://www.linkedin.com/mypreferences/d/manage-advertising',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Manage Premium subscription > Cancel. Access continues until billing period ends.',
   },
   {
     id: 'linkedin-premium',
@@ -1817,6 +2393,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'other',
     iconKey: 'linkedin',
     url: 'https://www.linkedin.com/premium',
+    cancellationUrl: 'https://www.linkedin.com/mypreferences/d/manage-advertising',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Manage Premium subscription > Cancel. Access continues until billing period ends.',
   },
   {
     id: 'bumble-premium',
@@ -1826,6 +2405,8 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'other',
     iconKey: 'bumble',
     url: 'https://bumble.com',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Cancel via iOS/Android subscription settings. No web cancellation available.',
   },
   {
     id: 'tinder-plus',
@@ -1835,6 +2416,8 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'other',
     iconKey: 'tinder',
     url: 'https://tinder.com',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Cancel via iOS/Android subscription settings. Profile remains active.',
   },
   {
     id: 'tinder-gold',
@@ -1844,6 +2427,8 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'other',
     iconKey: 'tinder',
     url: 'https://tinder.com',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Cancel via iOS/Android subscription settings. Profile remains active.',
   },
   {
     id: 'hinge-preferred',
@@ -1853,6 +2438,8 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'other',
     iconKey: 'hinge',
     url: 'https://hinge.co',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Cancel via iOS/Android subscription settings.',
   },
   {
     id: 'ancestry-plus',
@@ -1862,6 +2449,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'other',
     iconKey: 'ancestry',
     url: 'https://www.ancestry.com',
+    cancellationUrl: 'https://www.ancestry.com/account/membership',
+    cancellationDifficulty: 'medium',
+    cancellationNotes: 'Account > Membership > Cancel renewal. DNA data and tree are preserved. Retention offers common.',
   },
   {
     id: 'find-my-past',
@@ -1871,6 +2461,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'other',
     iconKey: 'findmypast',
     url: 'https://www.findmypast.com',
+    cancellationUrl: 'https://www.findmypast.com/account/subscription',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account > Subscription > Cancel.',
   },
   {
     id: 'nextdoor',
@@ -1880,6 +2473,8 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'other',
     iconKey: 'nextdoor',
     url: 'https://nextdoor.com',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Cancel via iOS/Android subscription settings or through the app.',
   },
   {
     id: 'discord-nitro',
@@ -1889,6 +2484,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'other',
     iconKey: 'discord',
     url: 'https://discord.com/nitro',
+    cancellationUrl: 'https://discord.com/settings/subscriptions',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'User Settings > Subscriptions > Cancel. Server boosts are removed at period end.',
   },
   {
     id: 'discord-nitro-basic',
@@ -1898,6 +2496,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'other',
     iconKey: 'discord',
     url: 'https://discord.com/nitro',
+    cancellationUrl: 'https://discord.com/settings/subscriptions',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'User Settings > Subscriptions > Cancel.',
   },
   {
     id: 'snapchat-plus',
@@ -1907,6 +2508,8 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'other',
     iconKey: 'snapchat',
     url: 'https://www.snapchat.com',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Cancel via iOS/Android subscription settings.',
   },
   {
     id: 'x-premium',
@@ -1916,6 +2519,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'other',
     iconKey: 'x',
     url: 'https://x.com',
+    cancellationUrl: 'https://x.com/settings/manage_subscription',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Subscription > Cancel subscription.',
   },
   {
     id: 'x-premium-plus',
@@ -1925,6 +2531,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'other',
     iconKey: 'x',
     url: 'https://x.com',
+    cancellationUrl: 'https://x.com/settings/manage_subscription',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Subscription > Cancel subscription.',
   },
   {
     id: 'reddit-premium',
@@ -1934,6 +2543,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'other',
     iconKey: 'reddit',
     url: 'https://www.reddit.com/premium',
+    cancellationUrl: 'https://www.reddit.com/settings/premium',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Premium > Cancel.',
   },
   {
     id: 'patreon-avg',
@@ -1943,6 +2555,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'other',
     iconKey: 'patreon',
     url: 'https://www.patreon.com',
+    cancellationUrl: 'https://www.patreon.com/settings/memberships',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Settings > Memberships > Edit pledge > Cancel. Each creator cancelled individually.',
   },
   {
     id: 'bark',
@@ -1952,6 +2567,9 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'other',
     iconKey: 'bark',
     url: 'https://www.bark.us',
+    cancellationUrl: 'https://www.bark.us/account',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Account > Subscription > Cancel subscription.',
   },
   {
     id: 'life360-plus',
@@ -1961,6 +2579,8 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'other',
     iconKey: 'life360',
     url: 'https://www.life360.com',
+    cancellationDifficulty: 'easy',
+    cancellationNotes: 'Cancel via iOS/Android subscription settings. Reverts to free tier.',
   },
   {
     id: 'planet-fitness',
@@ -1970,6 +2590,8 @@ export const CATALOG_ENTRIES: readonly CatalogEntry[] = [
     category: 'other',
     iconKey: 'planet-fitness',
     url: 'https://www.planetfitness.com',
+    cancellationDifficulty: 'hard',
+    cancellationNotes: 'Must visit your home club in person or send a certified letter. No online or phone cancellation.',
   },
 ] as const;
 

@@ -1,10 +1,11 @@
-// Data models and Zod schemas — all 13 tables
+// Data models and Zod schemas — all 15 tables
 export {
   // Enums
   AccountType,
   TargetType,
   Frequency,
   AmountSign,
+  RuleMatchType,
   // BillingCycle — exported by catalog module, same enum values
   SubscriptionStatus,
   NotificationType,
@@ -33,6 +34,10 @@ export {
   NotificationLogSchema,
   NotificationLogInsertSchema,
   PreferenceSchema,
+  GoalSchema,
+  GoalInsertSchema,
+  TransactionRuleSchema,
+  TransactionRuleInsertSchema,
 } from './schemas';
 
 // Types
@@ -61,4 +66,8 @@ export type {
   NotificationLog,
   NotificationLogInsert,
   Preference,
+  Goal,
+  GoalInsert,
+  TransactionRule,
+  TransactionRuleInsert,
 } from './schemas';

@@ -1,0 +1,32 @@
+.track {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.sm {
+  height: 4px;
+}
+
+.md {
+  height: 8px;
+}
+
+.fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width 0.3s ease;
+}
+
+.teal {
+  background: var(--progress-green);
+}
+
+.amber {
+  background: var(--progress-amber);
+}
+
+.coral {
+  background: var(--progress-coral);
+}

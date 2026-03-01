@@ -116,6 +116,7 @@ vi.mock('expo-router', () => ({
 }));
 
 vi.mock('../hooks', () => ({
+  useGoals: () => ({ goals: [], goalsWithProgress: [], createGoal: vi.fn(), updateGoal: vi.fn(), deleteGoal: vi.fn(), allocateToGoal: vi.fn() }),
   useBudget: () => hookState.budget,
   useTransactions: () => ({
     transactions: hookState.transactions,

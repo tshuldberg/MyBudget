@@ -136,6 +136,63 @@ export type {
   BankSyncRuntimeOptions,
 } from './server-runtime';
 
+export {
+  reconcileTransactions,
+  resolvePendingTransactions,
+  mapBankTransactionToLocal,
+} from './transaction-sync';
+
+export type {
+  SyncReconciliationResult,
+  PendingResolution,
+  BankToLocalMapping,
+} from './transaction-sync';
+
+export {
+  createIdempotencyStore,
+  isWebhookDuplicate,
+  recordWebhookProcessed,
+  pruneExpiredEntries,
+} from './idempotency';
+
+export type {
+  IdempotencyStatus,
+  IdempotencyEntry,
+  IdempotencyStoreConfig,
+  IdempotencyStore,
+} from './idempotency';
+
+export {
+  createAuthGuard,
+  validateBankSyncToken,
+  checkRateLimit,
+} from './auth-guard';
+
+export type {
+  AuthGuardConfig,
+  AuthResult,
+  RateLimitResult,
+  RateLimitOptions,
+  AuthGuard,
+  GuardCheckRequest,
+  GuardCheckResult,
+  TokenValidator,
+  TokenValidationResult,
+} from './auth-guard';
+
+export {
+  detectRecurringCharges,
+  normalizePayeeName,
+} from './recurring-detector';
+
+export type {
+  DetectedSubscription,
+} from './recurring-detector';
+
+export {
+  getSubscriptionSuggestions,
+} from './subscription-discovery';
+
 export type {
   AwsKmsEncryptInput,
   AwsKmsDecryptInput,

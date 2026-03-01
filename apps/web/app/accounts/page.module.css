@@ -1,0 +1,111 @@
+.netWorthCard {
+  margin-bottom: var(--spacing-lg);
+}
+
+.netWorthHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-sm);
+}
+
+.netWorthLabel {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.netWorthAmount {
+  font-size: var(--font-size-xxl);
+  font-weight: 700;
+  margin-bottom: var(--spacing-md);
+}
+
+.netWorthBreakdown {
+  display: flex;
+  gap: var(--spacing-xl);
+}
+
+.breakdownItem {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.breakdownLabel {
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+}
+
+.breakdownValue {
+  font-size: var(--font-size-md);
+  font-weight: 600;
+}
+
+.section {
+  margin-bottom: var(--spacing-xl);
+}
+
+.sectionTitle {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: var(--spacing-md);
+}
+
+.accountGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: var(--spacing-md);
+}
+
+.connectCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-xl);
+  margin-top: var(--spacing-lg);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-lg);
+  background: rgba(78, 205, 196, 0.03);
+}
+
+.connectIcon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(78, 205, 196, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-teal);
+}
+
+.connectTitle {
+  font-size: var(--font-size-md);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.connectDesc {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  max-width: 360px;
+}
+
+@media (max-width: 768px) {
+  .accountGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .netWorthBreakdown {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+}
