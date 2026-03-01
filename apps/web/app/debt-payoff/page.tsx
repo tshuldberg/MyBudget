@@ -34,17 +34,17 @@ interface PlanWithDebts {
   id: string;
   name: string;
   strategy: string;
-  extra_payment: number;
-  is_active: number;
+  extraPayment: number;
+  isActive: boolean;
   debts: Array<{
     id: string;
-    plan_id: string;
+    planId: string;
     name: string;
     balance: number;
-    interest_rate: number;
-    minimum_payment: number;
-    compounding: string;
-    sort_order: number;
+    interestRate: number;
+    minimumPayment: number;
+    compounding: 'monthly' | 'daily';
+    sortOrder: number;
   }>;
 }
 
@@ -109,7 +109,7 @@ export default function DebtPayoffPage() {
   }
 
   // Build chart data from projection
-  const chartData: Array<{ month: number; [key: string]: number }> = [];
+  const chartData: Array<Record<string, number>> = [];
   if (projection && projection.schedule.length > 0) {
     const debtNames = [...new Set(projection.schedule.map((e) => e.debtName))];
     const maxMonth = projection.totalMonths;
@@ -189,8 +189,8 @@ export default function DebtPayoffPage() {
                       <div key={debt.id} className={styles.debtRow}>
                         <span className={styles.debtName}>{debt.name}</span>
                         <span className={styles.debtDetail}>{formatCurrency(debt.balance)}</span>
-                        <span className={styles.debtDetail}>{(debt.interest_rate / 100).toFixed(2)}%</span>
-                        <span className={styles.debtDetail}>{formatCurrency(debt.minimum_payment)}/mo</span>
+                        <span className={styles.debtDetail}>{(debt.interestRate / 100).toFixed(2)}%</span>
+                        <span className={styles.debtDetail}>{formatCurrency(debt.minimumPayment)}/mo</span>
                         <span className={styles.debtDetail}>{debt.compounding}</span>
                         <button className={styles.debtDeleteBtn} onClick={() => handleDeleteDebt(debt.id)}>
                           <Trash2 size={14} />

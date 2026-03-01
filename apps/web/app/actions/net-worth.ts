@@ -8,7 +8,6 @@ import {
   captureSnapshot,
 } from '@mybudget/shared';
 import type { NetWorthSnapshotRow } from '@mybudget/shared';
-import { randomUUID } from 'crypto';
 
 export async function fetchNetWorthSnapshots(): Promise<NetWorthSnapshotRow[]> {
   return _listSnapshots(getDb());
@@ -23,17 +22,17 @@ export async function createNetWorthSnapshot(month: string): Promise<NetWorthSna
     name: a.name,
     type: a.type as 'checking' | 'savings' | 'credit_card' | 'cash',
     balance: a.balance,
-    isActive: a.is_active === 1,
+    isActive: !!a.is_active,
   }));
 
   const snapshot = captureSnapshot({ accounts: input, month });
 
-  return _createSnapshot(db, randomUUID(), {
+  return _createSnapshot(db, {
     month: snapshot.month,
     assets: snapshot.assets,
     liabilities: snapshot.liabilities,
-    net_worth: snapshot.netWorth,
-    account_balances: snapshot.accountBalances,
+    netWorth: snapshot.netWorth,
+    accountBalances: snapshot.accountBalances,
   });
 }
 

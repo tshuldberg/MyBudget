@@ -58,7 +58,7 @@ export default function NetWorthPage() {
       if (snapshots.length > 0) {
         setData(snapshots.map((s) => ({
           month: s.month,
-          netWorth: s.net_worth,
+          netWorth: s.netWorth,
         })));
       } else {
         setData(estimated);

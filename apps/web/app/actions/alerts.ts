@@ -15,7 +15,6 @@ import type {
   AlertHistoryRow,
   AlertNotification,
 } from '@mybudget/shared';
-import { randomUUID } from 'crypto';
 
 export async function fetchAlerts(): Promise<AlertRow[]> {
   return _listAlerts(getDb());
@@ -25,9 +24,9 @@ export async function createBudgetAlert(
   categoryId: string,
   thresholdPct: number,
 ): Promise<AlertRow> {
-  return _createAlert(getDb(), randomUUID(), {
-    category_id: categoryId,
-    threshold_pct: thresholdPct,
+  return _createAlert(getDb(), {
+    categoryId,
+    thresholdPct,
   });
 }
 
@@ -35,7 +34,7 @@ export async function updateAlertEnabled(
   alertId: string,
   enabled: boolean,
 ): Promise<void> {
-  _updateAlert(getDb(), alertId, { is_enabled: enabled ? 1 : 0 });
+  _updateAlert(getDb(), alertId, { isEnabled: enabled });
 }
 
 export async function deleteBudgetAlert(alertId: string): Promise<void> {
@@ -83,34 +82,34 @@ export async function checkAndFireAlerts(month?: string): Promise<AlertNotificat
 
   const alertConfigs = alerts.map((a) => ({
     id: a.id,
-    categoryId: a.category_id,
-    thresholdPct: a.threshold_pct,
-    isEnabled: a.is_enabled === 1,
+    categoryId: a.categoryId,
+    thresholdPct: a.thresholdPct,
+    isEnabled: a.isEnabled,
   }));
 
   const historyEntries = history.map((h) => ({
-    alertId: h.alert_id,
-    categoryId: h.category_id,
+    alertId: h.alertId,
+    categoryId: h.categoryId,
     month: h.month,
-    thresholdPct: h.threshold_pct,
-    spentPct: h.spent_pct,
-    amountSpent: h.amount_spent,
-    targetAmount: h.target_amount,
-    notifiedAt: h.notified_at,
+    thresholdPct: h.thresholdPct,
+    spentPct: h.spentPct,
+    amountSpent: h.amountSpent,
+    targetAmount: h.targetAmount,
+    notifiedAt: h.notifiedAt,
   }));
 
   const notifications = checkAlerts(alertConfigs, categoryStates, historyEntries, targetMonth);
 
   // Persist any fired alerts to history
   for (const n of notifications) {
-    _createAlertHistory(db, randomUUID(), {
-      alert_id: n.alertId,
-      category_id: n.categoryId,
+    _createAlertHistory(db, {
+      alertId: n.alertId,
+      categoryId: n.categoryId,
       month: targetMonth,
-      threshold_pct: n.thresholdPct,
-      spent_pct: n.spentPct,
-      amount_spent: n.amountSpent,
-      target_amount: n.targetAmount,
+      thresholdPct: n.thresholdPct,
+      spentPct: n.spentPct,
+      amountSpent: n.amountSpent,
+      targetAmount: n.targetAmount,
     });
   }
 

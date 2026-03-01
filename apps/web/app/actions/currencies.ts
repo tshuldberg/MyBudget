@@ -12,7 +12,6 @@ import type {
   CurrencyRow,
   ExchangeRateRow,
 } from '@mybudget/shared';
-import { randomUUID } from 'crypto';
 
 export async function fetchCurrencies(): Promise<CurrencyRow[]> {
   return _listCurrencies(getDb());
@@ -27,6 +26,7 @@ export async function addCurrency(
     code: code.toUpperCase(),
     name,
     symbol,
+    decimalPlaces: 2,
   });
 }
 
@@ -37,11 +37,11 @@ export async function setExchangeRate(
 ): Promise<ExchangeRateRow> {
   const rateNum = parseFloat(rateDecimal);
   const rateInt = Math.round(rateNum * RATE_PRECISION);
-  return _upsertExchangeRate(getDb(), randomUUID(), {
-    from_currency: fromCurrency.toUpperCase(),
-    to_currency: toCurrency.toUpperCase(),
+  return _upsertExchangeRate(getDb(), {
+    fromCurrency: fromCurrency.toUpperCase(),
+    toCurrency: toCurrency.toUpperCase(),
     rate: rateInt,
-    rate_decimal: rateDecimal,
+    rateDecimal,
   });
 }
 

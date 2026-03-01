@@ -27,7 +27,7 @@ export async function fetchUpcomingTransactions(daysAhead = 30): Promise<Upcomin
     frequency: t.frequency as 'weekly' | 'biweekly' | 'monthly' | 'quarterly' | 'annually',
     nextDate: t.next_date,
     endDate: t.end_date,
-    isActive: t.is_active === 1,
+    isActive: !!t.is_active,
   }));
 
   const upcoming = getUpcomingTransactions(mapped, daysAhead);

@@ -17,7 +17,6 @@ import type {
   DebtPayoffResult,
   DebtInput,
 } from '@mybudget/shared';
-import { randomUUID } from 'crypto';
 
 export async function fetchDebtPayoffPlans(): Promise<Array<DebtPayoffPlanRow & { debts: DebtPayoffDebtRow[] }>> {
   const db = getDb();
@@ -32,7 +31,7 @@ export async function createDebtPayoffPlan(
   name: string,
   strategy: 'snowball' | 'avalanche',
 ): Promise<DebtPayoffPlanRow> {
-  return _createPlan(getDb(), randomUUID(), { name, strategy });
+  return _createPlan(getDb(), { name, strategy, extraPayment: 0 });
 }
 
 export async function addDebtToPlan(
@@ -43,12 +42,13 @@ export async function addDebtToPlan(
   minimumPayment: number,
   compounding: 'monthly' | 'daily',
 ): Promise<DebtPayoffDebtRow> {
-  return _createDebt(getDb(), randomUUID(), {
-    plan_id: planId,
+  return _createDebt(getDb(), {
+    planId,
+    accountId: null,
     name,
     balance,
-    interest_rate: interestRate,
-    minimum_payment: minimumPayment,
+    interestRate,
+    minimumPayment,
     compounding,
   });
 }
@@ -75,9 +75,9 @@ export async function calculatePayoffProjection(
     id: d.id,
     name: d.name,
     balance: d.balance,
-    interestRate: d.interest_rate,
-    minimumPayment: d.minimum_payment,
-    compounding: d.compounding as 'monthly' | 'daily',
+    interestRate: d.interestRate,
+    minimumPayment: d.minimumPayment,
+    compounding: d.compounding,
   }));
 
   if (strategy === 'avalanche') {

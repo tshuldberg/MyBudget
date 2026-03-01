@@ -12,6 +12,7 @@ import {
   Trash2, Info, Plus, Pencil, Eye, EyeOff,
   ArrowRight, Building2, RefreshCw, Unplug,
   Clock, CheckCircle2, AlertCircle, Loader2,
+  AlertTriangle, Coins,
 } from 'lucide-react';
 import {
   fetchCategoryGroups,
@@ -46,14 +47,16 @@ import type { BankConnection, BankAccount } from '../actions/bank-sync';
 import { PlaidLink } from '../../components/PlaidLink';
 import styles from './page.module.css';
 
-type Section = 'profile' | 'linked' | 'notifications' | 'categories' | 'rules' | 'data';
+type Section = 'profile' | 'linked' | 'notifications' | 'categories' | 'rules' | 'alerts' | 'currencies' | 'data';
 
-const NAV_ITEMS: Array<{ id: Section; label: string; icon: React.ReactNode }> = [
+const NAV_ITEMS: Array<{ id: Section; label: string; icon: React.ReactNode; href?: string }> = [
   { id: 'profile', label: 'Profile', icon: <User size={16} /> },
   { id: 'linked', label: 'Linked Accounts', icon: <Link2 size={16} /> },
   { id: 'notifications', label: 'Notifications', icon: <Bell size={16} /> },
   { id: 'categories', label: 'Categories', icon: <Tag size={16} /> },
   { id: 'rules', label: 'Transaction Rules', icon: <Repeat size={16} /> },
+  { id: 'alerts', label: 'Budget Alerts', icon: <AlertTriangle size={16} />, href: '/settings/alerts' },
+  { id: 'currencies', label: 'Currencies', icon: <Coins size={16} />, href: '/settings/currencies' },
   { id: 'data', label: 'Data', icon: <Download size={16} /> },
 ];
 
@@ -67,14 +70,25 @@ export default function SettingsPage() {
       <div className={styles.layout}>
         <nav className={styles.sidebar}>
           {NAV_ITEMS.map((item) => (
-            <button
-              key={item.id}
-              className={`${styles.navItem} ${section === item.id ? styles.navItemActive : ''}`}
-              onClick={() => setSection(item.id)}
-            >
-              {item.icon}
-              {item.label}
-            </button>
+            item.href ? (
+              <a
+                key={item.id}
+                href={item.href}
+                className={styles.navItem}
+              >
+                {item.icon}
+                {item.label}
+              </a>
+            ) : (
+              <button
+                key={item.id}
+                className={`${styles.navItem} ${section === item.id ? styles.navItemActive : ''}`}
+                onClick={() => setSection(item.id)}
+              >
+                {item.icon}
+                {item.label}
+              </button>
+            )
           ))}
         </nav>
 
