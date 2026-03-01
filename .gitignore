@@ -30,6 +30,13 @@ Thumbs.db
 
 # Turbo
 .turbo/
+.claude/worktrees/
+
+# Local app data
+apps/web/.data/
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
 
 # Testing
 coverage/
