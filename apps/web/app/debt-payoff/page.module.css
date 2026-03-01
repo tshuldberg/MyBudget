@@ -1,0 +1,194 @@
+/* Debt Payoff page */
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+/* Strategy toggle */
+.strategyToggle {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+.strategyBtn {
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  transition: all 0.15s ease;
+}
+
+.strategyBtn:hover {
+  border-color: var(--color-teal);
+  color: var(--text-primary);
+}
+
+.strategyBtnActive {
+  background: rgba(78, 205, 196, 0.12);
+  border-color: var(--color-teal);
+  color: var(--color-teal);
+}
+
+/* Summary cards */
+.summary {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-md);
+}
+
+.summaryCard {
+  text-align: center;
+}
+
+.summaryLabel {
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.summaryValue {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-top: var(--spacing-xs);
+}
+
+.summaryValueTeal {
+  color: var(--color-teal);
+}
+
+.summaryValueCoral {
+  color: var(--color-coral);
+}
+
+/* Add debt form */
+.addForm {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr auto;
+  gap: var(--spacing-sm);
+  align-items: flex-end;
+}
+
+/* Debt list */
+.debtList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.debtRow {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr auto;
+  gap: var(--spacing-sm);
+  align-items: center;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border);
+}
+
+.debtName {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: var(--font-size-sm);
+}
+
+.debtDetail {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+}
+
+.debtDeleteBtn {
+  background: none;
+  border: none;
+  color: var(--color-coral);
+  cursor: pointer;
+  padding: var(--spacing-xs);
+  border-radius: var(--radius-sm);
+  transition: background 0.15s ease;
+}
+
+.debtDeleteBtn:hover {
+  background: rgba(255, 107, 107, 0.12);
+}
+
+/* Extra payment */
+.extraPaymentRow {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--spacing-md);
+}
+
+/* Chart */
+.chartWrap {
+  height: 300px;
+}
+
+/* Amortization table */
+.amortTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--font-size-sm);
+}
+
+.amortTable th {
+  text-align: left;
+  padding: var(--spacing-sm);
+  border-bottom: 2px solid var(--border);
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.amortTable td {
+  padding: var(--spacing-sm);
+  border-bottom: 1px solid var(--border);
+  color: var(--text-secondary);
+}
+
+.amortTable tr:last-child td {
+  border-bottom: none;
+}
+
+.sectionTitle {
+  font-size: var(--font-size-md);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-sm);
+}
+
+@media (max-width: 900px) {
+  .summary {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .addForm {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .debtRow {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .summary {
+    grid-template-columns: 1fr;
+  }
+
+  .addForm {
+    grid-template-columns: 1fr;
+  }
+
+  .debtRow {
+    grid-template-columns: 1fr;
+  }
+}

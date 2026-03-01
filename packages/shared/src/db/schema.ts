@@ -295,6 +295,121 @@ CREATE TABLE IF NOT EXISTS transaction_rules (
   created_at TEXT NOT NULL DEFAULT (datetime('now'))
 );`;
 
+// -- 21. Net Worth Snapshots --
+export const CREATE_NET_WORTH_SNAPSHOTS = `
+CREATE TABLE IF NOT EXISTS net_worth_snapshots (
+  id TEXT PRIMARY KEY NOT NULL,
+  month TEXT NOT NULL,
+  assets INTEGER NOT NULL DEFAULT 0,
+  liabilities INTEGER NOT NULL DEFAULT 0,
+  net_worth INTEGER NOT NULL DEFAULT 0,
+  account_balances TEXT,
+  created_at TEXT NOT NULL DEFAULT (datetime('now')),
+  UNIQUE(month)
+);`;
+
+// -- 22. Debt Payoff Plans --
+export const CREATE_DEBT_PAYOFF_PLANS = `
+CREATE TABLE IF NOT EXISTS debt_payoff_plans (
+  id TEXT PRIMARY KEY NOT NULL,
+  name TEXT NOT NULL,
+  strategy TEXT NOT NULL CHECK(strategy IN ('snowball', 'avalanche')),
+  extra_payment INTEGER NOT NULL DEFAULT 0,
+  is_active INTEGER NOT NULL DEFAULT 1,
+  created_at TEXT NOT NULL DEFAULT (datetime('now')),
+  updated_at TEXT NOT NULL DEFAULT (datetime('now'))
+);`;
+
+// -- 23. Debt Payoff Debts --
+export const CREATE_DEBT_PAYOFF_DEBTS = `
+CREATE TABLE IF NOT EXISTS debt_payoff_debts (
+  id TEXT PRIMARY KEY NOT NULL,
+  plan_id TEXT NOT NULL REFERENCES debt_payoff_plans(id) ON DELETE CASCADE,
+  account_id TEXT REFERENCES accounts(id) ON DELETE SET NULL,
+  name TEXT NOT NULL,
+  balance INTEGER NOT NULL,
+  interest_rate INTEGER NOT NULL DEFAULT 0,
+  minimum_payment INTEGER NOT NULL DEFAULT 0,
+  compounding TEXT NOT NULL DEFAULT 'monthly' CHECK(compounding IN ('monthly', 'daily')),
+  sort_order INTEGER NOT NULL DEFAULT 0
+);`;
+
+// -- 24. Budget Rollovers --
+export const CREATE_BUDGET_ROLLOVERS = `
+CREATE TABLE IF NOT EXISTS budget_rollovers (
+  id TEXT PRIMARY KEY NOT NULL,
+  category_id TEXT NOT NULL REFERENCES categories(id) ON DELETE CASCADE,
+  from_month TEXT NOT NULL,
+  to_month TEXT NOT NULL,
+  amount INTEGER NOT NULL,
+  created_at TEXT NOT NULL DEFAULT (datetime('now')),
+  UNIQUE(category_id, from_month)
+);`;
+
+// -- 25. Budget Alerts --
+export const CREATE_BUDGET_ALERTS = `
+CREATE TABLE IF NOT EXISTS budget_alerts (
+  id TEXT PRIMARY KEY NOT NULL,
+  category_id TEXT NOT NULL REFERENCES categories(id) ON DELETE CASCADE,
+  threshold_pct INTEGER NOT NULL DEFAULT 80,
+  is_enabled INTEGER NOT NULL DEFAULT 1,
+  created_at TEXT NOT NULL DEFAULT (datetime('now')),
+  updated_at TEXT NOT NULL DEFAULT (datetime('now')),
+  UNIQUE(category_id, threshold_pct)
+);`;
+
+// -- 26. Alert History --
+export const CREATE_ALERT_HISTORY = `
+CREATE TABLE IF NOT EXISTS alert_history (
+  id TEXT PRIMARY KEY NOT NULL,
+  alert_id TEXT NOT NULL REFERENCES budget_alerts(id) ON DELETE CASCADE,
+  category_id TEXT NOT NULL,
+  month TEXT NOT NULL,
+  threshold_pct INTEGER NOT NULL,
+  spent_pct INTEGER NOT NULL,
+  amount_spent INTEGER NOT NULL,
+  target_amount INTEGER NOT NULL,
+  notified_at TEXT NOT NULL DEFAULT (datetime('now')),
+  UNIQUE(alert_id, month)
+);`;
+
+// -- 27. Currencies --
+export const CREATE_CURRENCIES = `
+CREATE TABLE IF NOT EXISTS currencies (
+  code TEXT PRIMARY KEY NOT NULL,
+  name TEXT NOT NULL,
+  symbol TEXT NOT NULL DEFAULT '',
+  decimal_places INTEGER NOT NULL DEFAULT 2,
+  is_base INTEGER NOT NULL DEFAULT 0,
+  created_at TEXT NOT NULL DEFAULT (datetime('now'))
+);`;
+
+// -- 28. Exchange Rates --
+export const CREATE_EXCHANGE_RATES = `
+CREATE TABLE IF NOT EXISTS exchange_rates (
+  id TEXT PRIMARY KEY NOT NULL,
+  from_currency TEXT NOT NULL REFERENCES currencies(code) ON DELETE CASCADE,
+  to_currency TEXT NOT NULL REFERENCES currencies(code) ON DELETE CASCADE,
+  rate INTEGER NOT NULL,
+  rate_decimal TEXT NOT NULL,
+  fetched_at TEXT NOT NULL DEFAULT (datetime('now')),
+  UNIQUE(from_currency, to_currency)
+);`;
+
+// -- 29. Shared Envelopes (future: household sharing) --
+export const CREATE_SHARED_ENVELOPES = `
+CREATE TABLE IF NOT EXISTS shared_envelopes (
+  id TEXT PRIMARY KEY NOT NULL,
+  category_id TEXT NOT NULL REFERENCES categories(id) ON DELETE CASCADE,
+  device_id TEXT NOT NULL,
+  partner_device_id TEXT,
+  sharing_mode TEXT NOT NULL DEFAULT 'joint' CHECK(sharing_mode IN ('joint', 'split')),
+  is_active INTEGER NOT NULL DEFAULT 1,
+  created_at TEXT NOT NULL DEFAULT (datetime('now')),
+  updated_at TEXT NOT NULL DEFAULT (datetime('now')),
+  UNIQUE(category_id)
+);`;
+
 // -- Indexes --
 export const BANK_SYNC_INDEXES = [
   `CREATE INDEX IF NOT EXISTS idx_bank_connections_status ON bank_connections(status);`,
@@ -312,6 +427,17 @@ export const GOALS_RULES_INDEXES = [
   `CREATE INDEX IF NOT EXISTS idx_goals_target_date ON goals(target_date);`,
   `CREATE INDEX IF NOT EXISTS idx_transaction_rules_is_enabled ON transaction_rules(is_enabled, priority);`,
   `CREATE INDEX IF NOT EXISTS idx_transaction_rules_category_id ON transaction_rules(category_id);`,
+];
+
+export const FEATURES_V4_INDEXES = [
+  `CREATE INDEX IF NOT EXISTS idx_net_worth_snapshots_month ON net_worth_snapshots(month);`,
+  `CREATE INDEX IF NOT EXISTS idx_debt_payoff_debts_plan_id ON debt_payoff_debts(plan_id);`,
+  `CREATE INDEX IF NOT EXISTS idx_budget_rollovers_category_month ON budget_rollovers(category_id, from_month);`,
+  `CREATE INDEX IF NOT EXISTS idx_budget_alerts_category_id ON budget_alerts(category_id);`,
+  `CREATE INDEX IF NOT EXISTS idx_alert_history_alert_id ON alert_history(alert_id);`,
+  `CREATE INDEX IF NOT EXISTS idx_alert_history_month ON alert_history(month);`,
+  `CREATE INDEX IF NOT EXISTS idx_exchange_rates_pair ON exchange_rates(from_currency, to_currency);`,
+  `CREATE INDEX IF NOT EXISTS idx_shared_envelopes_category_id ON shared_envelopes(category_id);`,
 ];
 
 export const CORE_INDEXES = [
@@ -339,6 +465,7 @@ export const CREATE_INDEXES = [
   ...CORE_INDEXES,
   ...BANK_SYNC_INDEXES,
   ...GOALS_RULES_INDEXES,
+  ...FEATURES_V4_INDEXES,
 ];
 
 /**
@@ -375,13 +502,26 @@ export const GOALS_RULES_TABLES = [
   CREATE_TRANSACTION_RULES,
 ];
 
+export const FEATURES_V4_TABLES = [
+  CREATE_NET_WORTH_SNAPSHOTS,
+  CREATE_DEBT_PAYOFF_PLANS,
+  CREATE_DEBT_PAYOFF_DEBTS,
+  CREATE_BUDGET_ROLLOVERS,
+  CREATE_BUDGET_ALERTS,
+  CREATE_ALERT_HISTORY,
+  CREATE_CURRENCIES,
+  CREATE_EXCHANGE_RATES,
+  CREATE_SHARED_ENVELOPES,
+];
+
 export const ALL_TABLES = [
   ...CORE_TABLES,
   ...BANK_SYNC_TABLES,
   ...GOALS_RULES_TABLES,
+  ...FEATURES_V4_TABLES,
 ];
 
 /**
  * Schema version — increment this when changing the schema.
  */
-export const SCHEMA_VERSION = 3;
+export const SCHEMA_VERSION = 4;

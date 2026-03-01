@@ -13,6 +13,8 @@ import {
   X,
   Landmark,
   Target,
+  Calendar,
+  TrendingDown,
 } from 'lucide-react';
 import { SidebarNavItem } from './SidebarNavItem';
 import styles from './Sidebar.module.css';
@@ -24,6 +26,8 @@ const NAV_ITEMS = [
   { href: '/subscriptions', label: 'Subscriptions', icon: RefreshCw },
   { href: '/goals', label: 'Goals', icon: Target },
   { href: '/reports', label: 'Reports', icon: BarChart3 },
+  { href: '/upcoming', label: 'Upcoming', icon: Calendar },
+  { href: '/debt-payoff', label: 'Debt Payoff', icon: TrendingDown },
   { href: '/accounts', label: 'Accounts', icon: Building2 },
 ];
 

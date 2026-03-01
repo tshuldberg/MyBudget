@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { PieChart, TrendingUp, Landmark } from 'lucide-react';
+import { PieChart, TrendingUp, Landmark, TrendingDown, Calendar } from 'lucide-react';
 import { PageHeader } from '../../components/layout/PageHeader';
 import { Card } from '../../components/ui/Card';
 import styles from './page.module.css';
@@ -28,6 +28,22 @@ const REPORT_CARDS = [
     icon: Landmark,
     color: 'rgba(160, 160, 200, 0.1)',
     iconColor: 'var(--color-lavender)',
+  },
+  {
+    title: 'Debt Payoff',
+    description: 'Plan your debt repayment with snowball or avalanche strategies.',
+    href: '/debt-payoff',
+    icon: TrendingDown,
+    color: 'rgba(255, 107, 107, 0.1)',
+    iconColor: 'var(--color-coral)',
+  },
+  {
+    title: 'Upcoming',
+    description: 'See scheduled transactions for the next 30 days.',
+    href: '/upcoming',
+    icon: Calendar,
+    color: 'rgba(245, 166, 35, 0.1)',
+    iconColor: 'var(--color-amber)',
   },
 ] as const;
 

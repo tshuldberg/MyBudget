@@ -338,3 +338,167 @@ export const TransactionRuleInsertSchema = TransactionRuleSchema.omit({
   priority: true,
 });
 export type TransactionRuleInsert = z.infer<typeof TransactionRuleInsertSchema>;
+
+// --- 16. Net Worth Snapshots ---
+
+export const NetWorthSnapshotSchema = z.object({
+  id,
+  month: monthFormat,
+  assets: cents,
+  liabilities: cents,
+  net_worth: cents,
+  account_balances: z.string().nullable(),
+  created_at: timestamp,
+});
+export type NetWorthSnapshot = z.infer<typeof NetWorthSnapshotSchema>;
+
+export const NetWorthSnapshotInsertSchema = NetWorthSnapshotSchema.omit({
+  id: true,
+  created_at: true,
+}).partial({ account_balances: true });
+export type NetWorthSnapshotInsert = z.infer<typeof NetWorthSnapshotInsertSchema>;
+
+// --- 17. Debt Payoff Plans ---
+
+export const DebtPayoffStrategy = z.enum(['snowball', 'avalanche']);
+export type DebtPayoffStrategy = z.infer<typeof DebtPayoffStrategy>;
+
+export const DebtPayoffPlanSchema = z.object({
+  id,
+  name: z.string().min(1).max(200),
+  strategy: DebtPayoffStrategy,
+  extra_payment: cents,
+  is_active: z.boolean(),
+  created_at: timestamp,
+  updated_at: timestamp,
+});
+export type DebtPayoffPlan = z.infer<typeof DebtPayoffPlanSchema>;
+
+export const DebtPayoffPlanInsertSchema = DebtPayoffPlanSchema.omit({
+  id: true,
+  created_at: true,
+  updated_at: true,
+}).partial({ extra_payment: true, is_active: true });
+export type DebtPayoffPlanInsert = z.infer<typeof DebtPayoffPlanInsertSchema>;
+
+// --- 18. Debt Payoff Debts ---
+
+export const CompoundingType = z.enum(['monthly', 'daily']);
+export type CompoundingType = z.infer<typeof CompoundingType>;
+
+export const DebtPayoffDebtSchema = z.object({
+  id,
+  plan_id: z.string().uuid(),
+  account_id: z.string().uuid().nullable(),
+  name: z.string().min(1).max(200),
+  balance: cents,
+  interest_rate: z.number().int(),
+  minimum_payment: cents,
+  compounding: CompoundingType,
+  sort_order: z.number().int().nonnegative(),
+});
+export type DebtPayoffDebt = z.infer<typeof DebtPayoffDebtSchema>;
+
+export const DebtPayoffDebtInsertSchema = DebtPayoffDebtSchema.omit({ id: true }).partial({
+  account_id: true,
+  interest_rate: true,
+  minimum_payment: true,
+  compounding: true,
+  sort_order: true,
+});
+export type DebtPayoffDebtInsert = z.infer<typeof DebtPayoffDebtInsertSchema>;
+
+// --- 19. Budget Rollovers ---
+
+export const BudgetRolloverSchema = z.object({
+  id,
+  category_id: z.string().uuid(),
+  from_month: monthFormat,
+  to_month: monthFormat,
+  amount: cents,
+  created_at: timestamp,
+});
+export type BudgetRollover = z.infer<typeof BudgetRolloverSchema>;
+
+export const BudgetRolloverInsertSchema = BudgetRolloverSchema.omit({
+  id: true,
+  created_at: true,
+});
+export type BudgetRolloverInsert = z.infer<typeof BudgetRolloverInsertSchema>;
+
+// --- 20. Budget Alerts ---
+
+export const BudgetAlertSchema = z.object({
+  id,
+  category_id: z.string().uuid(),
+  threshold_pct: z.number().int().min(1).max(200),
+  is_enabled: z.boolean(),
+  created_at: timestamp,
+  updated_at: timestamp,
+});
+export type BudgetAlert = z.infer<typeof BudgetAlertSchema>;
+
+export const BudgetAlertInsertSchema = BudgetAlertSchema.omit({
+  id: true,
+  created_at: true,
+  updated_at: true,
+}).partial({ threshold_pct: true, is_enabled: true });
+export type BudgetAlertInsert = z.infer<typeof BudgetAlertInsertSchema>;
+
+// --- 21. Alert History ---
+
+export const AlertHistorySchema = z.object({
+  id,
+  alert_id: z.string().uuid(),
+  category_id: z.string().uuid(),
+  month: monthFormat,
+  threshold_pct: z.number().int(),
+  spent_pct: z.number().int(),
+  amount_spent: cents,
+  target_amount: cents,
+  notified_at: timestamp,
+});
+export type AlertHistory = z.infer<typeof AlertHistorySchema>;
+
+export const AlertHistoryInsertSchema = AlertHistorySchema.omit({
+  id: true,
+  notified_at: true,
+});
+export type AlertHistoryInsert = z.infer<typeof AlertHistoryInsertSchema>;
+
+// --- 22. Currencies ---
+
+export const CurrencySchema = z.object({
+  code: z.string().length(3),
+  name: z.string().min(1).max(100),
+  symbol: z.string().max(10),
+  decimal_places: z.number().int().nonnegative(),
+  is_base: z.boolean(),
+  created_at: timestamp,
+});
+export type Currency = z.infer<typeof CurrencySchema>;
+
+export const CurrencyInsertSchema = CurrencySchema.omit({ created_at: true }).partial({
+  symbol: true,
+  decimal_places: true,
+  is_base: true,
+});
+export type CurrencyInsert = z.infer<typeof CurrencyInsertSchema>;
+
+// --- 23. Exchange Rates ---
+
+export const ExchangeRateSchema = z.object({
+  id,
+  from_currency: z.string().length(3),
+  to_currency: z.string().length(3),
+  rate: z.number().int(),
+  rate_decimal: z.string(),
+  fetched_at: timestamp,
+});
+export type ExchangeRate = z.infer<typeof ExchangeRateSchema>;
+
+export const ExchangeRateInsertSchema = ExchangeRateSchema.omit({
+  id: true,
+  fetched_at: true,
+});
+export type ExchangeRateInsert = z.infer<typeof ExchangeRateInsertSchema>;

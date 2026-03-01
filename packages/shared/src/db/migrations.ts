@@ -15,6 +15,8 @@ import {
   BANK_SYNC_TABLES,
   CORE_INDEXES,
   CORE_TABLES,
+  FEATURES_V4_INDEXES,
+  FEATURES_V4_TABLES,
   GOALS_RULES_INDEXES,
   GOALS_RULES_TABLES,
   SCHEMA_VERSION,
@@ -67,9 +69,23 @@ const migration003: Migration = {
 };
 
 /**
+ * Migration 4: Reporting, analytics, alerts, multi-currency, and sharing tables.
+ */
+const migration004: Migration = {
+  version: 4,
+  description: 'Reporting, analytics, alerts, multi-currency, and sharing tables',
+  statements: [
+    ...FEATURES_V4_TABLES,
+    ...FEATURES_V4_INDEXES,
+    // Seed default base currency
+    `INSERT OR IGNORE INTO currencies (code, name, symbol, decimal_places, is_base) VALUES ('USD', 'US Dollar', '$', 2, 1);`,
+  ],
+};
+
+/**
  * All migrations in order. Add new migrations here.
  */
-export const MIGRATIONS: Migration[] = [migration001, migration002, migration003];
+export const MIGRATIONS: Migration[] = [migration001, migration002, migration003, migration004];
 
 /**
  * The preference key used to track schema version.

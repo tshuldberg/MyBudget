@@ -161,3 +161,111 @@ export type {
   RuleInsert,
   RuleUpdate,
 } from './rules-crud';
+
+// Net Worth Snapshot CRUD
+export {
+  createSnapshot,
+  getSnapshot,
+  getSnapshotByMonth,
+  listSnapshots,
+  updateSnapshot,
+  deleteSnapshot,
+} from './net-worth-crud';
+export type {
+  NetWorthSnapshotRow,
+  NetWorthSnapshotInsert,
+  NetWorthSnapshotUpdate,
+} from './net-worth-crud';
+
+// Debt Payoff CRUD
+export {
+  createPlan,
+  getPlan,
+  listPlans,
+  updatePlan,
+  deletePlan,
+  getActivePlans,
+  createDebt,
+  getDebt,
+  listDebtsByPlan,
+  updateDebt,
+  deleteDebt,
+} from './debt-payoff-crud';
+export type {
+  DebtPayoffPlanRow,
+  DebtPayoffPlanInsert,
+  DebtPayoffPlanUpdate,
+  DebtPayoffDebtRow,
+  DebtPayoffDebtInsert,
+  DebtPayoffDebtUpdate,
+} from './debt-payoff-crud';
+
+// Rollover CRUD
+export {
+  createRollover,
+  getRollover,
+  listRollovers,
+  getRolloversByMonth,
+  getRolloversByCategory,
+  deleteRollover,
+  deleteRolloversByMonth,
+} from './rollover-crud';
+export type {
+  RolloverRow,
+  RolloverInsert as RolloverCrudInsert,
+} from './rollover-crud';
+
+// Budget Alerts CRUD
+export {
+  createAlert,
+  getAlert,
+  listAlerts,
+  getAlertsByCategory,
+  updateAlert,
+  deleteAlert,
+  createAlertHistory,
+  getAlertHistory,
+  getAlertHistoryByMonth,
+  deleteAlertHistory,
+} from './alerts-crud';
+export type {
+  AlertRow,
+  AlertInsert as AlertCrudInsert,
+  AlertUpdate as AlertCrudUpdate,
+  AlertHistoryRow,
+  AlertHistoryInsert as AlertHistoryCrudInsert,
+} from './alerts-crud';
+
+// Currency CRUD
+export {
+  createCurrency,
+  getCurrency,
+  listCurrencies,
+  getBaseCurrency,
+  deleteCurrency,
+  upsertExchangeRate,
+  getExchangeRate,
+  listExchangeRates,
+  deleteExchangeRate,
+} from './currency-crud';
+export type {
+  CurrencyRow,
+  CurrencyInsert as CurrencyCrudInsert,
+  ExchangeRateRow,
+  ExchangeRateInsert as ExchangeRateCrudInsert,
+} from './currency-crud';
+
+// V4 Schema exports
+export {
+  CREATE_NET_WORTH_SNAPSHOTS,
+  CREATE_DEBT_PAYOFF_PLANS,
+  CREATE_DEBT_PAYOFF_DEBTS,
+  CREATE_BUDGET_ROLLOVERS,
+  CREATE_BUDGET_ALERTS,
+  CREATE_ALERT_HISTORY,
+  CREATE_CURRENCIES,
+  CREATE_EXCHANGE_RATES,
+  CREATE_SHARED_ENVELOPES,
+  FEATURES_V4_TABLES,
+  FEATURES_V4_INDEXES,
+} from './schema';
