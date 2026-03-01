@@ -282,6 +282,69 @@
   padding: var(--spacing-lg);
 }
 
+/* Smart Widgets */
+.smartRow {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-md);
+}
+
+.smartCard {
+  display: flex;
+  flex-direction: column;
+}
+
+.smartAmount {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-top: 4px;
+}
+
+.smartDetail {
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* Goals */
+.goalList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.goalRow {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.goalInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.goalName {
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.goalAmounts {
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+}
+
+.goalMeta {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+}
+
 /* Skeleton */
 .skeleton {
   height: 32px;
@@ -314,5 +377,10 @@
   .wide {
     grid-column: span 1;
     grid-row: auto;
+  }
+
+  .smartRow {
+    grid-column: span 1;
+    grid-template-columns: 1fr;
   }
 }

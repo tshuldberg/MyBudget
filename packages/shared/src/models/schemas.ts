@@ -288,3 +288,53 @@ export const PreferenceSchema = z.object({
   value: z.string(),
 });
 export type Preference = z.infer<typeof PreferenceSchema>;
+
+// --- 14. Goals ---
+
+export const GoalSchema = z.object({
+  id,
+  name: z.string().min(1).max(200),
+  target_amount_cents: cents,
+  current_amount_cents: cents,
+  target_date: dateFormat.nullable(),
+  category_id: z.string().uuid().nullable(),
+  created_at: timestamp,
+  updated_at: timestamp,
+});
+export type Goal = z.infer<typeof GoalSchema>;
+
+export const GoalInsertSchema = GoalSchema.omit({
+  id: true,
+  created_at: true,
+  updated_at: true,
+}).partial({
+  current_amount_cents: true,
+  target_date: true,
+  category_id: true,
+});
+export type GoalInsert = z.infer<typeof GoalInsertSchema>;
+
+// --- 15. Transaction Rules ---
+
+export const RuleMatchType = z.enum(['contains', 'exact', 'starts_with']);
+export type RuleMatchType = z.infer<typeof RuleMatchType>;
+
+export const TransactionRuleSchema = z.object({
+  id,
+  payee_pattern: z.string().min(1).max(200),
+  match_type: RuleMatchType,
+  category_id: z.string().uuid(),
+  is_enabled: z.boolean(),
+  priority: z.number().int().nonnegative(),
+  created_at: timestamp,
+});
+export type TransactionRule = z.infer<typeof TransactionRuleSchema>;
+
+export const TransactionRuleInsertSchema = TransactionRuleSchema.omit({
+  id: true,
+  created_at: true,
+}).partial({
+  is_enabled: true,
+  priority: true,
+});
+export type TransactionRuleInsert = z.infer<typeof TransactionRuleInsertSchema>;

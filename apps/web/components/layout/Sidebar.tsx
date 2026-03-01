@@ -12,6 +12,7 @@ import {
   Menu,
   X,
   Landmark,
+  Target,
 } from 'lucide-react';
 import { SidebarNavItem } from './SidebarNavItem';
 import styles from './Sidebar.module.css';
@@ -21,6 +22,7 @@ const NAV_ITEMS = [
   { href: '/budget', label: 'Budget', icon: Wallet },
   { href: '/transactions', label: 'Transactions', icon: ArrowLeftRight },
   { href: '/subscriptions', label: 'Subscriptions', icon: RefreshCw },
+  { href: '/goals', label: 'Goals', icon: Target },
   { href: '/reports', label: 'Reports', icon: BarChart3 },
   { href: '/accounts', label: 'Accounts', icon: Building2 },
 ];

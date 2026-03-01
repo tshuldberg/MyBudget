@@ -10,7 +10,8 @@ import { Dialog } from '../../components/ui/Dialog';
 import {
   User, Link2, Bell, Tag, Repeat, Download,
   Trash2, Info, Plus, Pencil, Eye, EyeOff,
-  ArrowRight, Building2,
+  ArrowRight, Building2, RefreshCw, Unplug,
+  Clock, CheckCircle2, AlertCircle, Loader2,
 } from 'lucide-react';
 import {
   fetchCategoryGroups,
@@ -23,7 +24,26 @@ import {
   deleteCategory,
 } from '../actions/categories';
 import { fetchAccounts } from '../actions/accounts';
-import type { CategoryGroup, Category, Account } from '@mybudget/shared';
+import {
+  fetchBankConnections,
+  fetchBankAccounts,
+  disconnectBank,
+} from '../actions/bank-sync';
+import {
+  fetchTransactionRules,
+  createTransactionRule,
+  updateTransactionRule,
+  deleteTransactionRule,
+  testRuleMatches,
+} from '../actions/transaction-rules';
+import type {
+  CategoryGroup,
+  Category,
+  Account,
+  TransactionRule,
+} from '@mybudget/shared';
+import type { BankConnection, BankAccount } from '../actions/bank-sync';
+import { PlaidLink } from '../../components/PlaidLink';
 import styles from './page.module.css';
 
 type Section = 'profile' | 'linked' | 'notifications' | 'categories' | 'rules' | 'data';
@@ -129,71 +149,181 @@ function ProfileSection() {
 /* ─── Linked Accounts ──────────────────────── */
 
 function LinkedAccountsSection() {
-  const [accounts, setAccounts] = useState<Account[]>([]);
+  const [connections, setConnections] = useState<BankConnection[]>([]);
+  const [bankAccounts, setBankAccounts] = useState<BankAccount[]>([]);
+  const [manualAccounts, setManualAccounts] = useState<Account[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetchAccounts().then(setAccounts);
+  const loadData = useCallback(async () => {
+    const [conns, bAccts, accts] = await Promise.all([
+      fetchBankConnections(),
+      fetchBankAccounts(),
+      fetchAccounts(),
+    ]);
+    setConnections(conns);
+    setBankAccounts(bAccts);
+    setManualAccounts(accts);
+    setLoading(false);
   }, []);
 
-  const bankAccounts = accounts.filter((a) => a.type === 'checking' || a.type === 'savings');
-  const cardAccounts = accounts.filter((a) => a.type === 'credit_card');
+  useEffect(() => { loadData(); }, [loadData]);
+
+  async function handleDisconnect(connectionId: string) {
+    await disconnectBank(connectionId);
+    loadData();
+  }
+
+  function formatLastSync(date: string | null): string {
+    if (!date) return 'Never synced';
+    const d = new Date(date);
+    const now = new Date();
+    const diffMs = now.getTime() - d.getTime();
+    const diffMins = Math.floor(diffMs / 60000);
+    if (diffMins < 1) return 'Just now';
+    if (diffMins < 60) return `${diffMins}m ago`;
+    const diffHours = Math.floor(diffMins / 60);
+    if (diffHours < 24) return `${diffHours}h ago`;
+    const diffDays = Math.floor(diffHours / 24);
+    return `${diffDays}d ago`;
+  }
+
+  const activeConnections = connections.filter((c) => c.status !== 'disconnected');
+  const hasConnections = activeConnections.length > 0;
+
+  if (loading) {
+    return (
+      <>
+        <h2 className={styles.sectionTitle}>Linked Accounts</h2>
+        <p className={styles.sectionSubtitle}>Manage connected bank accounts and credit cards</p>
+        <Card>
+          <div style={{ padding: 'var(--spacing-lg)', textAlign: 'center', color: 'var(--text-muted)' }}>
+            Loading...
+          </div>
+        </Card>
+      </>
+    );
+  }
 
   return (
     <>
       <h2 className={styles.sectionTitle}>Linked Accounts</h2>
       <p className={styles.sectionSubtitle}>Manage connected bank accounts and credit cards</p>
 
-      {accounts.length === 0 ? (
+      {!hasConnections && manualAccounts.length === 0 ? (
         <Card>
           <div className={styles.emptyState}>
             <div className={styles.emptyIcon}>🏦</div>
-            <div className={styles.emptyText}>No accounts linked yet. Add your bank accounts to get started.</div>
-            <Button variant="primary" size="sm">
-              <Plus size={14} /> Link Account
-            </Button>
+            <div className={styles.emptyText}>No accounts linked yet. Connect your bank to sync transactions automatically.</div>
+            <PlaidLink onSuccess={loadData} size="sm" />
           </div>
         </Card>
       ) : (
         <div className={styles.linkedSection}>
-          {bankAccounts.length > 0 && (
+          {/* Bank Connections */}
+          {activeConnections.map((conn) => {
+            const connAccounts = bankAccounts.filter((a) => a.connection_id === conn.id);
+            const statusIcon = conn.status === 'active'
+              ? <CheckCircle2 size={14} color="var(--color-teal)" />
+              : conn.status === 'error'
+              ? <AlertCircle size={14} color="var(--color-coral)" />
+              : <Clock size={14} color="var(--text-muted)" />;
+
+            return (
+              <Card key={conn.id}>
+                <div className={styles.groupHeader}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-sm)' }}>
+                    <Building2 size={16} color="var(--text-secondary)" />
+                    <span className={styles.groupName}>
+                      {conn.institution_name ?? conn.display_name}
+                    </span>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-sm)' }}>
+                    <span className={conn.status === 'active' ? styles.syncBadge : styles.errorBadge}>
+                      {statusIcon} {conn.status === 'active' ? 'Connected' : conn.status === 'error' ? 'Error' : 'Pending'}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Last synced */}
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 'var(--spacing-xs)',
+                  fontSize: 'var(--font-size-xs)',
+                  color: 'var(--text-muted)',
+                  marginBottom: 'var(--spacing-md)',
+                }}>
+                  <Clock size={12} />
+                  Last synced: {formatLastSync(conn.last_successful_sync)}
+                </div>
+
+                {/* Connected accounts */}
+                {connAccounts.map((a) => (
+                  <div key={a.id} className={styles.linkedAccount}>
+                    <div className={styles.linkedIcon}>
+                      {a.type === 'credit_card' ? '💳' : <Building2 size={18} />}
+                    </div>
+                    <div className={styles.linkedInfo}>
+                      <div className={styles.linkedName}>
+                        {a.name}
+                        {a.mask && <span style={{ color: 'var(--text-muted)' }}> ****{a.mask}</span>}
+                      </div>
+                      <div className={styles.linkedStatus}>{a.official_name ?? a.type}</div>
+                    </div>
+                  </div>
+                ))}
+
+                {/* Actions */}
+                <div style={{ display: 'flex', gap: 'var(--spacing-sm)', marginTop: 'var(--spacing-md)' }}>
+                  {conn.status === 'error' && (
+                    <PlaidLink
+                      onSuccess={loadData}
+                      variant="secondary"
+                      size="sm"
+                      label="Reconnect"
+                    />
+                  )}
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => handleDisconnect(conn.id)}
+                    style={{ color: 'var(--color-coral)' }}
+                  >
+                    <Unplug size={14} /> Disconnect
+                  </Button>
+                </div>
+              </Card>
+            );
+          })}
+
+          {/* Manual-only accounts (not tied to a bank connection) */}
+          {manualAccounts.length > 0 && (
             <Card>
               <div className={styles.groupHeader}>
-                <span className={styles.groupName}>Bank Accounts</span>
+                <span className={styles.groupName}>Manual Accounts</span>
               </div>
-              {bankAccounts.map((a) => (
+              {manualAccounts.map((a) => (
                 <div key={a.id} className={styles.linkedAccount}>
                   <div className={styles.linkedIcon}>
-                    <Building2 size={18} />
+                    {a.type === 'credit_card' ? '💳' : a.type === 'cash' ? '💵' : <Building2 size={18} />}
                   </div>
                   <div className={styles.linkedInfo}>
                     <div className={styles.linkedName}>{a.name}</div>
-                    <div className={styles.linkedStatus}>{a.type === 'checking' ? 'Checking' : 'Savings'}</div>
+                    <div className={styles.linkedStatus}>
+                      {a.type === 'checking' ? 'Checking' : a.type === 'savings' ? 'Savings' : a.type === 'credit_card' ? 'Credit Card' : 'Cash'}
+                    </div>
                   </div>
-                  <span className={styles.syncBadge}>Connected</span>
                 </div>
               ))}
             </Card>
           )}
-          {cardAccounts.length > 0 && (
-            <Card>
-              <div className={styles.groupHeader}>
-                <span className={styles.groupName}>Credit Cards</span>
-              </div>
-              {cardAccounts.map((a) => (
-                <div key={a.id} className={styles.linkedAccount}>
-                  <div className={styles.linkedIcon}>💳</div>
-                  <div className={styles.linkedInfo}>
-                    <div className={styles.linkedName}>{a.name}</div>
-                    <div className={styles.linkedStatus}>Credit Card</div>
-                  </div>
-                  <span className={styles.syncBadge}>Connected</span>
-                </div>
-              ))}
-            </Card>
-          )}
-          <Button variant="secondary" size="sm">
-            <Plus size={14} /> Link Another Account
-          </Button>
+
+          <PlaidLink
+            onSuccess={loadData}
+            variant="secondary"
+            size="sm"
+            label="Connect Another Account"
+          />
         </div>
       )}
     </>
@@ -496,62 +626,79 @@ function AddCategoryDialog({ groupId, onClose, onSave }: {
 
 /* ─── Transaction Rules ────────────────────── */
 
-interface TransactionRule {
-  id: string;
-  payeeContains: string;
-  categoryName: string;
-  categoryId: string;
-}
-
 function TransactionRulesSection() {
   const [rules, setRules] = useState<TransactionRule[]>([]);
   const [newPayee, setNewPayee] = useState('');
   const [newCatId, setNewCatId] = useState('');
+  const [newMatchType, setNewMatchType] = useState<'contains' | 'exact' | 'starts_with'>('contains');
   const [categories, setCategories] = useState<Array<{ id: string; name: string; emoji: string | null }>>([]);
+  const [testCount, setTestCount] = useState<number | null>(null);
+  const [testing, setTesting] = useState(false);
 
-  useEffect(() => {
-    // Load categories for the dropdown
-    fetchCategoryGroups(false).then(async (groups) => {
-      const allCats: Array<{ id: string; name: string; emoji: string | null }> = [];
-      for (const g of groups) {
-        const cats = await fetchCategoriesByGroup(g.id);
-        for (const c of cats) {
-          allCats.push({ id: c.id, name: c.name, emoji: c.emoji });
-        }
+  const loadData = useCallback(async () => {
+    const [dbRules, groups] = await Promise.all([
+      fetchTransactionRules(),
+      fetchCategoryGroups(false),
+    ]);
+    setRules(dbRules);
+
+    const allCats: Array<{ id: string; name: string; emoji: string | null }> = [];
+    for (const g of groups) {
+      const cats = await fetchCategoriesByGroup(g.id);
+      for (const c of cats) {
+        allCats.push({ id: c.id, name: c.name, emoji: c.emoji });
       }
-      setCategories(allCats);
-    });
-
-    // Load saved rules from localStorage
-    const saved = localStorage.getItem('mybudget_txn_rules');
-    if (saved) {
-      try { setRules(JSON.parse(saved)); } catch { /* ignore */ }
     }
+    setCategories(allCats);
   }, []);
 
-  function saveRules(updated: TransactionRule[]) {
-    setRules(updated);
-    localStorage.setItem('mybudget_txn_rules', JSON.stringify(updated));
-  }
+  useEffect(() => { loadData(); }, [loadData]);
 
-  function handleAddRule() {
+  async function handleAddRule() {
     if (!newPayee.trim() || !newCatId) return;
-    const cat = categories.find((c) => c.id === newCatId);
-    if (!cat) return;
-    const rule: TransactionRule = {
-      id: crypto.randomUUID(),
-      payeeContains: newPayee.trim(),
-      categoryName: `${cat.emoji ?? ''} ${cat.name}`.trim(),
-      categoryId: newCatId,
-    };
-    saveRules([...rules, rule]);
+    await createTransactionRule({
+      payee_pattern: newPayee.trim(),
+      match_type: newMatchType,
+      category_id: newCatId,
+    });
     setNewPayee('');
     setNewCatId('');
+    setTestCount(null);
+    loadData();
   }
 
-  function handleDeleteRule(id: string) {
-    saveRules(rules.filter((r) => r.id !== id));
+  async function handleDeleteRule(id: string) {
+    await deleteTransactionRule(id);
+    loadData();
   }
+
+  async function handleToggleRule(rule: TransactionRule) {
+    await updateTransactionRule(rule.id, { is_enabled: !rule.is_enabled });
+    loadData();
+  }
+
+  async function handleTestRule() {
+    if (!newPayee.trim()) return;
+    setTesting(true);
+    const count = await testRuleMatches(newPayee.trim(), newMatchType);
+    setTestCount(count);
+    setTesting(false);
+  }
+
+  function getCategoryLabel(categoryId: string): string {
+    const cat = categories.find((c) => c.id === categoryId);
+    if (!cat) return 'Unknown';
+    return `${cat.emoji ?? ''} ${cat.name}`.trim();
+  }
+
+  const matchTypeLabel = (mt: string) => {
+    switch (mt) {
+      case 'contains': return 'contains';
+      case 'exact': return 'equals';
+      case 'starts_with': return 'starts with';
+      default: return mt;
+    }
+  };
 
   return (
     <>
@@ -561,21 +708,42 @@ function TransactionRulesSection() {
       <Card>
         <div className={styles.ruleList}>
           {rules.map((rule) => (
-            <div key={rule.id} className={styles.ruleRow}>
+            <div
+              key={rule.id}
+              className={styles.ruleRow}
+              style={{ opacity: rule.is_enabled ? 1 : 0.5 }}
+            >
               <div>
-                <div className={styles.ruleLabel}>When payee contains</div>
-                <div className={styles.ruleValue}>&ldquo;{rule.payeeContains}&rdquo;</div>
+                <div className={styles.ruleLabel}>When payee {matchTypeLabel(rule.match_type)}</div>
+                <div className={styles.ruleValue}>&ldquo;{rule.payee_pattern}&rdquo;</div>
               </div>
               <div className={styles.ruleArrow}>
                 <ArrowRight size={16} />
               </div>
               <div>
                 <div className={styles.ruleLabel}>Assign category</div>
-                <div className={styles.ruleValue}>{rule.categoryName}</div>
+                <div className={styles.ruleValue}>{getCategoryLabel(rule.category_id)}</div>
               </div>
-              <button className={styles.ruleDeleteBtn} onClick={() => handleDeleteRule(rule.id)} title="Remove rule">
-                <Trash2 size={14} />
-              </button>
+              <div style={{ display: 'flex', gap: 'var(--spacing-xs)', alignItems: 'center' }}>
+                <button
+                  onClick={() => handleToggleRule(rule)}
+                  style={{
+                    width: 36, height: 20, borderRadius: 10, border: 'none', cursor: 'pointer',
+                    background: rule.is_enabled ? 'var(--color-teal)' : 'rgba(255,255,255,0.1)',
+                    position: 'relative', transition: 'background 0.15s',
+                  }}
+                  title={rule.is_enabled ? 'Disable rule' : 'Enable rule'}
+                >
+                  <span style={{
+                    position: 'absolute', top: 2, left: rule.is_enabled ? 18 : 2,
+                    width: 16, height: 16, borderRadius: '50%',
+                    background: 'white', transition: 'left 0.15s',
+                  }} />
+                </button>
+                <button className={styles.ruleDeleteBtn} onClick={() => handleDeleteRule(rule.id)} title="Remove rule">
+                  <Trash2 size={14} />
+                </button>
+              </div>
             </div>
           ))}
 
@@ -590,10 +758,20 @@ function TransactionRulesSection() {
       <Card>
         <div className={styles.addRuleForm}>
           <Input
-            label="Payee contains"
+            label="Payee pattern"
             placeholder="e.g. Starbucks"
             value={newPayee}
-            onChange={(e) => setNewPayee(e.target.value)}
+            onChange={(e) => { setNewPayee(e.target.value); setTestCount(null); }}
+          />
+          <Select
+            label="Match type"
+            value={newMatchType}
+            onChange={(e) => { setNewMatchType(e.target.value as 'contains' | 'exact' | 'starts_with'); setTestCount(null); }}
+            options={[
+              { value: 'contains', label: 'Contains' },
+              { value: 'starts_with', label: 'Starts with' },
+              { value: 'exact', label: 'Exact match' },
+            ]}
           />
           <Select
             label="Assign category"
@@ -607,7 +785,19 @@ function TransactionRulesSection() {
               })),
             ]}
           />
-          <Button variant="primary" size="sm" onClick={handleAddRule} style={{ alignSelf: 'end' }}>
+        </div>
+        <div style={{ display: 'flex', gap: 'var(--spacing-sm)', marginTop: 'var(--spacing-md)', alignItems: 'center' }}>
+          <Button variant="secondary" size="sm" onClick={handleTestRule} disabled={!newPayee.trim() || testing}>
+            {testing ? <Loader2 size={14} /> : <RefreshCw size={14} />}
+            Test Rule
+          </Button>
+          {testCount !== null && (
+            <span style={{ fontSize: 'var(--font-size-xs)', color: testCount > 0 ? 'var(--color-teal)' : 'var(--text-muted)' }}>
+              {testCount} transaction{testCount !== 1 ? 's' : ''} would match
+            </span>
+          )}
+          <div style={{ flex: 1 }} />
+          <Button variant="primary" size="sm" onClick={handleAddRule} disabled={!newPayee.trim() || !newCatId}>
             <Plus size={14} /> Add Rule
           </Button>
         </div>

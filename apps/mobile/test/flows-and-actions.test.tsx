@@ -72,6 +72,7 @@ vi.mock('expo-router', () => ({
 }));
 
 vi.mock('../hooks', () => ({
+  useGoals: () => ({ goals: [], goalsWithProgress: [], createGoal: vi.fn(), updateGoal: vi.fn(), deleteGoal: vi.fn(), allocateToGoal: vi.fn() }),
   useAccounts: () => ({
     accounts: [
       { id: 'acc-checking', name: 'Checking', type: 'checking', balance: 352480 },

@@ -1,5 +1,50 @@
 # MyBudget — Timeline
 
+## 2026-02-28 — Production Readiness: Engine Modules, Bank Sync Hardening, Goals, Rules, UI
+
+Agent team sprint (5 members: researcher, architect, test-writer, dev-backend, dev-frontend) to close competitive feature gaps identified from Notion market research and Rocket Money comparison. Production readiness gap report at `docs/REPORT-production-readiness-2026-02-28.md`. Implementation plan at `docs/plans/queue/01-mybudget-production-readiness.md`.
+
+### Research & Planning
+- Compiled 38-gap production readiness report from Notion competitor analysis (YNAB, Monarch Money, Rocket Money, Copilot, Goodbudget, EveryDollar)
+- Designed 5-phase implementation plan covering ~50 files
+- Identified bank sync as #1 competitive gap, smart features as #2
+
+### TDD Test Suite (162 new tests, 10 files)
+- `engine/__tests__/income-estimator.test.ts` (18 tests)
+- `engine/__tests__/payday-detector.test.ts` (16 tests)
+- `engine/__tests__/net-cash.test.ts` (16 tests)
+- `engine/__tests__/transaction-rules.test.ts` (20 tests)
+- `engine/__tests__/goals.test.ts` (18 tests)
+- `bank-sync/__tests__/transaction-sync.test.ts` (14 tests)
+- `bank-sync/__tests__/auth-guard.test.ts` (12 tests)
+- `bank-sync/__tests__/idempotency.test.ts` (14 tests)
+- `db/__tests__/goals-crud.test.ts` (17 tests)
+- `db/__tests__/rules-crud.test.ts` (17 tests)
+
+### Backend Implementation (packages/shared/)
+- **DB Schema v3:** Added `goals` and `transaction_rules` tables with migration
+- **5 new engine modules:** income-estimator, payday-detector, net-cash, transaction-rules, goals
+- **3 bank sync modules:** transaction-sync pipeline, auth-guard with rate limiting, webhook idempotency
+- **CRUD operations:** goals-crud.ts, rules-crud.ts with full lifecycle support
+
+### Frontend Implementation (apps/web/, apps/mobile/)
+- Fixed failing `landing-interface.test.tsx` (missing mocks for time-based greeting)
+- **Bank Connection UI:** PlaidLink component, enhanced Linked Accounts in settings with status indicators
+- **Smart Dashboard Widgets:** income indicator, "Next Payday" countdown, Net Cash card, goals preview
+- **Transaction Rules UI:** DB-backed rule editor replacing localStorage, match types, test button
+- **Goal Tracking UI:** Full `/goals` page with CRUD, progress bars, status badges, sidebar nav
+- **Mobile Goals:** `goals.tsx` screen, `useGoals` hook, settings integration
+
+### Fixes & Integration
+- Resolved `Goal` type collision (aliased engine export as `GoalInput` in `engine/index.ts`)
+- Added `useGoals` mock to 2 existing mobile test files
+- Updated CLAUDE.md data model: 18 tables -> 20 tables (added goals, transaction_rules)
+
+### Verification
+- `pnpm test` -- 494 tests passing (469 shared + 24 mobile + 1 web), 0 failures
+- `pnpm typecheck` -- 6/6 tasks clean, 0 errors
+- All new engine modules exported from `packages/shared/src/index.ts`
+
 ## 2026-02-27 — Rocket Money-style web app redesign (Phases A-E)
 
 Comprehensive UI/UX overhaul of the Next.js web app to match Rocket Money's fintech design patterns. Based on frame-by-frame analysis of a Rocket Money screen recording. Full comparison report at `docs/REPORT-rocket-money-comparison-2026-02-27.md`.

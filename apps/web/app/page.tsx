@@ -18,9 +18,14 @@ import { fetchRecentTransactions } from './actions/transactions';
 import { fetchUpcomingRenewals, fetchSubscriptionSummary } from './actions/subscriptions';
 import { fetchDailySpending } from './actions/reports';
 import { seedDefaultCategories } from './actions/categories';
-import type { Account, TransactionWithSplits, Subscription } from '@mybudget/shared';
+import { fetchIncomeEstimate, fetchPaydayPrediction } from './actions/smart-features';
+import { fetchGoalsWithProgress } from './actions/goals';
+import type { GoalWithProgress } from './actions/goals';
+import type { Account, TransactionWithSplits, Subscription, IncomeEstimate } from '@mybudget/shared';
+import type { PaydayPrediction, PaydayPattern } from '@mybudget/shared';
 import { CurrentSpendChart } from '../components/dashboard/CurrentSpendChart';
 import { UpcomingStrip } from '../components/dashboard/UpcomingStrip';
+import { ProgressBar } from '../components/ui/ProgressBar';
 
 import styles from './page.module.css';
 
@@ -53,19 +58,25 @@ export default function DashboardPage() {
   const [upcomingRenewals, setUpcomingRenewals] = useState<Subscription[]>([]);
   const [subSummary, setSubSummary] = useState({ monthlyTotal: 0, annualTotal: 0, activeCount: 0 });
   const [dailySpend, setDailySpend] = useState<DailyData | null>(null);
+  const [incomeData, setIncomeData] = useState<IncomeEstimate | null>(null);
+  const [paydayData, setPaydayData] = useState<{ pattern: PaydayPattern; prediction: PaydayPrediction } | null>(null);
+  const [goalsWithProgress, setGoalsWithProgress] = useState<GoalWithProgress[]>([]);
   const [loading, setLoading] = useState(true);
   const [expandedAccountType, setExpandedAccountType] = useState<string | null>(null);
 
   const load = useCallback(async () => {
     try {
       await seedDefaultCategories();
-      const [nw, accts, txns, renewals, subSum, daily] = await Promise.all([
+      const [nw, accts, txns, renewals, subSum, daily, income, payday, gwp] = await Promise.all([
         getNetWorth(),
         fetchAccounts(),
         fetchRecentTransactions(8),
         fetchUpcomingRenewals(7),
         fetchSubscriptionSummary(),
         fetchDailySpending(),
+        fetchIncomeEstimate().catch(() => null),
+        fetchPaydayPrediction().catch(() => null),
+        fetchGoalsWithProgress().catch(() => []),
       ]);
       setNetWorth(nw);
       setAccounts(accts);
@@ -73,6 +84,9 @@ export default function DashboardPage() {
       setUpcomingRenewals(renewals);
       setSubSummary(subSum);
       setDailySpend(daily);
+      setIncomeData(income);
+      setPaydayData(payday);
+      setGoalsWithProgress(gwp);
     } finally {
       setLoading(false);
     }
@@ -239,6 +253,56 @@ export default function DashboardPage() {
           )}
         </Card>
 
+        {/* Smart Widgets Row */}
+        <div className={styles.smartRow}>
+          {/* Income Indicator */}
+          <Card className={styles.smartCard}>
+            <span className={styles.cardLabel}>Monthly Income</span>
+            <div className={styles.smartAmount}>
+              {formatCurrency(incomeData?.totalMonthlyEstimate ?? 0)}
+            </div>
+            {incomeData && incomeData.streams.length > 0 && (
+              <div className={styles.smartDetail}>
+                {incomeData.streams.length} source{incomeData.streams.length !== 1 ? 's' : ''} detected
+              </div>
+            )}
+          </Card>
+
+          {/* Payday Countdown */}
+          <Card className={styles.smartCard}>
+            <span className={styles.cardLabel}>Next Payday</span>
+            {paydayData ? (
+              <>
+                <div className={styles.smartAmount}>
+                  {paydayData.prediction.daysUntil === 0
+                    ? 'Today'
+                    : paydayData.prediction.daysUntil === 1
+                    ? 'Tomorrow'
+                    : `${paydayData.prediction.daysUntil} days`}
+                </div>
+                <div className={styles.smartDetail}>
+                  {paydayData.pattern.frequency.replace('_', '-')} schedule
+                </div>
+              </>
+            ) : (
+              <div className={styles.smartDetail} style={{ marginTop: 'var(--spacing-sm)' }}>
+                Not enough data to detect
+              </div>
+            )}
+          </Card>
+
+          {/* Net Cash Card */}
+          <Card className={styles.smartCard}>
+            <span className={styles.cardLabel}>Net Cash</span>
+            <div className={`${styles.smartAmount} ${netCash < 0 ? styles.amountNegative : ''}`}>
+              {formatCurrency(netCash)}
+            </div>
+            <div className={styles.smartDetail}>
+              Checking - Cards
+            </div>
+          </Card>
+        </div>
+
         {/* Upcoming Strip */}
         <Card>
           <UpcomingStrip
@@ -246,6 +310,35 @@ export default function DashboardPage() {
             onSeeAll={() => router.push('/subscriptions/calendar')}
           />
         </Card>
+
+        {/* Goals */}
+        {goalsWithProgress.length > 0 && (
+          <Card className={styles.wide}>
+            <div className={styles.cardHeader}>
+              <span className={styles.cardLabel}>Goals</span>
+              <button className={styles.viewAll} onClick={() => router.push('/goals')}>
+                View all <ChevronRight size={14} />
+              </button>
+            </div>
+            <div className={styles.goalList}>
+              {goalsWithProgress.slice(0, 4).map(({ goal, progress, status }) => (
+                <div key={goal.id} className={styles.goalRow}>
+                  <div className={styles.goalInfo}>
+                    <span className={styles.goalName}>{goal.name}</span>
+                    <span className={styles.goalAmounts}>
+                      {formatCurrency(progress.currentAmount)} / {formatCurrency(progress.targetAmount)}
+                    </span>
+                  </div>
+                  <ProgressBar value={Math.min(progress.percentage, 100)} size="sm" />
+                  <div className={styles.goalMeta}>
+                    <span>{progress.percentage}%</span>
+                    <span>{status === 'completed' ? 'Complete' : status === 'overdue' ? 'Overdue' : status === 'behind' ? 'Behind' : 'On Track'}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </Card>
+        )}
       </div>
     </div>
   );

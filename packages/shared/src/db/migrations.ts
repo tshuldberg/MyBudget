@@ -15,6 +15,8 @@ import {
   BANK_SYNC_TABLES,
   CORE_INDEXES,
   CORE_TABLES,
+  GOALS_RULES_INDEXES,
+  GOALS_RULES_TABLES,
   SCHEMA_VERSION,
 } from './schema';
 
@@ -56,9 +58,18 @@ const migration002: Migration = {
 };
 
 /**
+ * Migration 3: Add goals and transaction rules tables.
+ */
+const migration003: Migration = {
+  version: 3,
+  description: 'Goals and transaction rules tables',
+  statements: [...GOALS_RULES_TABLES, ...GOALS_RULES_INDEXES],
+};
+
+/**
  * All migrations in order. Add new migrations here.
  */
-export const MIGRATIONS: Migration[] = [migration001, migration002];
+export const MIGRATIONS: Migration[] = [migration001, migration002, migration003];
 
 /**
  * The preference key used to track schema version.

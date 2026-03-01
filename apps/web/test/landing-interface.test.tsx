@@ -2,6 +2,12 @@ import React from 'react';
 import { describe, expect, it, vi } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 
+// Mock next/navigation
+vi.mock('next/navigation', () => ({
+  useRouter: vi.fn().mockReturnValue({ push: vi.fn(), replace: vi.fn(), back: vi.fn() }),
+  usePathname: vi.fn().mockReturnValue('/'),
+}));
+
 // Mock the new modular actions
 vi.mock('../app/actions/accounts', () => ({
   getNetWorth: vi.fn().mockResolvedValue({ assets: 0, liabilities: 0, netWorth: 0 }),
@@ -31,6 +37,13 @@ vi.mock('../app/actions/subscriptions', () => ({
 
 vi.mock('../app/actions/reports', () => ({
   fetchMonthlySpending: vi.fn().mockResolvedValue([]),
+  fetchDailySpending: vi.fn().mockResolvedValue({
+    thisMonth: [],
+    lastMonth: [],
+    thisMonthTotal: 0,
+    lastMonthTotal: 0,
+    comparison: 0,
+  }),
 }));
 
 vi.mock('../app/actions/categories', () => ({
@@ -55,7 +68,8 @@ describe('MyBudget web dashboard', () => {
     render(<Home />);
 
     await waitFor(() => {
-      expect(screen.getByText('Dashboard')).toBeInTheDocument();
+      // Dashboard shows a time-based greeting, not a static title
+      expect(screen.getByText(/Good (morning|afternoon|evening)/)).toBeInTheDocument();
     });
   });
 });
